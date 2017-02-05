@@ -1,0 +1,23 @@
+# By default the robots.txt file blocks all search engins from crawling your site!
+#
+# Comment out the current settings and uncomment the function you would like to use.
+#
+#
+# Block all search engins from crawling your website
+
+User-agent: *
+Disallow: /
+
+
+# Allow all search engins from crawling your website
+#
+# User-agent: *
+# Disallow: 
+#
+#
+# Allow all search engins from crawling your website
+# A Crawl-delay: of 30 seconds would allow crawlers to index your entire 1,000 page website in just 8.3 hours
+# A Crawl-delay: of 500 seconds would allow crawlers to index your entire 1,000 page website in 5.8 days
+#
+# User-agent: *
+# Crawl-delay: 30
