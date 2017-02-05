@@ -1,0 +1,47 @@
+.first {
+    padding-top: 15vh;
+}
+
+.header-text {
+    margin-top: 20vh;
+    margin-bottom: 15vh;
+}
+
+.vmargin {
+    color: #fff;
+    margin-top: 20vh;
+    margin-bottom: 15vh;
+}
+
+.header-text > h1, .header-text > h4, .header-text > p {
+    color: #fff;
+}
+
+.btn-background-white {
+    background-color: #fff !important;
+}
+
+.nav .material-icons {
+    font-size: 22px !important;
+    max-width: 22px !important;
+}
+
+.nav form button.btn {
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.horizontal-align-radio .radio {
+    float: left !important;
+    width: inherit !important;
+}
+
+.radio+.radio {
+    margin-top: 10px !important;
+}
+
+body {
+    background-repeat: no-repeat;
+    background-size: cover;
+}
