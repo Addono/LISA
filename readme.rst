@@ -20,7 +20,7 @@ Installation
 
 Go to application/config/ and rename database.php-setup to database.php, then update it with your database account settings. In the same folder there is a config.php file, update this with your domain name.
 
-Afterwards visit $yoururl$/index.php/install.
+Afterwards visit http(s)://$yoururl$/index.php/install.
 
 *******
 License
