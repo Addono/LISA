@@ -7,19 +7,8 @@
 
             <footer class="footer">
                 <div class="container">
-                    <!-- Optional footer navigation
-                    <nav class="pull-left">
-                        <ul>
-                            <li>
-                                <a href="http://impeesa.nl">
-                                    Scouting Impeesa
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                    -->
                     <div class="copyright">
-                        &copy; 2017, Boerenkoolfuif Commissie 2017
+                        &copy; <?=lang('copyright')?>
                     </div>
                 </div>
             </footer>

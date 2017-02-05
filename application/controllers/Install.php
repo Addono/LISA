@@ -7,15 +7,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Install extends CI_Controller {
 
-    private $usersTable = 'users_table';
-    private $receiptsEntries = 'receipts_entries';
-
     public function index() {
         $this->load->database();
         $this->load->dbforge();
+        $this->load->helper('tables');
 
-        $this->addTable($this->usersTable, $this->getUsersTableFields());
-        $this->addTable($this->receiptsEntries, $this->getReceiptEntriesTable());
+        $this->addTable(USERS_TABLE, $this->getUsersTableFields());
     }
 
     private function addTable($name, $fields, $attr = ['ENGINE' => 'InnoDB']) {
@@ -33,38 +30,6 @@ class Install extends CI_Controller {
         }
     }
 
-    private function getReceiptEntriesTable() {
-        return [
-            'group_id' => [
-                'type' => 'INT',
-                'constraint' => '9',
-            ],
-            'resource0' => [
-                'type' => 'TINYINT',
-                'constraint' => 1,
-            ],
-            'resource1' => [
-                'type' => 'TINYINT',
-                'constraint' => 1,
-            ],
-            'resource2' => [
-                'type' => 'TINYINT',
-                'constraint' => 1,
-            ],
-            'specialty' => [
-                'type' => 'VARCHAR',
-                'constraint' => 255,
-            ],
-            'score' => [
-                'type' => 'FLOAT',
-            ],
-            'country' => [
-                'type' => 'ENUM("netherlands","belgium","france","germany")',
-            ],
-            'FOREIGN KEY (group_id) REFERENCES '.$this->usersTable.'(id)',
-        ];
-    }
-
     private function getUsersTableFields() {
         return [
             'username' => [
@@ -72,9 +37,9 @@ class Install extends CI_Controller {
                 'constraint' => 255,
                 'unique' => TRUE,
             ],
-            'pin' => [
-                'type' => 'VARCHAR',
-                'constraint' => 16,
+            'password' => [
+                'type' => 'TEXT',
+                'constraint' => 255,
             ],
             'role' => [
                 'type' => 'ENUM("user","admin")',

@@ -12,7 +12,7 @@
     <link rel="icon" type="image/png" href="<?=base_url('resources/img/favicon.png')?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-    <title>Boerenkoolfuif 2017</title>
+    <title><?=lang('application_title')?></title>
 
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
 
@@ -27,83 +27,61 @@
     <link href="<?=base_url('resources/css/style.css')?>" rel="stylesheet" />
 </head>
 
-<body style="background-image: url('<?=base_url('resources/img/boerenkool.jpg')?>')">
+<body style="background-image: url('<?=base_url('resources/img/bg.jpeg')?>')">
 
 <nav class="navbar navbar-transparent navbar-absolute">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation">
-                <span class="sr-only">Toggle navigation</span>
+                <span class="sr-only"><?=lang('navigation_toggle')?></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="<?=site_url()?>">
-                <b>PROLpa TheWorstChef</b> <?=$loggedIn?ucfirst($username):false?>
+                <b><?=lang('application_name')?></b> <?=$loggedIn?ucfirst($username):false?>
             </a>
         </div>
 
         <div class="collapse navbar-collapse" id="navigation">
             <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="<?=site_url('top')?>" class="btn btn-simple btn-white" target="_self">
-                        <i class="material-icons">star</i> Top scores
-                    </a>
-                </li>
             <?php if($loggedIn) {
                 if($role === 'admin') {?>
                 <!-- Admin specific buttons -->
-                <li>
-                    <a href="<?=site_url('add/netherlands')?>" class="btn btn-simple btn-white" target="_self">
-                        <i class="material-icons">add</i> Nederland
-                    </a>
-                </li>
-                <li>
-                    <a href="<?=site_url('add/belgium')?>" class="btn btn-simple btn-white" target="_self">
-                        <i class="material-icons">add</i> België
-                    </a>
-                </li>
-                <li>
-                    <a href="<?=site_url('add/germany')?>" class="btn btn-simple btn-white" target="_self">
-                        <i class="material-icons">add</i> Duitsland
-                    </a>
-                </li>
-                <li>
-                    <a href="<?=site_url('add/france')?>" class="btn btn-simple btn-white" target="_self">
-                        <i class="material-icons">add</i> Frankrijk
-                    </a>
-                </li>
+                <!-- /Admin specific buttons -->
                 <?php } elseif($role === 'user') { ?>
                 <!-- User specific buttons -->
-                <li>
-                    <a href="<?=site_url('receipts')?>" class="btn btn-simple btn-white" target="_self">
-                        <i class="material-icons">receipt</i> Mijn recepten
-                    </a>
-                </li>
+                <!-- /User specific buttons -->
                 <?php } ?>
+                <!-- Buttons for logged in users -->
                 <li>
                     <a href="<?=site_url('logout')?>" class="btn btn-simple btn-white" target="_self">
-                        <i class="material-icons">exit_to_app</i> Uitloggen
+                        <i class="material-icons">exit_to_app</i> <?=lang('logout_logout')?>
                     </a>
                 </li>
+                <!-- /Buttons for logged in users -->
             <?php } else { ?>
+                <!-- Buttons for users whom are not logged in -->
                 <li>
                     <a href="<?=site_url('login')?>" class="btn btn-simple btn-white" target="_self">
-                        <i class="material-icons">account_box</i> Inloggen
+                        <i class="material-icons">account_box</i> <?=lang('login_login')?>
                     </a>
                 </li>
+                <!-- /Buttons for users whom are not logged in -->
             <?php } ?>
+                <!-- Buttons for everyone -->
                 <li>
-                    <a href="https://twitter.com/impeesa_afoort" target="_blank" class="btn btn-simple btn-white btn-just-icon">
+                    <a href="https://twitter.com/" target="_blank" class="btn btn-simple btn-white btn-just-icon">
                         <i class="fa fa-twitter"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="https://www.facebook.com/impeesa.amersfoort" target="_blank" class="btn btn-simple btn-white btn-just-icon">
+                    <a href="https://www.facebook.com/" target="_blank" class="btn btn-simple btn-white btn-just-icon">
                         <i class="fa fa-facebook-square"></i>
                     </a>
                 </li>
+                <!-- /Buttons for everyone -->
             </ul>
         </div>
     </div>

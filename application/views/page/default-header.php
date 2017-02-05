@@ -5,5 +5,5 @@
  */
 ?>
 <div class="col-md-6 vmargin">
-    <h1>Welkom!</h1>
-    <h4>This is your new default homepage!</h4>
+    <h1><?=lang('default_page_header_title')?></h1>
+    <h4><?=lang('default_page_header_body')?></h4>

@@ -19,6 +19,7 @@ class Page extends CI_Controller {
         $this->load->helper([
             'url',
             'form',
+            'language',
         ]);
         $this->load->model([
             'Users',
@@ -27,7 +28,7 @@ class Page extends CI_Controller {
             'session',
             'form_validation'
         ]);
-        //$this->lang->load('default', 'english');
+        $this->lang->load('default', 'english');
 
         // Check if the user is logged in
         $this->data['loggedIn'] = $this->session->username !== NULL;
@@ -84,30 +85,30 @@ class Page extends CI_Controller {
                 $rules = [
                     [
                         'field' => 'username',
-                        'label' => 'Gebruikersnaam',
+                        'label' => lang('login_username'),
                         'rules' => [
                             'required',
                         ],
                         'errors' => [
-                            'required' => 'Vul uw gebruikersnaam in.',
+                            'required' => lang('login_error_field_required'),
                         ],
                     ],
                     [
                         'field' => 'password',
-                        'label' => 'Pin',
+                        'label' => lang('login_password'),
                         'rules' => 'required',
                         'errors' => [
-                            'required' => 'Vul de pincode in.',
+                            'required' => lang('login_error_field_required'),
                         ],
                     ],
                     [
                         'field' => 'username',
-                        'label' => 'Gebruikersnaam',
+                        'label' => lang('login_username'),
                         'rules' => [
                             ['usernameExists', [$this->Users, 'userExists']],
                         ],
                         'errors' => [
-                            'usernameExists' => 'Gebruikersnaam bestaat niet.',
+                            'usernameExists' => lang('login_error_username_does_not_exist'),
                         ],
                     ],
                 ];
@@ -128,7 +129,7 @@ class Page extends CI_Controller {
                     redirect('');
                     break;
                 } else {
-                    $this->data['errors'][] = 'Ongeldige combinatie van gebruikersnaam en pincode.';
+                    $this->data['errors'][] = lang('login_error_invalid_credentials');
                     break;
                 }
             case 'logout':

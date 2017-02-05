@@ -11,7 +11,7 @@
             <div class="card card-signup">
                 <?=form_open()?>
                     <div class="header header-primary text-center">
-                        <h4>Inloggen</h4>
+                        <h4><?=lang('login_login')?></h4>
                         <?=validation_errors()?>
                         <?php
                         foreach($errors as $error) {
@@ -26,7 +26,7 @@
                             <span class="input-group-addon">
                                 <i class="material-icons">face</i>
                             </span>
-                            <label class="control-label">Username</label>
+                            <label class="control-label"><?=lang('login_username')?></label>
                             <input type="text" name="username" class="form-control" value="<?=set_value('username')?>" />
                         </div>
 
@@ -34,12 +34,12 @@
                             <span class="input-group-addon">
                                 <i class="material-icons">lock_outline</i>
                             </span>
-                            <label class="control-label">Pincode</label>
+                            <label class="control-label"><?=lang('login_password')?></label>
                             <input type="password" name="password" class="form-control" />
                         </div>
                     </div>
                     <div class="footer text-center">
-                        <input type="submit" value="Log in" class="btn btn-simple btn-primary btn-lg">
+                        <input type="submit" value="<?=lang('login_submit')?>" class="btn btn-simple btn-primary btn-lg">
                     </div>
                 </form>
             </div>

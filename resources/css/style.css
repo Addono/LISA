@@ -40,3 +40,8 @@
 .radio+.radio {
     margin-top: 10px !important;
 }
+
+body {
+    background-repeat: no-repeat;
+    background-size: cover;
+}
