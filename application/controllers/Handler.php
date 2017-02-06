@@ -4,11 +4,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * @property    CI_Form_validation  $form_validation
  * @property    Users               $Users
- * @property    Receipt             $Receipt
  * @property    CI_Session          $session
  * @property    CI_DB_query_builder $db
  */
-class Page extends CI_Controller {
+class Handler extends CI_Controller {
     const DefaultValue = 'default';
 
     private $data = ['errors' => []];
