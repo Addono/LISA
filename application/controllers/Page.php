@@ -29,6 +29,7 @@ class Page extends CI_Controller {
             'form_validation'
         ]);
         $this->lang->load('default', 'english');
+        $this->lang->load('application', 'english');
 
         // Check if the user is logged in
         $this->data['loggedIn'] = $this->session->username !== NULL;

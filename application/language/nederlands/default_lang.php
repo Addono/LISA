@@ -4,10 +4,6 @@
  * @date 5-2-2017
  */
 
-$lang['application_name'] = 'Jouw naam hier';
-$lang['application_title'] = 'Jouw titel hier';
-$lang['copyright'] = '2017, Adriaan Knapen';
-
 $lang['navigation_toggle'] = 'Open/sluit menu';
 
 $lang['default_page_header_title'] = 'Welkom';

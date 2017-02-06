@@ -4,10 +4,6 @@
  * @date 5-2-2017
  */
 
-$lang['application_name'] = 'Name placeholder';
-$lang['application_title'] = 'Title placeholder';
-$lang['copyright'] = '2017, Adriaan Knapen';
-
 $lang['navigation_toggle'] = 'Toggle navigation';
 
 $lang['default_page_header_title'] = 'Welcome';
