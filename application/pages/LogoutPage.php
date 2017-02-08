@@ -6,6 +6,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @date 6-2-2017
  */
 
+/**
+ * Class LogoutPage
+ * todo remove username from header
+ */
 class LogoutPage extends PageFrame
 {
 
