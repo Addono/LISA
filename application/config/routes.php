@@ -52,6 +52,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['install'] = 'Install/index';
 $route['(:any)'] = 'Handler/index/$1';
 $route['(:any)/(:any)'] = 'Handler/index/$1/$2';
-$route['default_controller'] = 'Page';
+$route['default_controller'] = 'Handler';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

@@ -21,7 +21,7 @@ class Users extends CI_Model {
      * @param $role
      * @return bool|mixed Returns the pin of the generated user on success, else returns false.
      */
-    public function insertUser($username, $password, $role = 'user') {
+    public function addUser($username, $password, $role = 'user') {
         return $this->db->insert(
             USERS_TABLE,
             [
@@ -38,9 +38,21 @@ class Users extends CI_Model {
      * @param $password
      * @return bool
      */
-    public function checkCredentials($username, $password) {
+    public function checkUsernamePasswordCredentials($username, $password) {
+        $userId = $this->getUserId($username);
+
+        return $this->checkUserIdPasswordCredentials($userId, $password);
+    }
+
+    /**
+     * Checks if a user matching the credentials is present in the database.
+     * @param $userId
+     * @param $password
+     * @return bool
+     */
+    public function checkUserIdPasswordCredentials($userId, $password) {
         $result = $this->db
-            ->where(['username' => $username])
+            ->where(['id' => $userId])
             ->get(USERS_TABLE)
             ->row();
         if(isset($result->password)) {
@@ -50,16 +62,16 @@ class Users extends CI_Model {
         }
     }
 
-    public function userExists($username) {
+    public function usernameExists($username) {
         $result = $this->db
             ->where(['username' => $username])
             ->count_all_results(USERS_TABLE);
         return $result !== 0;
     }
 
-    public function userRole($username) {
+    public function userRole($userId) {
         return $this->db
-            ->where(['username' => $username])
+            ->where(['id' => $userId])
             ->get(USERS_TABLE)
             ->row()
             ->role;
@@ -73,7 +85,15 @@ class Users extends CI_Model {
             ->result();
     }
 
-    public function getId($username) {
+    public function getUsername($userId) {
+        return $this->db
+            ->where(['id' => $userId])
+            ->get(USERS_TABLE)
+            ->row()
+            ->username;
+    }
+
+    private function getUserId($username) {
         return $this->db
             ->where(['username' => $username])
             ->get(USERS_TABLE)
