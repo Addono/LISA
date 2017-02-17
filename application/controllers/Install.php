@@ -18,7 +18,6 @@ class Install extends CI_Controller {
         $this->load->helper('tables');
         $this->load->model('Users');
 
-        $this->db->trans_start();
 
         $this->addTable(MODEL_VERSIONS_TABLE, $this->getModelVersionTable());
 
@@ -73,7 +72,9 @@ class Install extends CI_Controller {
                             $this->alterTable($tableName, $alterations);
                         }
 
-                        $this->db->where($where)->update(MODEL_VERSIONS_TABLE, ['version' => $version]);
+                        $replace = array_merge($where, ['version' => $version]);
+
+                        $this->db->replace(MODEL_VERSIONS_TABLE, $replace);
                         echo $this->db->last_query();
 
                         echo "Installed r" . $version . ".<br>";
@@ -85,8 +86,6 @@ class Install extends CI_Controller {
 
             $models->next();
         }
-
-        $this->db->trans_complete();
     }
 
     static function getTableName($modelName) {
