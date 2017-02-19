@@ -7,8 +7,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * Class Install
- * @property    Users               $Users
+ * @property  Users                 $Users
  * @property  CI_DB_query_builder   $db
+ * @property  CI_DB_forge           $dbforge
  */
 class Install extends CI_Controller {
 
@@ -62,6 +63,7 @@ class Install extends CI_Controller {
 
                 echo "Current version of " . $modelName . " is " . $version . ".<br>";
 
+                // Install all versions currently not yet installed.
                 while (TRUE) {
                     $version++;
                     $functionName = 'r'.$version;
