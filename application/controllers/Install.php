@@ -80,7 +80,7 @@ class Install extends CI_Controller {
 
                         echo ' - Installed r' . $version . '.<br>';
                     } else {
-                        echo '- ' . $modelName . ' is up-to-date.';
+                        echo ' - ' . $modelName . ' is up-to-date.';
                         break;
                     }
                 }
