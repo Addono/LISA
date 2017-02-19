@@ -7,11 +7,39 @@
  */
 class Users extends CI_Model {
 
+    private $tableName;
+
     public function __construct()
     {
         $ci =& get_instance();
         $ci->load->database();
         $this->load->helper('tables');
+
+        $this->tableName = Install::getTableName(self::class);
+    }
+
+    public function r1() {
+        return [
+            'add' => [
+                'username' => [
+                    'type' => 'VARCHAR',
+                    'constraint' => 255,
+                    'unique' => TRUE,
+                ],
+                'password' => [
+                    'type' => 'TEXT',
+                    'constraint' => 255,
+                ],
+                'role' => [
+                    'type' => 'ENUM("'.ROLE_USER.'","'.ROLE_ADMIN.'")',
+                    'default' => 'user',
+                ],
+            ]
+        ];
+    }
+
+    public function r2() {
+        $this->addUser('admin', 'banana', 'admin');
     }
 
     /**
@@ -21,9 +49,9 @@ class Users extends CI_Model {
      * @param $role
      * @return bool|mixed Returns the pin of the generated user on success, else returns false.
      */
-    public function insertUser($username, $password, $role = 'user') {
+    public function addUser($username, $password, $role = 'user') {
         return $this->db->insert(
-            USERS_TABLE,
+            $this->tableName,
             [
                 'username' => $username,
                 'password' => password_hash($password, PASSWORD_DEFAULT),
@@ -38,10 +66,22 @@ class Users extends CI_Model {
      * @param $password
      * @return bool
      */
-    public function checkCredentials($username, $password) {
+    public function checkUsernamePasswordCredentials($username, $password) {
+        $userId = $this->getUserId($username);
+
+        return $this->checkUserIdPasswordCredentials($userId, $password);
+    }
+
+    /**
+     * Checks if a user matching the credentials is present in the database.
+     * @param $userId
+     * @param $password
+     * @return bool
+     */
+    public function checkUserIdPasswordCredentials($userId, $password) {
         $result = $this->db
-            ->where(['username' => $username])
-            ->get(USERS_TABLE)
+            ->where(['id' => $userId])
+            ->get($this->tableName)
             ->row();
         if(isset($result->password)) {
             return password_verify($password, $result->password);
@@ -50,17 +90,17 @@ class Users extends CI_Model {
         }
     }
 
-    public function userExists($username) {
+    public function usernameExists($username) {
         $result = $this->db
             ->where(['username' => $username])
-            ->count_all_results(USERS_TABLE);
+            ->count_all_results($this->tableName);
         return $result !== 0;
     }
 
-    public function userRole($username) {
+    public function userRole($userId) {
         return $this->db
-            ->where(['username' => $username])
-            ->get(USERS_TABLE)
+            ->where(['id' => $userId])
+            ->get($this->tableName)
             ->row()
             ->role;
     }
@@ -69,14 +109,22 @@ class Users extends CI_Model {
         return $this->db
             ->select(['username'])
             ->where(['role' => 'user'])
-            ->get(USERS_TABLE)
+            ->get($this->tableName)
             ->result();
     }
 
-    public function getId($username) {
+    public function getUsername($userId) {
+        return $this->db
+            ->where(['id' => $userId])
+            ->get($this->tableName)
+            ->row()
+            ->username;
+    }
+
+    private function getUserId($username) {
         return $this->db
             ->where(['username' => $username])
-            ->get(USERS_TABLE)
+            ->get($this->tableName)
             ->row()
             ->id;
     }
