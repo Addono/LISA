@@ -1,8 +1,10 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
+require_once('Install.php');
+
 /**
  * @property    CI_Form_validation  $form_validation
- * @property    Login               $Users
+ * @property    Login               $Login
  * @property    CI_Session          $session
  * @property    CI_DB_query_builder $db
  */
@@ -23,7 +25,7 @@ class Handler extends CI_Controller {
             'tables',
         ]);
         $this->load->model([
-            'Users',
+            'Login',
         ]);
         $this->load->library([
             'session',
@@ -36,8 +38,8 @@ class Handler extends CI_Controller {
         $this->data['loggedIn'] = $this->session->userId !== NULL;
         $this->data['userId'] = $this->session->userId;
         if($this->data['loggedIn']) {
-            $this->data['role'] = $this->Users->userRole($this->data['userId']);
-            $this->data['username'] = $this->Users->getUsername($this->data['userId']);
+            $this->data['role'] = $this->Login->userRole($this->data['userId']);
+            $this->data['username'] = $this->Login->getUsername($this->data['userId']);
         } else {
             $this->data['role'] = ROLE_VISITOR;
         }

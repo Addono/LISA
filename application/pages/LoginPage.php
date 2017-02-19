@@ -8,14 +8,14 @@
 /**
  * Class DefaultPage
  * @property    CI_Session          $session
- * @property    Login               $Users
+ * @property    Login               $Login
  */
 class LoginPage extends PageFrame
 {
 
     public function __construct()
     {
-        parent::addModels(['Users']);
+        parent::addModels(['Login']);
         parent::addLibraries(['session']);
         parent::addHelpers(['tables']);
         parent::__construct();
@@ -23,7 +23,7 @@ class LoginPage extends PageFrame
         if(!$this->hasError) {
             $username = set_value('username');
             $password = set_value('password');
-            $userId = $this->ci->Users->checkUsernamePasswordCredentials($username, $password);
+            $userId = $this->ci->Login->checkUsernamePasswordCredentials($username, $password);
             if($userId) {
                 $this->ci->session->userId = $userId;
                 redirect();
@@ -80,7 +80,7 @@ class LoginPage extends PageFrame
                 'field' => 'username',
                 'label' => lang('login_username'),
                 'rules' => [
-                    ['usernameExists', [$this->ci->Users, 'usernameExists']],
+                    ['usernameExists', [$this->ci->Login, 'usernameExists']],
                 ],
                 'errors' => [
                     'usernameExists' => lang('login_error_username_does_not_exist'),
