@@ -7,7 +7,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * Class Install
- * @property  Login                 $Users
  * @property  CI_DB_query_builder   $db
  * @property  CI_DB_forge           $dbforge
  */
