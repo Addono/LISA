@@ -7,7 +7,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * Class Install
- * @property  Login                 $Users
  * @property  CI_DB_query_builder   $db
  * @property  CI_DB_forge           $dbforge
  */
@@ -80,7 +79,7 @@ class Install extends CI_Controller {
 
                         echo ' - Installed r' . $version . '.<br>';
                     } else {
-                        echo '- ' . $modelName . ' is up-to-date.';
+                        echo ' - ' . $modelName . ' is up-to-date.';
                         break;
                     }
                 }
