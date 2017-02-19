@@ -7,7 +7,7 @@
 /**
  * Class PageFrame
  * @property    CI_Form_validation  $form_validation
- * @property    Users               $Users
+ * @property    Login               $Users
  */
 abstract class PageFrame extends CI_Controller
 {

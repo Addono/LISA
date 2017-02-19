@@ -8,7 +8,7 @@
 /**
  * Class DefaultPage
  * @property    CI_Session          $session
- * @property    Users               $Users
+ * @property    Login               $Users
  */
 class LoginPage extends PageFrame
 {
