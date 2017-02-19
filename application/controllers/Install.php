@@ -7,7 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * Class Install
- * @property  Users                 $Users
+ * @property  Login                 $Users
  * @property  CI_DB_query_builder   $db
  * @property  CI_DB_forge           $dbforge
  */
@@ -17,7 +17,6 @@ class Install extends CI_Controller {
         $this->load->database();
         $this->load->dbforge();
         $this->load->helper('tables');
-        $this->load->model('Users');
 
 
         $this->addTable(MODEL_VERSIONS_TABLE, $this->getModelVersionTable());
@@ -80,8 +79,9 @@ class Install extends CI_Controller {
                             $this->db->replace(MODEL_VERSIONS_TABLE, $replace);
                         $this->db->trans_complete();
 
-                        echo "Installed r" . $version . ".<br>";
+                        echo ' - Installed r' . $version . '.<br>';
                     } else {
+                        echo '- ' . $modelName . ' is up-to-date.';
                         break;
                     }
                 }
@@ -130,24 +130,6 @@ class Install extends CI_Controller {
         }
 
         return false;
-    }
-
-    private function getUsersTableFields() {
-        return [
-            'username' => [
-                'type' => 'VARCHAR',
-                'constraint' => 255,
-                'unique' => TRUE,
-            ],
-            'password' => [
-                'type' => 'TEXT',
-                'constraint' => 255,
-            ],
-            'role' => [
-                'type' => 'ENUM("'.ROLE_USER.'","'.ROLE_ADMIN.'")',
-                'default' => 'user',
-            ],
-        ];
     }
 
     private function getModelVersionTable() {
