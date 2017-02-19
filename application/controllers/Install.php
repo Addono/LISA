@@ -67,15 +67,16 @@ class Install extends CI_Controller {
                     $functionName = 'r'.$version;
 
                     if(method_exists($this->$modelName, $functionName)) {
-                        $alterations = $this->$modelName->$functionName();
-                        if (is_array($alterations)) {
-                            $this->alterTable($tableName, $alterations);
-                        }
+                        $this->db->trans_start();
+                            $alterations = $this->$modelName->$functionName();
+                            if (is_array($alterations)) {
+                                $this->alterTable($tableName, $alterations);
+                            }
 
-                        $replace = array_merge($where, ['version' => $version]);
+                            $replace = array_merge($where, ['version' => $version]);
 
-                        $this->db->replace(MODEL_VERSIONS_TABLE, $replace);
-                        echo $this->db->last_query();
+                            $this->db->replace(MODEL_VERSIONS_TABLE, $replace);
+                        $this->db->trans_complete();
 
                         echo "Installed r" . $version . ".<br>";
                     } else {
@@ -102,31 +103,29 @@ class Install extends CI_Controller {
     }
 
     private function alterTable($name, $fields, $attr = ['ENGINE' => 'InnoDB']) {
-        $this->db->trans_start();
-            if($this->db->table_exists($name)) {
-                echo "Table '$name' already exists.<br>";
-                if (array_key_exists('add', $fields)) {
-                    $this->dbforge->add_column($name, $fields['add']);
-                }
-                if (array_key_exists('delete', $fields)) {
-                    if (is_array($fields['delete'])) {
-                        $this->dbforge->drop_table($name);
-                    } else {
-                        $this->dbforge->drop_column($name, $fields['delete']);
-                    }
-                }
-            } else {
-                $this->dbforge->add_field($fields['add']);
-                $this->dbforge->add_field('id');
-                if($this->dbforge->create_table($name, TRUE, $attr)) {
-                    echo "Successfully added table '$name'<br>";
-                    return true;
+        if($this->db->table_exists($name)) {
+            echo "Table '$name' already exists.<br>";
+            if (array_key_exists('add', $fields)) {
+                $this->dbforge->add_column($name, $fields['add']);
+            }
+            if (array_key_exists('delete', $fields)) {
+                if (is_array($fields['delete'])) {
+                    $this->dbforge->drop_table($name);
                 } else {
-                    echo "Failed adding table '$name'<br>";
-                    exit;
+                    $this->dbforge->drop_column($name, $fields['delete']);
                 }
             }
-        $this->db->trans_complete();
+        } else {
+            $this->dbforge->add_field($fields['add']);
+            $this->dbforge->add_field('id');
+            if($this->dbforge->create_table($name, TRUE, $attr)) {
+                echo "Successfully added table '$name'<br>";
+                return true;
+            } else {
+                echo "Failed adding table '$name'<br>";
+                exit;
+            }
+        }
 
         return false;
     }
