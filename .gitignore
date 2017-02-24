@@ -1,4 +1,4 @@
-    application/cache/*
+application/cache/*
 !application/cache/index.html
 !application/cache/.htaccess
 !application/cache/sessions/index.html
