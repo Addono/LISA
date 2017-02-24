@@ -1,7 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 require_once('Install.php');
-require_once('./application/models/ModelFrame.php');
 require_once('./application/pages/PageFrame.php');
 
 /**
@@ -27,6 +26,7 @@ class Handler extends CI_Controller {
             'tables',
         ]);
         $this->load->model([
+            'ModelFrame', // Ensure to load model frame first, since other models might depend on it.
             'Login',
         ]);
         $this->load->library([

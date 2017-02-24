@@ -59,7 +59,7 @@ class Login extends ModelFrame {
      * @return bool
      */
     public function checkUsernamePasswordCredentials($username, $password) {
-        $userId = $this->getUserId($username);
+        $userId = $this->getLoginIdFromUsername($username);
 
         return $this->checkUserIdPasswordCredentials($userId, $password);
     }
@@ -72,7 +72,7 @@ class Login extends ModelFrame {
      */
     public function checkUserIdPasswordCredentials($userId, $password) {
         $result = $this->db
-            ->where(['id' => $userId])
+            ->where(['login_id' => $userId])
             ->get($this->tableName)
             ->row();
         if(isset($result->password)) {
@@ -92,24 +92,23 @@ class Login extends ModelFrame {
     public function getUsernames() {
         return $this->db
             ->select(['username'])
-            ->where(['role' => 'user'])
             ->get($this->tableName)
             ->result();
     }
 
-    public function getUsername($userId) {
+    public function getUsername($loginId) {
         return $this->db
-            ->where(['id' => $userId])
+            ->where(['login_id' => $loginId])
             ->get($this->tableName)
             ->row()
             ->username;
     }
 
-    private function getUserId($username) {
+    private function getLoginIdFromUsername($username) {
         return $this->db
             ->where(['username' => $username])
             ->get($this->tableName)
             ->row()
-            ->id;
+            ->login_id;
     }
 }
