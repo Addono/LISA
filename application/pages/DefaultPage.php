@@ -26,17 +26,57 @@ class DefaultPage extends PageFrame
         return true;
     }
 
-    protected function accessibleBy()
+    public function hasAccess()
     {
-        return [
-            ROLE_VISITOR,
-            ROLE_ADMIN,
-            ROLE_VISITOR,
-        ];
+        return true;
     }
 
     protected function getFormValidationRules()
     {
         return false;
+    }
+
+    /**
+     * Function which is called after construction and before the views are rendered.
+     */
+    public function beforeView()
+    {
+    }
+
+    /**
+     * Function which is called after the views are rendered.
+     */
+    public function afterView()
+    {
+    }
+
+    /**
+     * Defines which models should be loaded.
+     *
+     * @return array;
+     */
+    protected function getModels()
+    {
+        return [];
+    }
+
+    /**
+     * Defines which libraries should be loaded.
+     *
+     * @return array;
+     */
+    protected function getLibraries()
+    {
+        return [];
+    }
+
+    /**
+     * Defines which helpers should be loaded.
+     *
+     * @return array;
+     */
+    protected function getHelpers()
+    {
+        return [];
     }
 }

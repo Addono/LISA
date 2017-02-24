@@ -13,15 +13,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class LogoutPage extends PageFrame
 {
 
-    public function __construct()
-    {
-        parent::addLibraries(['session']);
-        parent::__construct();
-
-        $this->ci->session->userId = null;
-        redirect();
-    }
-
     public function getHeader()
     {
         return [
@@ -48,11 +39,54 @@ class LogoutPage extends PageFrame
         return false;
     }
 
-    protected function accessibleBy()
+    public function hasAccess()
     {
-        return [
-            ROLE_ADMIN,
-            ROLE_USER,
-        ];
+        return $this->ci->session->userId !== null;
+    }
+
+    /**
+     * Function which is called after construction and before the views are rendered.
+     */
+    public function beforeView()
+    {
+        $this->ci->session->userId = null;
+        redirect();
+    }
+
+    /**
+     * Function which is called after the views are rendered.
+     */
+    public function afterView()
+    {
+    }
+
+    /**
+     * Defines which models should be loaded.
+     *
+     * @return array;
+     */
+    protected function getModels()
+    {
+        return [];
+    }
+
+    /**
+     * Defines which libraries should be loaded.
+     *
+     * @return array;
+     */
+    protected function getLibraries()
+    {
+        return ['session'];
+    }
+
+    /**
+     * Defines which helpers should be loaded.
+     *
+     * @return array;
+     */
+    protected function getHelpers()
+    {
+        return [];
     }
 }

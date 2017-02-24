@@ -38,10 +38,7 @@ class Handler extends CI_Controller {
         $this->data['loggedIn'] = $this->session->userId !== NULL;
         $this->data['userId'] = $this->session->userId;
         if($this->data['loggedIn']) {
-            $this->data['role'] = $this->Login->userRole($this->data['userId']);
             $this->data['username'] = $this->Login->getUsername($this->data['userId']);
-        } else {
-            $this->data['role'] = ROLE_VISITOR;
         }
 
         $pageControllerName = ucfirst($page).'Page';
@@ -53,11 +50,13 @@ class Handler extends CI_Controller {
             /** @var PageFrame $pageController */
             $pageController = new $pageControllerName();
 
-            if(!$pageController->hasAccess($this->data['role'])) {
+            if(!$pageController->hasAccess()) {
                 redirect(''); // todo add insufficient rights page
                 exit;
             }
             $pageController->setParams([$page, $subPage]);
+
+            $pageController->beforeView();
 
             $header = $pageController->getHeader();
             $header = $header?$header:[];
@@ -81,6 +80,8 @@ class Handler extends CI_Controller {
                 }
                 $this->load->view('templates/footer', $data);
             }
+
+            $pageController->afterView();
         } else {
             if ($page !== 'pageNotFound') {
                 redirect('pageNotFound');

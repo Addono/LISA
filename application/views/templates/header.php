@@ -46,14 +46,7 @@
 
         <div class="collapse navbar-collapse" id="navigation">
             <ul class="nav navbar-nav navbar-right">
-            <?php if($loggedIn) {
-                if($role === 'admin') {?>
-                <!-- Admin specific buttons -->
-                <!-- /Admin specific buttons -->
-                <?php } elseif($role === 'user') { ?>
-                <!-- User specific buttons -->
-                <!-- /User specific buttons -->
-                <?php } ?>
+            <?php if($loggedIn) { ?>
                 <!-- Buttons for logged in users -->
                 <li>
                     <a href="<?=site_url('logout')?>" class="btn btn-simple btn-white" target="_self">

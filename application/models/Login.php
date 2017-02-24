@@ -30,32 +30,26 @@ class Login extends CI_Model {
                     'type' => 'TEXT',
                     'constraint' => 255,
                 ],
-                'role' => [
-                    'type' => 'ENUM("'.ROLE_USER.'","'.ROLE_ADMIN.'")',
-                    'default' => 'user',
-                ],
             ]
         ];
     }
 
     public function r2() {
-        $this->addUser('admin', 'banana', 'admin');
+        $this->addUser('admin', 'banana');
     }
 
     /**
      * Adds a new user to the database.
      * @param $username
      * @param $password
-     * @param $role
      * @return bool|mixed Returns the pin of the generated user on success, else returns false.
      */
-    public function addUser($username, $password, $role = 'user') {
+    public function addUser($username, $password) {
         return $this->db->insert(
             $this->tableName,
             [
                 'username' => $username,
                 'password' => password_hash($password, PASSWORD_DEFAULT),
-                'role' => $role,
             ]
         );
     }
@@ -95,14 +89,6 @@ class Login extends CI_Model {
             ->where(['username' => $username])
             ->count_all_results($this->tableName);
         return $result !== 0;
-    }
-
-    public function userRole($userId) {
-        return $this->db
-            ->where(['id' => $userId])
-            ->get($this->tableName)
-            ->row()
-            ->role;
     }
 
     public function getUsernames() {

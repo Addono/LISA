@@ -13,26 +13,6 @@
 class LoginPage extends PageFrame
 {
 
-    public function __construct()
-    {
-        parent::addModels(['Login']);
-        parent::addLibraries(['session']);
-        parent::addHelpers(['tables']);
-        parent::__construct();
-
-        if(!$this->hasError) {
-            $username = set_value('username');
-            $password = set_value('password');
-            $userId = $this->ci->Login->checkUsernamePasswordCredentials($username, $password);
-            if($userId) {
-                $this->ci->session->userId = $userId;
-                redirect();
-            } else {
-                $this->dataAppend('errors', lang('login_error_invalid_credentials'));
-            }
-        }
-    }
-
     public function getHeader()
     {
         return [
@@ -89,10 +69,63 @@ class LoginPage extends PageFrame
         ];
     }
 
-    protected function accessibleBy()
+    public function hasAccess()
     {
-        return [
-            ROLE_VISITOR,
-        ];
+        return true;
+    }
+
+    /**
+     * Function which is called after construction and before the views are rendered.
+     */
+    public function beforeView()
+    {
+        if(!$this->hasError) {
+            $username = set_value('username');
+            $password = set_value('password');
+            $userId = $this->ci->Login->checkUsernamePasswordCredentials($username, $password);
+            if($userId) {
+                $this->ci->session->userId = $userId;
+                redirect();
+            } else {
+                $this->appendData('errors', lang('login_error_invalid_credentials'));
+            }
+        }
+    }
+
+    /**
+     * Function which is called after the views are rendered.
+     */
+    public function afterView()
+    {
+    }
+
+    /**
+     * Defines which models should be loaded.
+     *
+     * @return array
+     */
+    protected function getModels()
+    {
+        return ['Login'];
+    }
+
+    /**
+     * Defines which libraries should be loaded.
+     *
+     * @return array;
+     */
+    protected function getLibraries()
+    {
+        return ['session'];
+    }
+
+    /**
+     * Defines which helpers should be loaded.
+     *
+     * @return array;
+     */
+    protected function getHelpers()
+    {
+        return ['tables'];
     }
 }
