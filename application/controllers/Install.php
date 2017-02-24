@@ -32,7 +32,7 @@ class Install extends CI_Controller {
                 $fileName !== 'ModelFrame'
             ) { // Check if the model has the right extention.
                 $modelName = substr($fileName, 0, -$len);
-                $tableName = static::getTableName($modelName);
+                $tableName = getTableName($modelName);
                 $this->load->model($modelName);
 
                 $where = [
@@ -90,7 +90,7 @@ class Install extends CI_Controller {
         }
     }
 
-    static function getTableName($modelName) {
+    public static function getTableName($modelName) {
         return strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $modelName));
     }
 

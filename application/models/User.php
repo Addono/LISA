@@ -8,6 +8,48 @@
 class User extends ModelFrame
 {
 
+    /**
+     * Adds a new user.
+     *
+     * @param $loginId
+     * @param $firstName
+     * @param $lastName
+     * @param $email
+     * @return bool True on success, else false.
+     */
+    public function add($loginId, $firstName, $lastName, $email) {
+        $exists = $this->exists($loginId);
+        if (!$exists) {
+            return $this->db->insert(
+                $this->name(),
+                [
+                    'login_id' => $loginId,
+                    'first_name' => $firstName,
+                    'last_name' => $lastName,
+                    'email' => $email,
+                ]
+            );
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Checks if a user for this login id already exists.
+     *
+     * @param $loginId
+     * @return bool True if the user exists
+     */
+    public function exists($loginId) {
+        $result = $this->db
+            ->where(['login_id' => $loginId])
+            ->count_all_results($this->name());
+
+        return $result > 0;
+    }
+
+    //======================================
+
     public function r1() {
         return [
             'add' => [

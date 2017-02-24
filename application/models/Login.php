@@ -7,44 +7,15 @@
  */
 class Login extends ModelFrame {
 
-    public function r1() {
-        return [
-            'add' => [
-                'login_id' => [
-                    'type' => 'INT',
-                    'constraint' => ID_LENGTH,
-                    'unsigned' => TRUE,
-                ],
-                'username' => [
-                    'type' => 'VARCHAR',
-                    'constraint' => NAME_LENGTH,
-                    'unique' => TRUE,
-                ],
-                'password' => [
-                    'type' => 'VARCHAR',
-                    'constraint' => NAME_LENGTH,
-                ],
-            ]
-        ];
-    }
-
-    public function r2() {
-        return [];
-    }
-
-    public function r3() {
-        $this->addUser('admin', 'banana');
-    }
-
     /**
      * Adds a new user to the database.
      * @param $username
      * @param $password
      * @return bool|mixed Returns the pin of the generated user on success, else returns false.
      */
-    public function addUser($username, $password) {
+    public function addLogin($username, $password) {
         return $this->db->insert(
-            $this->tableName,
+            $this->name(),
             [
                 'username' => $username,
                 'password' => password_hash($password, PASSWORD_DEFAULT),
@@ -73,7 +44,7 @@ class Login extends ModelFrame {
     public function checkUserIdPasswordCredentials($userId, $password) {
         $result = $this->db
             ->where(['login_id' => $userId])
-            ->get($this->tableName)
+            ->get($this->name())
             ->row();
         if(isset($result->password)) {
             return password_verify($password, $result->password);
@@ -85,21 +56,21 @@ class Login extends ModelFrame {
     public function usernameExists($username) {
         $result = $this->db
             ->where(['username' => $username])
-            ->count_all_results($this->tableName);
-        return $result !== 0;
+            ->count_all_results($this->name());
+        return $result > 0;
     }
 
     public function getUsernames() {
         return $this->db
             ->select(['username'])
-            ->get($this->tableName)
+            ->get($this->name())
             ->result();
     }
 
     public function getUsername($loginId) {
         return $this->db
             ->where(['login_id' => $loginId])
-            ->get($this->tableName)
+            ->get($this->name())
             ->row()
             ->username;
     }
@@ -107,8 +78,53 @@ class Login extends ModelFrame {
     private function getLoginIdFromUsername($username) {
         return $this->db
             ->where(['username' => $username])
-            ->get($this->tableName)
+            ->get($this->name())
             ->row()
             ->login_id;
+    }
+
+    //======================================
+
+    /**
+     * Setups the table.
+     *
+     * @return array
+     */
+    public function r1() {
+        return [
+            'add' => [
+                'login_id' => [
+                    'type' => 'INT',
+                    'constraint' => ID_LENGTH,
+                    'unsigned' => TRUE,
+                ],
+                'username' => [
+                    'type' => 'VARCHAR',
+                    'constraint' => NAME_LENGTH,
+                    'unique' => TRUE,
+                ],
+                'password' => [
+                    'type' => 'VARCHAR',
+                    'constraint' => NAME_LENGTH,
+                ],
+            ]
+        ];
+    }
+
+    /**
+     * Ensures that login_id is a primary key.
+     * todo implement this
+     *
+     * @return array
+     */
+    public function r2() {
+        return []; // todo add login_id as a primary key
+    }
+
+    /**
+     * Creates a login for the admin user.
+     */
+    public function r3() {
+        $this->addLogin('admin', 'banana');
     }
 }

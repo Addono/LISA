@@ -28,6 +28,8 @@ class Handler extends CI_Controller {
         $this->load->model([
             'ModelFrame', // Ensure to load model frame first, since other models might depend on it.
             'Login',
+            'Role',
+            'UserRole',
         ]);
         $this->load->library([
             'session',

@@ -6,16 +6,14 @@
  */
 class ModelFrame extends CI_Model
 {
-    protected  $tableName;
-
     public function __construct()
     {
         $ci =& get_instance();
         $ci->load->database();
         $this->load->helper('tables');
-
-        $class = get_class($this);
-        $this->tableName = Install::getTableName($class);
     }
 
+    public static function name() {
+        return Install::getTableName(static::class);
+    }
 }
