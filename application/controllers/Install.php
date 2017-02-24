@@ -16,7 +16,7 @@ class Install extends CI_Controller {
         $this->load->database();
         $this->load->dbforge();
         $this->load->helper('tables');
-
+        $this->load->model('ModelFrame');
 
         $this->addTable(MODEL_VERSIONS_TABLE, $this->getModelVersionTable());
 
@@ -29,8 +29,8 @@ class Install extends CI_Controller {
             if(
                 !substr_compare($fileName, MODELS_FILE_EXTENTION, -$len, $len, TRUE)
                     &&
-                $fileName !== 'Install.php'
-            ) {
+                $fileName !== 'ModelFrame'
+            ) { // Check if the model has the right extention.
                 $modelName = substr($fileName, 0, -$len);
                 $tableName = static::getTableName($modelName);
                 $this->load->model($modelName);
@@ -59,7 +59,7 @@ class Install extends CI_Controller {
                     $version = $res->row()->version;
                 }
 
-                echo "Current version of " . $modelName . " is " . $version . ".<br>";
+                echo "<i>Current version of " . $modelName . " is " . $version . ".</i><br>";
 
                 // Install all versions currently not yet installed.
                 while (TRUE) {
@@ -80,7 +80,7 @@ class Install extends CI_Controller {
 
                         echo ' - Installed r' . $version . '.<br>';
                     } else {
-                        echo ' - ' . $modelName . ' is up-to-date.';
+                        echo '<b> - ' . $modelName . ' is up-to-date.</b><br>';
                         break;
                     }
                 }
@@ -104,31 +104,35 @@ class Install extends CI_Controller {
     }
 
     private function alterTable($name, $fields, $attr = ['ENGINE' => 'InnoDB']) {
-        if($this->db->table_exists($name)) {
-            echo "Table '$name' already exists.<br>";
-            if (array_key_exists('add', $fields)) {
-                $this->dbforge->add_column($name, $fields['add']);
-            }
-            if (array_key_exists('delete', $fields)) {
-                if (is_array($fields['delete'])) {
-                    $this->dbforge->drop_table($name);
-                } else {
-                    $this->dbforge->drop_column($name, $fields['delete']);
-                }
-            }
-        } else {
-            $this->dbforge->add_field($fields['add']);
-            $this->dbforge->add_field('id');
-            if($this->dbforge->create_table($name, TRUE, $attr)) {
-                echo "Successfully added table '$name'<br>";
-                return true;
-            } else {
-                echo "Failed adding table '$name'<br>";
-                exit;
+        // Manage all types.
+        foreach ($fields as $type => $field) {
+            switch ($type) {
+                case 'add':
+                    if(!$this->db->table_exists($name)) {
+                        $this->dbforge->add_field($field);
+                        if ($this->dbforge->create_table($name, TRUE, $attr)) {
+                            echo "Successfully added table '$name'<br>";
+                        } else {
+                            echo "Failed adding table '$name'<br>";
+                            exit;
+                        }
+                    } else {
+                        $this->dbforge->add_column($name, $field);
+                    }
+                    break;
+                case 'delete':
+                    // Check if we should drop a table or column(s) of a table.
+                    if (is_array($field)) {
+                        $this->dbforge->drop_column($name, $fields['delete']);
+                    } else {
+                        $this->dbforge->drop_table($name);
+                    }
+                    break;
+                default:
+                    echo "<b>Invalid database forge command parsed</b>";
+                    exit;
             }
         }
-
-        return false;
     }
 
     private function getModelVersionTable() {

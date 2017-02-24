@@ -5,36 +5,34 @@
  * @author Adriaan Knapen <a.d.knapen@protonmail.com>
  * @date 30-01-2017
  */
-class Login extends CI_Model {
-
-    private $tableName;
-
-    public function __construct()
-    {
-        $ci =& get_instance();
-        $ci->load->database();
-        $this->load->helper('tables');
-
-        $this->tableName = Install::getTableName(self::class);
-    }
+class Login extends ModelFrame {
 
     public function r1() {
         return [
             'add' => [
+                'login_id' => [
+                    'type' => 'INT',
+                    'constraint' => ID_LENGTH,
+                    'unsigned' => TRUE,
+                ],
                 'username' => [
                     'type' => 'VARCHAR',
-                    'constraint' => 255,
+                    'constraint' => NAME_LENGTH,
                     'unique' => TRUE,
                 ],
                 'password' => [
-                    'type' => 'TEXT',
-                    'constraint' => 255,
+                    'type' => 'VARCHAR',
+                    'constraint' => NAME_LENGTH,
                 ],
             ]
         ];
     }
 
     public function r2() {
+        return [];
+    }
+
+    public function r3() {
         $this->addUser('admin', 'banana');
     }
 

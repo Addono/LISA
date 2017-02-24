@@ -1,6 +1,8 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 require_once('Install.php');
+require_once('./application/models/ModelFrame.php');
+require_once('./application/pages/PageFrame.php');
 
 /**
  * @property    CI_Form_validation  $form_validation
@@ -44,7 +46,6 @@ class Handler extends CI_Controller {
         $pageControllerName = ucfirst($page).'Page';
         $pageControllerFile = './application/pages/'.$pageControllerName.'.php';
         if (file_exists($pageControllerFile)) {
-            require_once('./application/controllers/PageFrame.php');
             require_once($pageControllerFile);
 
             /** @var PageFrame $pageController */
