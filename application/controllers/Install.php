@@ -64,20 +64,32 @@ class Install extends CI_Controller {
             $models->next();
         }
 
-        $unchanged = 0; // Tracks how many steps where
+        /*
+         * Tries to update all models in the queue. If a model fails to update it will be added to the end of the
+         * queue. If non of the models in the queue manages to update any further while there still exists an model
+         * which isn't at the last version, then a dependency problem has occurred.
+         */
+        $unchanged = 0; // Tracks how many models consequently tried to update without making any improvement.
         while(!$queue->isEmpty() && $unchanged < $queue->count()) {
             $model = $queue->dequeue();
 
             echo 'Updating '.$model->name().'.<br>';
 
+            $oldVersion = $this->getModelVersion($model);
+
             // Install all versions currently not yet installed.
             $finished = $this->installUpdate($model);
 
+            $newVersion = $this->getModelVersion($model);
+
             if ($finished !== TRUE) {
                 $queue->enqueue($model);
-                $unchanged++;
-            } else {
-                $unchanged = 0;
+
+                if ($oldVersion == $newVersion) {
+                    $unchanged++;
+                } else {
+                    $unchanged = 0;
+                }
             }
         }
 
