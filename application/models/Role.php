@@ -57,7 +57,7 @@ class Role extends ModelFrame
 
     //======================================
 
-    public function r1() {
+    public function v1() {
         return [
             'add' => [
                 'role_id' => [

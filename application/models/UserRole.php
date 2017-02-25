@@ -74,7 +74,7 @@ class UserRole extends ModelFrame
      *
      * @return array
      */
-    public function r1() {
+    public function v1() {
         return [
             'add' => [
                 'login_id' => [

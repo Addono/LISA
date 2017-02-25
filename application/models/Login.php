@@ -90,7 +90,7 @@ class Login extends ModelFrame {
      *
      * @return array
      */
-    public function r1() {
+    public function v1() {
         return [
             'add' => [
                 'login_id' => [
@@ -117,7 +117,7 @@ class Login extends ModelFrame {
      *
      * @return array
      */
-    public function r2() {
+    public function v2() {
         return [
             'requires' => [
                 User::class => 1,
@@ -128,7 +128,7 @@ class Login extends ModelFrame {
     /**
      * Creates a login for the admin user.
      */
-    public function r3() {
+    public function v3() {
         $this->addLogin('admin', 'banana');
     }
 }

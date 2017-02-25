@@ -102,7 +102,7 @@ class Install extends CI_Controller {
 
     private function installUpdate($model) {
         $version = $this->getModelVersion($model) + 1;
-        $functionName = 'r'.$version;
+        $functionName = 'v'.$version;
         $tableName = $model->name();
 
         if(method_exists($model, $functionName)) {
@@ -125,7 +125,7 @@ class Install extends CI_Controller {
                 $this->updateModelVersion($model, $version);
             $this->db->trans_complete();
 
-            echo ' - Installed r' . $version . '.<br>';
+            echo ' - Installed v' . $version . '.<br>';
 
             return $this->installUpdate($model);
         } else {
@@ -142,7 +142,7 @@ class Install extends CI_Controller {
             $currentVersion = $this->getModelVersion($modelName);
 
             if ($version > $currentVersion) {
-                echo '<i> - Dependency on '.$modelName.' version '.$version.' not met!</i><br>';
+                echo '<i> - Dependency on '.$modelName.' (v'.$version.') not met!</i><br>';
 
                 $success = false;
             }
@@ -198,9 +198,9 @@ class Install extends CI_Controller {
                     if(!$this->db->table_exists($name)) {
                         $this->dbforge->add_field($field);
                         if ($this->dbforge->create_table($name, TRUE, $attr)) {
-                            echo "Successfully added table '$name'<br>";
+                            echo " - Added table '$name'<br>";
                         } else {
-                            echo "Failed adding table '$name'<br>";
+                            echo "<b> - Failed adding table '$name'</b><br>";
                             exit;
                         }
                     } else {
