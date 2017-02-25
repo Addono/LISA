@@ -21,36 +21,33 @@ class Install extends CI_Controller {
         $this->addTable(MODEL_VERSIONS_TABLE, $this->getModelVersionTable());
 
         $models = new RecursiveDirectoryIterator('./application/models', FilesystemIterator::SKIP_DOTS);
+        $queue = new SplQueue();
 
+        // Add each model and its version to the queue.
         $models->rewind();
         while($models->valid()) {
             $fileName = $models->getFilename();
             $len = strlen(MODELS_FILE_EXTENTION);
             if(
-                !substr_compare($fileName, MODELS_FILE_EXTENTION, -$len, $len, TRUE)
+                !substr_compare($fileName, MODELS_FILE_EXTENTION, -$len, $len, TRUE) // Check if the model has the right file type.
                     &&
-                $fileName !== 'ModelFrame'
-            ) { // Check if the model has the right extention.
+                $fileName !== 'ModelFrame.php'
+            ) {
                 $modelName = substr($fileName, 0, -$len);
-                $tableName = getTableName($modelName);
                 $this->load->model($modelName);
-
-                $where = [
-                    'model_name' => $modelName,
-                    'table_name' => $tableName,
-                ];
+                $model = $this->$modelName;
 
                 $res = $this->db
-                    ->where($where)
+                    ->where(['model_name' => $modelName])
                     ->get(MODEL_VERSIONS_TABLE);
 
                 // Add new model entry in the version database, if it didn't exist yet.
                 if ($res->num_rows() == 0) {
-                    $this->db
-                        ->insert(
-                            MODEL_VERSIONS_TABLE,
-                            $where
-                        );
+                    $this->db->insert(
+                        MODEL_VERSIONS_TABLE, [
+                        'model_name' => $modelName,
+                        'table_name' => $model->name(),
+                    ]);
 
                     echo 'New model ' . $modelName . ' found.<br>';
 
@@ -59,35 +56,113 @@ class Install extends CI_Controller {
                     $version = $res->row()->version;
                 }
 
+                $queue->enqueue($model);
+
                 echo "<i>Current version of " . $modelName . " is " . $version . ".</i><br>";
-
-                // Install all versions currently not yet installed.
-                while (TRUE) {
-                    $version++;
-                    $functionName = 'r'.$version;
-
-                    if(method_exists($this->$modelName, $functionName)) {
-                        $this->db->trans_start();
-                            $alterations = $this->$modelName->$functionName();
-                            if (is_array($alterations)) {
-                                $this->alterTable($tableName, $alterations);
-                            }
-
-                            $replace = array_merge($where, ['version' => $version]);
-
-                            $this->db->replace(MODEL_VERSIONS_TABLE, $replace);
-                        $this->db->trans_complete();
-
-                        echo ' - Installed r' . $version . '.<br>';
-                    } else {
-                        echo '<b> - ' . $modelName . ' is up-to-date.</b><br>';
-                        break;
-                    }
-                }
             }
 
             $models->next();
         }
+
+        $unchanged = 0; // Tracks how many steps where
+        while(!$queue->isEmpty() && $unchanged < $queue->count()) {
+            $model = $queue->dequeue();
+
+            echo 'Updating '.$model->name().'.<br>';
+
+            // Install all versions currently not yet installed.
+            $finished = $this->installUpdate($model);
+
+            if ($finished !== TRUE) {
+                $queue->enqueue($model);
+                $unchanged++;
+            } else {
+                $unchanged = 0;
+            }
+        }
+
+        if (!$queue->isEmpty()) {
+            echo '<b>DEPENDENCY CANNOT BE SOLVED!</b><br>';
+        } else {
+            echo '<b>Update successful</b><br>';
+        }
+    }
+
+    private function installUpdate($model) {
+        $version = $this->getModelVersion($model) + 1;
+        $functionName = 'r'.$version;
+        $tableName = $model->name();
+
+        if(method_exists($model, $functionName)) {
+            $alterations = $model->$functionName();
+
+            // Check if it has any dependencies.
+            if ($alterations !== null && key_exists('requires', $alterations)) {
+                $canProceed = $this->areDependenciesMet($alterations['requires']);
+
+                if (!$canProceed) {
+                    return false;
+                }
+            }
+
+            $this->db->trans_start();
+                if (is_array($alterations)) {
+                    $this->alterTable($tableName, $alterations);
+                }
+
+                $this->updateModelVersion($model, $version);
+            $this->db->trans_complete();
+
+            echo ' - Installed r' . $version . '.<br>';
+
+            return $this->installUpdate($model);
+        } else {
+            echo '<i> - ' . get_class($model) . ' is up-to-date.</i><br>';
+
+            return true;
+        }
+    }
+
+    private function areDependenciesMet($dependencies) {
+        $success = true;
+
+        foreach ($dependencies as $modelName => $version) {
+            $currentVersion = $this->getModelVersion($modelName);
+
+            if ($version > $currentVersion) {
+                echo '<i> - Dependency on '.$modelName.' version '.$version.' not met!</i><br>';
+
+                $success = false;
+            }
+        }
+
+        return $success;
+    }
+
+    /**
+     * Gets the current version of the model from the database.
+     *
+     * @param ModelFrame|string Either an instance of the model class or the name of the model itself.
+     * @return int The version of the model.
+     */
+    private function getModelVersion($model) {
+        if (is_string($model)) {
+            $modelName = $model;
+        } else {
+            $modelName = get_class($model);
+        }
+
+        return $this->db
+            ->where(['model_name' => $modelName])
+            ->get(MODEL_VERSIONS_TABLE)
+            ->row()
+            ->version;
+    }
+
+    private function updateModelVersion($model, $version) {
+        return $this->db
+            ->where(['model_name' => get_class($model)])
+            ->update(MODEL_VERSIONS_TABLE, ['version' => $version]);
     }
 
     public static function getTableName($modelName) {
@@ -127,6 +202,9 @@ class Install extends CI_Controller {
                     } else {
                         $this->dbforge->drop_table($name);
                     }
+                    break;
+                case 'requires':
+                    // Ignore these
                     break;
                 default:
                     echo "<b>Invalid database forge command parsed</b>";

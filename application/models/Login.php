@@ -118,7 +118,11 @@ class Login extends ModelFrame {
      * @return array
      */
     public function r2() {
-        return []; // todo add login_id as a primary key
+        return [
+            'requires' => [
+                User::class => 1,
+            ],
+        ]; // todo add login_id as a primary key
     }
 
     /**
