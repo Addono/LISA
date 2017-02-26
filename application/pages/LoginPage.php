@@ -84,7 +84,7 @@ class LoginPage extends PageFrame
             $password = set_value('password');
             $validCredentials = $this->ci->Login->checkUsernamePasswordCredentials($username, $password);
             if($validCredentials) {
-                $this->ci->session->userId = $this->ci->Login->getUsername($username);
+                $this->ci->session->userId = $this->ci->Login->getLoginIdFromUsername($username);
                 redirect();
             } else {
                 $this->appendData('errors', lang('login_error_invalid_credentials'));

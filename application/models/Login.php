@@ -52,9 +52,9 @@ class Login extends ModelFrame {
         $result = $this->db
             ->where([self::FIELD_LOGIN_ID => $userId])
             ->get($this->name())
-            ->row();
-        if(isset($result->password)) {
-            return password_verify($password, $result->password);
+            ->row_array();
+        if (key_exists(self::FIELD_PASSWORD, $result)) {
+            return password_verify($password, $result[self::FIELD_PASSWORD]);
         } else {
             return false;
         }
@@ -78,8 +78,7 @@ class Login extends ModelFrame {
         return $this->db
             ->where([self::FIELD_LOGIN_ID => $loginId])
             ->get($this->name())
-            ->row()
-            ->username;
+            ->row_array()[self::FIELD_USERNAME];
     }
 
     public function getLoginIdFromUsername($username) {
