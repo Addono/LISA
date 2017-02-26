@@ -31,7 +31,7 @@ class LogoutPage extends PageFrame
 
     public function isVisible()
     {
-        return false;
+        return $this->hasAccess();
     }
 
     protected function getFormValidationRules()
@@ -41,7 +41,7 @@ class LogoutPage extends PageFrame
 
     public function hasAccess()
     {
-        return $this->ci->session->userId !== null;
+        return isLoggedIn($this->ci->session);
     }
 
     /**
@@ -49,7 +49,7 @@ class LogoutPage extends PageFrame
      */
     public function beforeView()
     {
-        $this->ci->session->userId = null;
+        setLoggedOut($this->ci->session);
         redirect();
     }
 

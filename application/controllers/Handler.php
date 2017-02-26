@@ -24,6 +24,7 @@ class Handler extends CI_Controller {
             'form',
             'language',
             'tables',
+            'login_state',
         ]);
         $this->load->model([
             'ModelFrame', // Ensure to load model frame first, since other models might depend on it.
@@ -39,10 +40,9 @@ class Handler extends CI_Controller {
         $this->lang->load('application', 'english');
 
         // Check if the user is logged in
-        $this->data['loggedIn'] = $this->session->userId !== NULL;
-        $this->data['userId'] = $this->session->userId;
+        $this->data['loggedIn'] = isLoggedIn($this->session);
         if($this->data['loggedIn']) {
-            $this->data['username'] = $this->Login->getUsername($this->data['userId']);
+            $this->data['username'] = $this->Login->getUsername(getLoggedInLoginId($this->session));
         }
 
         $pageControllerName = ucfirst($page).'Page';

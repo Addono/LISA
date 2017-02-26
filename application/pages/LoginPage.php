@@ -32,7 +32,7 @@ class LoginPage extends PageFrame
 
     public function isVisible()
     {
-        return true;
+        return $this->hasAccess();
     }
 
     protected function getFormValidationRules()
@@ -71,7 +71,7 @@ class LoginPage extends PageFrame
 
     public function hasAccess()
     {
-        return true;
+        return !isLoggedIn($this->ci->session);
     }
 
     /**
@@ -84,7 +84,8 @@ class LoginPage extends PageFrame
             $password = set_value('password');
             $validCredentials = $this->ci->Login->checkUsernamePasswordCredentials($username, $password);
             if($validCredentials) {
-                $this->ci->session->userId = $this->ci->Login->getLoginIdFromUsername($username);
+                $loginId = $this->ci->Login->getLoginIdFromUsername($username);
+                setLoggedIn($this->ci->session, $loginId);
                 redirect();
             } else {
                 $this->appendData('errors', lang('login_error_invalid_credentials'));
