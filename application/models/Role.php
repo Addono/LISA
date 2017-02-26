@@ -7,6 +7,12 @@
  */
 class Role extends ModelFrame
 {
+    const ROLE_SUPERADMIN = 'super_admin';
+    const ROLE_ADMIN = 'admin';
+    const ROLE_USER = 'user';
+
+    const FIELD_ROLE_ID = 'role_id';
+    const FIELD_ROLE_NAME = 'role_name';
 
     /**
      * Adds a new role.
@@ -17,7 +23,7 @@ class Role extends ModelFrame
     public function add($roleName) {
         $roleExists = $this->getRoleNameExists($roleName);
         if (!$roleExists) {
-            return $this->db->insert($this->name(), ['name' => $roleName]);
+            return $this->db->insert($this->name(), [self::FIELD_ROLE_NAME => $roleName]);
         } else {
             return false;
         }
@@ -31,7 +37,7 @@ class Role extends ModelFrame
      */
     public function getRoleNameExists($roleName) {
         $result = $this->db
-            ->where(['role_name' => $roleName])
+            ->where([self::FIELD_ROLE_NAME => $roleName])
             ->count_all_results($this->name());
 
         return $result > 0;
@@ -49,10 +55,9 @@ class Role extends ModelFrame
         }
 
         return $this->db
-            ->where(['role_name' => $roleName])
+            ->where([self::FIELD_ROLE_NAME => $roleName])
             ->get($this->name())
-            ->row()
-            ->role_id;
+            ->row_array()[self::FIELD_ROLE_ID];
     }
 
     //======================================
@@ -60,17 +65,36 @@ class Role extends ModelFrame
     public function v1() {
         return [
             'add' => [
-                'role_id' => [
+                self::FIELD_ROLE_ID => [
                     'type' => 'INT',
                     'constraint' => ID_LENGTH,
                     'unsigned' => TRUE,
                 ],
-                'role_name' => [
+                self::FIELD_ROLE_NAME => [
                     'type' => 'VARCHAR',
                     'constraint' => NAME_LENGTH,
                     'unique' => TRUE,
                 ],
             ],
         ];
+    }
+
+    /**
+     * Ensures that role_id is a primary key.
+     * todo implement this
+     *
+     * @return array
+     */
+    public function v2() {
+        return []; // todo add role_id as a primary key
+    }
+
+    /**
+     * Adds the user, admin, and super admin role.
+     */
+    public function v3() {
+        $this->add(self::ROLE_SUPERADMIN);
+        $this->add(self::ROLE_ADMIN);
+        $this->add(self::ROLE_USER);
     }
 }

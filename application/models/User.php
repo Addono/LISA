@@ -7,9 +7,13 @@
  */
 class User extends ModelFrame
 {
+    const INITIAL_USER_FIRST_NAME = 'Lisa';
+    const INITIAL_USER_LAST_NAME = 'is super awsome';
+    const INITIAL_USER_EMAIL = 'invalid@email.x';
 
     /**
      * Adds a new user.
+     * todo check if a valid email is parsed.
      *
      * @param $loginId
      * @param $firstName
@@ -72,5 +76,29 @@ class User extends ModelFrame
                 ]
             ],
         ];
+    }
+
+    /**
+     * Ensures that login_id is a primary key.
+     * todo implement this
+     *
+     * @return array
+     */
+    public function v2() {
+        return []; // todo add login_id as a primary key
+    }
+
+    public function v3() {
+        return [
+            'requires' => [
+                Login::class => 3,
+            ],
+        ];
+    }
+
+    public function v4() {
+        $loginId = $this->Login->getLoginIdFromUsername(Login::INITIAL_LOGIN_USERNAME);
+
+        $this->add($loginId, self::INITIAL_USER_FIRST_NAME, self::INITIAL_USER_LAST_NAME, self::INITIAL_USER_EMAIL);
     }
 }

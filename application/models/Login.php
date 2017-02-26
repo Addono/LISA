@@ -7,6 +7,9 @@
  */
 class Login extends ModelFrame {
 
+    const INITIAL_LOGIN_USERNAME = 'Lisa';
+    const INITIAL_LOGIN_PASSWORD = 'is super awsome';
+
     /**
      * Adds a new user to the database.
      * @param $username
@@ -75,12 +78,17 @@ class Login extends ModelFrame {
             ->username;
     }
 
-    private function getLoginIdFromUsername($username) {
-        return $this->db
+    public function getLoginIdFromUsername($username) {
+        $row = $this->db
             ->where(['username' => $username])
             ->get($this->name())
-            ->row()
-            ->login_id;
+            ->row();
+
+        if ($row === null) {
+            throw new Exception('Username "'.$username.'" was not found in the login table.');
+        }
+
+        return $row->login_id;
     }
 
     //======================================
@@ -118,17 +126,13 @@ class Login extends ModelFrame {
      * @return array
      */
     public function v2() {
-        return [
-            'requires' => [
-                User::class => 1,
-            ],
-        ]; // todo add login_id as a primary key
+        return []; // todo add login_id as a primary key
     }
 
     /**
      * Creates a login for the admin user.
      */
     public function v3() {
-        $this->addLogin('admin', 'banana');
+        $this->addLogin(self::INITIAL_LOGIN_USERNAME, self::INITIAL_LOGIN_PASSWORD);
     }
 }
