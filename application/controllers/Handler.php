@@ -49,8 +49,8 @@ class Handler extends CI_Controller {
     }
 
     /**
-     * @param $page
-     * @param $subPage
+     * @param string $page
+     * @param string $subPage
      */
     private function showPage($page, $subPage)
     {
@@ -76,6 +76,7 @@ class Handler extends CI_Controller {
             $body = $body ? $body : [];
             $data = $pageController->getData();
             $data = $data ? $data : [];
+
 
             $data = array_merge($this->data, $data);
 

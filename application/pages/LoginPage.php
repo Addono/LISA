@@ -25,11 +25,6 @@ class LoginPage extends PageFrame
         return false;
     }
 
-    public function getData()
-    {
-        return false;
-    }
-
     public function isVisible()
     {
         return $this->hasAccess();

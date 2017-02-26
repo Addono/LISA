@@ -114,7 +114,7 @@ abstract class PageFrame extends CI_Controller
      * @param $key
      * @param $value
      */
-    protected function setData($key, $value) {
+    protected final function setData($key, array $value) {
         $this->data[$key] = $value;
     }
 
@@ -124,7 +124,7 @@ abstract class PageFrame extends CI_Controller
      * @param $key
      * @param $value
      */
-    protected function appendData($key, $value) {
+    protected final function appendData($key, $value) {
         $this->data[$key][] = $value;
     }
 
@@ -133,7 +133,7 @@ abstract class PageFrame extends CI_Controller
      *
      * @return array
      */
-    public function getData() {
+    public final function getData() {
         return $this->data;
     }
 
@@ -148,6 +148,7 @@ abstract class PageFrame extends CI_Controller
             return true;
         }
 
+        // Check if all of the rules hold.
         $hasError = false;
         foreach($rules as $rule) {
             $this->ci->form_validation->set_rules([$rule]);
