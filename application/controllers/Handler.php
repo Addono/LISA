@@ -45,16 +45,25 @@ class Handler extends CI_Controller {
             $this->data['username'] = $this->Login->getUsername(getLoggedInLoginId($this->session));
         }
 
-        $pageControllerName = ucfirst($page).'Page';
-        $pageControllerFile = './application/pages/'.$pageControllerName.'.php';
+        $this->showPage($page, $subPage);
+    }
+
+    /**
+     * @param $page
+     * @param $subPage
+     */
+    private function showPage($page, $subPage)
+    {
+        $pageControllerName = ucfirst($page) . 'Page';
+        $pageControllerFile = './application/pages/' . $pageControllerName . '.php';
         if (file_exists($pageControllerFile)) {
             require_once($pageControllerFile);
 
             /** @var PageFrame $pageController */
             $pageController = new $pageControllerName();
 
-            if(!$pageController->hasAccess()) {
-                redirect(''); // todo add insufficient rights page
+            if (!$pageController->hasAccess()) {
+                redirect(); // todo add insufficient rights page
                 exit;
             }
             $pageController->setParams([$page, $subPage]);
@@ -62,32 +71,32 @@ class Handler extends CI_Controller {
             $pageController->beforeView();
 
             $header = $pageController->getHeader();
-            $header = $header?$header:[];
+            $header = $header ? $header : [];
             $body = $pageController->getBody();
-            $body = $body?$body:[];
+            $body = $body ? $body : [];
             $data = $pageController->getData();
-            $data = $data?$data:[];
+            $data = $data ? $data : [];
 
             $data = array_merge($this->data, $data);
 
-            if(!$header && !$body) {
+            if (!$header && !$body) {
                 redirect('pageNotFound');
             } else {
                 $this->load->view('templates/header', $data);
-                foreach($header as $h) {
-                    $this->load->view('page/'.$h, $data);
+                foreach ($header as $h) {
+                    $this->load->view('page/' . $h, $data);
                 }
                 $this->load->view('templates/intersection', $data);
-                foreach($body as $b) {
-                    $this->load->view('page/'.$b, $data);
+                foreach ($body as $b) {
+                    $this->load->view('page/' . $b, $data);
                 }
                 $this->load->view('templates/footer', $data);
             }
 
             $pageController->afterView();
         } else {
-            if ($page !== 'pageNotFound') {
-                redirect('pageNotFound');
+            if ($page !== 'PageNotFound') {
+                redirect('PageNotFound');
             } else {
                 show_404();
             }
