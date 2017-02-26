@@ -10,14 +10,23 @@ require_once('./application/pages/PageFrame.php');
  * @property    CI_DB_query_builder $db
  */
 class Handler extends CI_Controller {
-    const DefaultValue = 'default';
+    const DEFAULT_PAGE = 'default';
+
+    const GROUP_FRONTEND = 'default';
+    const GROUP_ADMIN = 'admin';
 
     private $data = [
         'errors' => [],
     ];
 
-    public function index($page = self::DefaultValue, $subPage = null)
+    public function index($group = self::GROUP_FRONTEND, $page = self::DEFAULT_PAGE, $subPage = null)
     {
+        if (!file_exists('./application/pages/'.$group)) {
+            $subPage = $page;
+            $page = $group;
+            $group = self::GROUP_FRONTEND;
+        }
+
         // Import all helpers and libraries.
         $this->load->helper([
             'url',
@@ -45,17 +54,18 @@ class Handler extends CI_Controller {
             $this->data['username'] = $this->Login->getUsername(getLoggedInLoginId($this->session));
         }
 
-        $this->showPage($page, $subPage);
+        $this->showPage($group, $page, $subPage);
     }
 
     /**
      * @param string $page
      * @param string $subPage
+     * @param string $group
      */
-    private function showPage($page, $subPage)
+    private function showPage($group, $page, $subPage)
     {
         $pageControllerName = ucfirst($page) . 'Page';
-        $pageControllerFile = './application/pages/' . $pageControllerName . '.php';
+        $pageControllerFile = './application/pages/'.$group.'/' . $pageControllerName . '.php';
         if (file_exists($pageControllerFile)) {
             require_once($pageControllerFile);
 
@@ -85,11 +95,11 @@ class Handler extends CI_Controller {
             } else {
                 $this->load->view('templates/header', $data);
                 foreach ($header as $h) {
-                    $this->load->view('page/' . $h, $data);
+                    $this->load->view('page/'. $group . '/' . $h, $data);
                 }
                 $this->load->view('templates/intersection', $data);
                 foreach ($body as $b) {
-                    $this->load->view('page/' . $b, $data);
+                    $this->load->view('page/' . $group . '/' . $b, $data);
                 }
                 $this->load->view('templates/footer', $data);
             }

@@ -3,16 +3,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * @author Adriaan Knapen <a.d.knapen@protonmail.com>
- * @date 26-2-2017
+ * @date 6-2-2017
  */
 
-class PageNotFoundPage extends PageFrame
+class DefaultPage extends PageFrame
 {
 
     public function getHeader()
     {
         return [
-            '../error/pageNotFound'
+            'default-header'
         ];
     }
 
@@ -23,7 +23,7 @@ class PageNotFoundPage extends PageFrame
 
     public function isVisible()
     {
-        return false;
+        return true;
     }
 
     public function hasAccess()
