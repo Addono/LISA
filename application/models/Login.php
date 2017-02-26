@@ -5,38 +5,7 @@
  * @author Adriaan Knapen <a.d.knapen@protonmail.com>
  * @date 30-01-2017
  */
-class Login extends CI_Model {
-
-    private $tableName;
-
-    public function __construct()
-    {
-        $ci =& get_instance();
-        $ci->load->database();
-        $this->load->helper('tables');
-
-        $this->tableName = Install::getTableName(self::class);
-    }
-
-    public function r1() {
-        return [
-            'add' => [
-                'username' => [
-                    'type' => 'VARCHAR',
-                    'constraint' => 255,
-                    'unique' => TRUE,
-                ],
-                'password' => [
-                    'type' => 'TEXT',
-                    'constraint' => 255,
-                ],
-            ]
-        ];
-    }
-
-    public function r2() {
-        $this->addUser('admin', 'banana');
-    }
+class Login extends ModelFrame {
 
     /**
      * Adds a new user to the database.
@@ -44,9 +13,9 @@ class Login extends CI_Model {
      * @param $password
      * @return bool|mixed Returns the pin of the generated user on success, else returns false.
      */
-    public function addUser($username, $password) {
+    public function addLogin($username, $password) {
         return $this->db->insert(
-            $this->tableName,
+            $this->name(),
             [
                 'username' => $username,
                 'password' => password_hash($password, PASSWORD_DEFAULT),
@@ -61,7 +30,7 @@ class Login extends CI_Model {
      * @return bool
      */
     public function checkUsernamePasswordCredentials($username, $password) {
-        $userId = $this->getUserId($username);
+        $userId = $this->getLoginIdFromUsername($username);
 
         return $this->checkUserIdPasswordCredentials($userId, $password);
     }
@@ -74,8 +43,8 @@ class Login extends CI_Model {
      */
     public function checkUserIdPasswordCredentials($userId, $password) {
         $result = $this->db
-            ->where(['id' => $userId])
-            ->get($this->tableName)
+            ->where(['login_id' => $userId])
+            ->get($this->name())
             ->row();
         if(isset($result->password)) {
             return password_verify($password, $result->password);
@@ -87,31 +56,79 @@ class Login extends CI_Model {
     public function usernameExists($username) {
         $result = $this->db
             ->where(['username' => $username])
-            ->count_all_results($this->tableName);
-        return $result !== 0;
+            ->count_all_results($this->name());
+        return $result > 0;
     }
 
     public function getUsernames() {
         return $this->db
             ->select(['username'])
-            ->where(['role' => 'user'])
-            ->get($this->tableName)
+            ->get($this->name())
             ->result();
     }
 
-    public function getUsername($userId) {
+    public function getUsername($loginId) {
         return $this->db
-            ->where(['id' => $userId])
-            ->get($this->tableName)
+            ->where(['login_id' => $loginId])
+            ->get($this->name())
             ->row()
             ->username;
     }
 
-    private function getUserId($username) {
+    private function getLoginIdFromUsername($username) {
         return $this->db
             ->where(['username' => $username])
-            ->get($this->tableName)
+            ->get($this->name())
             ->row()
-            ->id;
+            ->login_id;
+    }
+
+    //======================================
+
+    /**
+     * Setups the table.
+     *
+     * @return array
+     */
+    public function v1() {
+        return [
+            'add' => [
+                'login_id' => [
+                    'type' => 'INT',
+                    'constraint' => ID_LENGTH,
+                    'unsigned' => TRUE,
+                ],
+                'username' => [
+                    'type' => 'VARCHAR',
+                    'constraint' => NAME_LENGTH,
+                    'unique' => TRUE,
+                ],
+                'password' => [
+                    'type' => 'VARCHAR',
+                    'constraint' => NAME_LENGTH,
+                ],
+            ]
+        ];
+    }
+
+    /**
+     * Ensures that login_id is a primary key.
+     * todo implement this
+     *
+     * @return array
+     */
+    public function v2() {
+        return [
+            'requires' => [
+                User::class => 1,
+            ],
+        ]; // todo add login_id as a primary key
+    }
+
+    /**
+     * Creates a login for the admin user.
+     */
+    public function v3() {
+        $this->addLogin('admin', 'banana');
     }
 }

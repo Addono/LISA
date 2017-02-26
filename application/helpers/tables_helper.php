@@ -5,8 +5,7 @@
  */
 define('MODEL_VERSIONS_TABLE', 'model_versions');
 
-define('ROLE_USER', 'user');
-define('ROLE_ADMIN', 'admin');
-define('ROLE_VISITOR', 'visitor');
+define('ID_LENGTH', 11);
+define('NAME_LENGTH', 100);
 
 define('MODELS_FILE_EXTENTION', '.php');

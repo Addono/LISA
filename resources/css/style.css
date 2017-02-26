@@ -1,3 +1,9 @@
+html {
+    /* Ensure that the page uses the entire screen */
+    min-height: 100%;
+    min-width: 100%;
+}
+
 .first {
     padding-top: 15vh;
 }
