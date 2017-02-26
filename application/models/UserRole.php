@@ -96,30 +96,20 @@ class UserRole extends ModelFrame
     }
 
     /**
-     * Ensures that login_id and role_id is a primary key.
-     * todo implement this
+     * Ensure all dependencies of v3.
      *
      * @return array
      */
     public function v2() {
-        return []; // todo add role_id and login_id as a primary key
-    }
-
-    /**
-     * Ensure all dependencies of v4.
-     *
-     * @return array
-     */
-    public function v3() {
         return [
             'requires' => [
-                User::class => 4,
-                Role::class => 3,
+                User::class => 3,
+                Role::class => 2,
             ],
         ];
     }
 
-    public function v4() {
+    public function v3() {
         $loginId = $this->Login->getLoginIdFromUsername(LOGIN::INITIAL_LOGIN_USERNAME);
         $roleId = $this->Role->getRoleIdFromRoleName(Role::ROLE_SUPERADMIN);
 

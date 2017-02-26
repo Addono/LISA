@@ -122,19 +122,9 @@ class Login extends ModelFrame {
     }
 
     /**
-     * Ensures that login_id is a primary key.
-     * todo implement this
-     *
-     * @return array
-     */
-    public function v2() {
-        return []; // todo add login_id as a primary key
-    }
-
-    /**
      * Creates a login for the admin user.
      */
-    public function v3() {
+    public function v2() {
         $this->addLogin(self::INITIAL_LOGIN_USERNAME, self::INITIAL_LOGIN_PASSWORD);
     }
 }

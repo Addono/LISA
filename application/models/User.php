@@ -78,25 +78,15 @@ class User extends ModelFrame
         ];
     }
 
-    /**
-     * Ensures that login_id is a primary key.
-     * todo implement this
-     *
-     * @return array
-     */
     public function v2() {
-        return []; // todo add login_id as a primary key
-    }
-
-    public function v3() {
         return [
             'requires' => [
-                Login::class => 3,
+                Login::class => 2,
             ],
         ];
     }
 
-    public function v4() {
+    public function v3() {
         $loginId = $this->Login->getLoginIdFromUsername(Login::INITIAL_LOGIN_USERNAME);
 
         $this->add($loginId, self::INITIAL_USER_FIRST_NAME, self::INITIAL_USER_LAST_NAME, self::INITIAL_USER_EMAIL);

@@ -78,19 +78,9 @@ class Role extends ModelFrame
     }
 
     /**
-     * Ensures that role_id is a primary key.
-     * todo implement this
-     *
-     * @return array
-     */
-    public function v2() {
-        return []; // todo add role_id as a primary key
-    }
-
-    /**
      * Adds the user, admin, and super admin role.
      */
-    public function v3() {
+    public function v2() {
         $this->add(self::ROLE_SUPERADMIN);
         $this->add(self::ROLE_ADMIN);
         $this->add(self::ROLE_USER);
