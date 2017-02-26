@@ -58,7 +58,9 @@ class User extends ModelFrame
         return [
             'add' => [
                 'login_id' => [
-                    'type' => 'primary',
+                    'type' => 'foreign',
+                    'table' => Login::name(),
+                    'field' => Login::FIELD_LOGIN_ID,
                 ],
                 'first_name' => [
                     'type' => 'VARCHAR',
