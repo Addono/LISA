@@ -66,9 +66,7 @@ class Role extends ModelFrame
         return [
             'add' => [
                 self::FIELD_ROLE_ID => [
-                    'type' => 'INT',
-                    'constraint' => ID_LENGTH,
-                    'unsigned' => TRUE,
+                    'type' => 'primary',
                 ],
                 self::FIELD_ROLE_NAME => [
                     'type' => 'VARCHAR',

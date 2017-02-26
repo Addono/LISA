@@ -76,16 +76,20 @@ class UserRole extends ModelFrame
      */
     public function v1() {
         return [
+            'requires' => [
+                Login::class => 1,
+                Role::class => 1,
+            ],
             'add' => [
-                'login_id' => [
-                    'type' => 'INT',
-                    'constraint' => ID_LENGTH,
-                    'unsigned' => TRUE,
+                Login::FIELD_LOGIN_ID => [
+                    'type' => 'foreign',
+                    'table' => Login::name(),
+                    'field' => Login::FIELD_LOGIN_ID,
                 ],
-                'role_id' => [
-                    'type' => 'INT',
-                    'constraint' => ID_LENGTH,
-                    'unsigned' => TRUE,
+                Role::FIELD_ROLE_ID => [
+                    'type' => 'foreign',
+                    'table' => Role::name(),
+                    'field' => Role::FIELD_ROLE_ID,
                 ],
             ],
         ];

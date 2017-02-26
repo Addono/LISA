@@ -10,6 +10,10 @@ class Login extends ModelFrame {
     const INITIAL_LOGIN_USERNAME = 'Lisa';
     const INITIAL_LOGIN_PASSWORD = 'is super awsome';
 
+    const FIELD_LOGIN_ID = 'login_id';
+    const FIELD_USERNAME = 'username';
+    const FIELD_PASSWORD = 'password';
+
     /**
      * Adds a new user to the database.
      * @param $username
@@ -20,8 +24,8 @@ class Login extends ModelFrame {
         return $this->db->insert(
             $this->name(),
             [
-                'username' => $username,
-                'password' => password_hash($password, PASSWORD_DEFAULT),
+                self::FIELD_USERNAME => $username,
+                self::FIELD_PASSWORD => password_hash($password, PASSWORD_DEFAULT),
             ]
         );
     }
@@ -46,7 +50,7 @@ class Login extends ModelFrame {
      */
     public function checkUserIdPasswordCredentials($userId, $password) {
         $result = $this->db
-            ->where(['login_id' => $userId])
+            ->where([self::FIELD_LOGIN_ID => $userId])
             ->get($this->name())
             ->row();
         if(isset($result->password)) {
@@ -58,21 +62,21 @@ class Login extends ModelFrame {
 
     public function usernameExists($username) {
         $result = $this->db
-            ->where(['username' => $username])
+            ->where([self::FIELD_USERNAME => $username])
             ->count_all_results($this->name());
         return $result > 0;
     }
 
     public function getUsernames() {
         return $this->db
-            ->select(['username'])
+            ->select([self::FIELD_USERNAME])
             ->get($this->name())
             ->result();
     }
 
     public function getUsername($loginId) {
         return $this->db
-            ->where(['login_id' => $loginId])
+            ->where([self::FIELD_LOGIN_ID => $loginId])
             ->get($this->name())
             ->row()
             ->username;
@@ -80,15 +84,15 @@ class Login extends ModelFrame {
 
     public function getLoginIdFromUsername($username) {
         $row = $this->db
-            ->where(['username' => $username])
+            ->where([self::FIELD_USERNAME => $username])
             ->get($this->name())
-            ->row();
+            ->row_array();
 
         if ($row === null) {
             throw new Exception('Username "'.$username.'" was not found in the login table.');
         }
 
-        return $row->login_id;
+        return $row[self::FIELD_LOGIN_ID];
     }
 
     //======================================
@@ -101,17 +105,15 @@ class Login extends ModelFrame {
     public function v1() {
         return [
             'add' => [
-                'login_id' => [
-                    'type' => 'INT',
-                    'constraint' => ID_LENGTH,
-                    'unsigned' => TRUE,
+                self::FIELD_LOGIN_ID => [
+                    'type' => 'primary',
                 ],
-                'username' => [
+                self::FIELD_USERNAME => [
                     'type' => 'VARCHAR',
                     'constraint' => NAME_LENGTH,
                     'unique' => TRUE,
                 ],
-                'password' => [
+                self::FIELD_PASSWORD => [
                     'type' => 'VARCHAR',
                     'constraint' => NAME_LENGTH,
                 ],

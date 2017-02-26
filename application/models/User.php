@@ -58,9 +58,7 @@ class User extends ModelFrame
         return [
             'add' => [
                 'login_id' => [
-                    'type' => 'INT',
-                    'constraint' => ID_LENGTH,
-                    'unsigned' => TRUE,
+                    'type' => 'primary',
                 ],
                 'first_name' => [
                     'type' => 'VARCHAR',

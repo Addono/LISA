@@ -276,28 +276,55 @@ class Install extends CI_Controller {
      * @param array $actions The actions to be executed.
      * @param array $attr
      */
-    private function alterTable($name, array $actions, array $attr = ['ENGINE' => 'InnoDB']) {
+    private function alterTable($tableName, array $actions, array $attr = ['ENGINE' => 'InnoDB']) {
         foreach ($actions as $type => $action) {
             switch ($type) {
                 case 'add':
-                    if(!$this->db->table_exists($name)) {
-                        $this->dbforge->add_field($action);
-                        if ($this->dbforge->create_table($name, TRUE, $attr)) {
-                            echo " - Added table '$name'<br>";
+                    if(!$this->db->table_exists($tableName)) {
+                        $keyType = [
+                            'type' => 'INT',
+                            'constraint' => ID_LENGTH,
+                            'unsigned' => true,
+                            'auto_increment' => true,
+                        ];
+
+                        // Check if there are any keys which should be primary key.
+                        foreach($action as $name => $properties) {
+
+                            switch ($properties['type']) {
+                                case 'primary':
+                                    $this->dbforge->add_key($name, true);
+                                    $this->dbforge->add_field([$name => $keyType]);
+                                    $keyType['auto_increment'] = false; // Ensure that only the first field will auto increment
+                                    break;
+                                case 'foreign':
+                                    // Add a new key as foreign key.
+                                    $this->dbforge->add_field([$name => $keyType]);
+                                    $this->dbforge->add_field('CONSTRAINT FOREIGN KEY ('.$name.') REFERENCES '.$properties['table'].'('.$properties['field'].')');
+                                    $keyType['auto_increment'] = false; // Ensure that only the first field will auto increment.
+                                    break;
+                                default:
+                                    $this->dbforge->add_field([$name => $properties]);
+                                    break;
+                            }
+                        }
+
+                        if ($this->dbforge->create_table($tableName, TRUE, $attr)) {
+                            echo " - Added table '$tableName'<br>";
                         } else {
-                            echo "<b> - Failed adding table '$name'</b><br>";
+                            echo "<b> - Failed adding table '$tableName'</b><br>";
                             exit;
                         }
                     } else {
-                        $this->dbforge->add_column($name, $action);
+                        $this->dbforge->add_column($tableName, $action);
                     }
                     break;
                 case 'delete':
                     // Check if we should drop a table or column(s) of a table.
                     if (is_array($action)) {
-                        $this->dbforge->drop_column($name, $actions['delete']);
+                        $this->dbforge->drop_column($tableName, $actions['delete']);
                     } else {
-                        $this->dbforge->drop_table($name);
+                        $this->dbforge->drop_table($tableName);
                     }
                     break;
                 case 'requires':
