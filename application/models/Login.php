@@ -8,7 +8,7 @@
 class Login extends ModelFrame {
 
     const INITIAL_LOGIN_USERNAME = 'Lisa';
-    const INITIAL_LOGIN_PASSWORD = 'is super awsome';
+    const INITIAL_LOGIN_PASSWORD = 'Lisa';
 
     const FIELD_LOGIN_ID = 'login_id';
     const FIELD_USERNAME = 'username';
