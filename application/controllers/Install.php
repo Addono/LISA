@@ -286,7 +286,7 @@ class Install extends CI_Controller {
                     if(!$this->db->table_exists($tableName)) {
                         $keyType = [
                             'type' => self::ID_TYPE,
-                            'constraint' => self::ID_LENGTH,
+                            'constraint' => self::ID_CONSTRAINT,
                             'unsigned' => true,
                             'auto_increment' => true,
                         ];
