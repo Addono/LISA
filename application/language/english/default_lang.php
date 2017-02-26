@@ -17,10 +17,8 @@ $lang['login_error_username_does_not_exist'] = 'Username does not exist.';
 $lang['login_error_field_required'] = '%s is required, please enter it.';
 $lang['login_error_invalid_credentials'] = 'Unknown combination of username and password.';
 
-$lang['logout_header_title'] = 'You are now logged out';
-$lang['logout_header_body'] = 'As soon as possible will you be redirected back to the the home page.';
 $lang['logout_logout'] = 'Logout';
-$lang['logout_homepage'] = 'Home';
+$lang['logout_success_header'] = 'You are now logged out';
 
 $lang['404_page_header_title'] = 'CRASH...#404';
 $lang['404_page_header_body'] = 'Sorry, but we couldn\'t find the page you requested, to get you back on track click the button to go back to the home page.';

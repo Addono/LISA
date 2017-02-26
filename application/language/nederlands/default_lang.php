@@ -17,10 +17,8 @@ $lang['login_error_username_does_not_exist'] = 'Gebruikersnaam bestaat niet.';
 $lang['login_error_field_required'] = '%s is vereist, vul dit a.u.b. in.';
 $lang['login_error_invalid_credentials'] = 'Onbekende combinatie van gebruikersnaam en wachtwoord.';
 
-$lang['logout_header_title'] = 'Je bent nu uitgelogd.';
-$lang['logout_header_body'] = 'Zo snel mogelijk wordt je doorgestuurd naar de startpagina.';
 $lang['logout_logout'] = 'Uitloggen';
-$lang['logout_homepage'] = 'Startpagina';
+$lang['logout_success_header'] = 'Je bent nu uitgelogd';
 
 $lang['404_page_header_title'] = 'CRASH...#404';
 $lang['404_page_header_body'] = 'Sorry, maar de pagina die jij probeerde te bereiken kunnen wij niet vinden. Om je weer op gang te helpen kan je met de volgende knop terug naar de startpagina gaan.';
