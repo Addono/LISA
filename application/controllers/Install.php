@@ -15,6 +15,9 @@ class Install extends CI_Controller {
     const INITIAL_MODEL_VERSION = 0;
     const MODEL_FRAME_FILE_NAME = 'ModelFrame.php';
 
+    const ID_TYPE = 'INT';
+    const ID_CONSTRAINT = 11;
+
     public function index() {
         $this->load->database();
         $this->load->dbforge();
@@ -282,8 +285,8 @@ class Install extends CI_Controller {
                 case 'add':
                     if(!$this->db->table_exists($tableName)) {
                         $keyType = [
-                            'type' => 'INT',
-                            'constraint' => ID_LENGTH,
+                            'type' => self::ID_TYPE,
+                            'constraint' => self::ID_LENGTH,
                             'unsigned' => true,
                             'auto_increment' => true,
                         ];
