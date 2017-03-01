@@ -23,7 +23,7 @@ class DefaultPage extends PageFrame
 
     public function hasAccess()
     {
-        return isLoggedInAndHasRole($this->ci->session, $this->ci->LoginRole, [Role::ROLE_ADMIN]);
+        return isLoggedInAndHasRole($this->ci, [Role::ROLE_ADMIN]);
     }
 
     protected function getFormValidationRules()
@@ -52,7 +52,9 @@ class DefaultPage extends PageFrame
      */
     protected function getModels()
     {
-        return [];
+        return [
+            'Role',
+        ];
     }
 
     /**

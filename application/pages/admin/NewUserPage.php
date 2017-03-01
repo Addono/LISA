@@ -53,7 +53,7 @@ class NewUserPage extends PageFrame
      */
     public function hasAccess()
     {
-        return isLoggedInAndHasRole($this->ci->session, $this->ci->LoginRole, [Role::ROLE_ADMIN]);
+        return isLoggedInAndHasRole($this->ci, [Role::ROLE_ADMIN]);
     }
 
     public function onFormSuccess()

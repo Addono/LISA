@@ -1,9 +1,13 @@
 <?php
 
 /**
- * @property  CI_DB_query_builder   $db
  * @author Adriaan Knapen <a.d.knapen@protonmail.com>
  * @date 24-2-2017
+ */
+
+/**
+ * Class LoginRole
+ * @property  CI_DB_query_builder   $db
  */
 class LoginRole extends ModelFrame
 {
@@ -54,26 +58,6 @@ class LoginRole extends ModelFrame
             ->count_all_results($this->name());
 
         return $result > 0;
-    }
-
-    /**
-     * Checks if a user has a certain role.
-     *
-     * @param $loginId
-     * @param $roleName
-     * @return bool True if the user has this role, else false.
-     */
-    public function userHasRole($loginId, $roleName) {
-        $count = $this->db
-            ->where([
-                Role::name().'.'.Role::FIELD_ROLE_NAME => $roleName,
-                LoginRole::name().'.'.Login::FIELD_LOGIN_ID => $loginId,
-            ])
-            ->where(Role::name().'.'.Role::FIELD_ROLE_ID.' = '.LoginRole::name().'.'.Role::FIELD_ROLE_ID)
-            ->count_all_results([LoginRole::name(), Role::name()]);
-
-
-        return $count > 0;
     }
 
     //======================================

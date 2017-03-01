@@ -60,20 +60,23 @@ if (! function_exists('isLoggedInAndHasRole')) {
     /**
      * Checks if the user is logged in and has at least one of a set of roles.
      *
-     * @param CI_Session $session
-     * @param LoginRole $loginRole
+     * @param CI_Controller $ci
      * @param string|array $roles
      * @return bool True if a user is logged in and has (one of the) roles, else false.
+     * @internal param CI_Session $session
+     * @internal param LoginRole $loginRole
      */
-    function isLoggedInAndHasRole($session, $loginRole, $roles) {
-        if (!isLoggedIn($session)) {
+    function isLoggedInAndHasRole($ci, $roles) {
+        $ci->load->model(Role_LoginRole::class);
+
+        if (!isLoggedIn($ci->session)) {
             return false;
         }
 
         if (is_array($roles)) {
             // Check for each of the roles if the user has this role.
             foreach ($roles as $role) {
-                $hasRole = $loginRole->userHasRole(getLoggedInLoginId($session), $role);
+                $hasRole = $ci->Role_LoginRole->userHasRole(getLoggedInLoginId($ci->session), $role);
                 if ($hasRole) {
                     return true;
                 }
@@ -81,7 +84,7 @@ if (! function_exists('isLoggedInAndHasRole')) {
 
             return false; // Return false if the user has non of the roles.
         } else {
-            return $loginRole->userHasRole(getLoggedInLoginId($session), $roles);
+            return $ci->Role_LoginRole->userHasRole(getLoggedInLoginId($ci->session), $roles);
         }
     }
 }
