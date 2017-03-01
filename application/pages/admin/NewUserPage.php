@@ -56,7 +56,7 @@ class NewUserPage extends PageFrame
         $firstName  = set_value('first-name');
         $lastName   = set_value('last-name');
         $email      = set_value('email');
-        $userRoles  = $this->getSelectedRoles();
+        $userRoles  = array_keys(set_value('roles'));
 
         $success = $this->ci->Login_User_LoginRole->add($username, $password, $firstName, $lastName, $email, $userRoles);
 
@@ -65,24 +65,6 @@ class NewUserPage extends PageFrame
         } else {
             $this->addWarningMessage(lang('application_new_user_error_unknown'));
         }
-    }
-
-    /**
-     * Extracts all selected roles from the form post data.
-     *
-     * @return array
-     */
-    private function getSelectedRoles() {
-        $userRoles = [];
-        $roles = $this->ci->Role->getRoles();
-        foreach ($roles as $role) {
-            $roleId = $role[Role::FIELD_ROLE_ID];
-            if (set_value('roles_'.$roleId) === '1') {
-                $userRoles[] = $roleId;
-            }
-        }
-
-        return $userRoles;
     }
 
     /**
