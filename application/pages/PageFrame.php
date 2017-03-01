@@ -89,7 +89,7 @@ abstract class PageFrame extends CI_Controller
     /**
      * The form validation rules.
      *
-     * @return array
+     * @return array|bool
      */
     abstract protected function getFormValidationRules();
 
