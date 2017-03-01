@@ -21,7 +21,7 @@
     <link rel="stylesheet" type="text/css" href="<?=base_url('resources/css/roboto.css')?>" />
     <link rel="stylesheet" type="text/css" href="<?=base_url('resources/css/font-awesome.min.css')?>" />
 
-    <!-- CSS Files -->
+    <!--    CSS Files   -->
     <link href="<?=base_url('resources/css/bootstrap.min.css')?>" rel="stylesheet" />
     <link href="<?=base_url('resources/css/material-kit.css')?>" rel="stylesheet"/>
     <link href="<?=base_url('resources/css/style.css')?>" rel="stylesheet" />

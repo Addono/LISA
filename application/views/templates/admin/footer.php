@@ -5,8 +5,6 @@
  */
 ?>
 
-        <!-- /#wrapper -->
-
         <!-- jQuery -->
         <script src="<?=base_url('./resources/js/jquery.min.js')?>"></script>
 
@@ -18,6 +16,18 @@
 
         <!-- Custom Theme JavaScript -->
         <script src="<?=base_url('./resources/js/sb-admin-2.js')?>"></script>
+
+        <!-- DataTables JavaScript -->
+        <script src="<?=base_url('./resources/js/jquery.dataTables.min.js')?>"></script>
+        <script src="<?=base_url('./resources/js/dataTables.bootstrap.min.js')?>"></script>
+        <script src="<?=base_url('./resources/js/dataTables.responsive.js')?>"></script>
+        <script>
+            $(document).ready(function() {
+                $('.data-table-responsive').DataTable({
+                    responsive: true
+                });
+            });
+        </script>
 
     </body>
 

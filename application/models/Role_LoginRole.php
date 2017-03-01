@@ -37,4 +37,23 @@ class Role_LoginRole extends ModelFrame
 
         return $count > 0;
     }
+
+    /**
+     * Returns all roles corresponding to one login id.
+     *
+     * @param int $loginId
+     * @return array
+     */
+    public function getRolesFromLoginId($loginId) {
+        return $this->db
+            ->where([Login::FIELD_LOGIN_ID => $loginId])
+            ->join(Role::name(),
+                eq(
+                    field(Role::FIELD_ROLE_ID, Role::name()),
+                    field(Role::FIELD_ROLE_ID, LoginRole::name())
+                )
+            )
+            ->get(LoginRole::name())
+            ->result_array();
+    }
 }

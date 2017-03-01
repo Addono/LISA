@@ -31,7 +31,7 @@ class LoginRole extends ModelFrame
         $exists = $this->exists($loginId, $roleId);
         if (!$exists) {
             return $this->db->insert(
-                $this->name(),
+                self::name(),
                 [
                     Login::FIELD_LOGIN_ID => $loginId,
                     Role::FIELD_ROLE_ID => $roleId,
@@ -55,9 +55,23 @@ class LoginRole extends ModelFrame
                 Login::FIELD_LOGIN_ID => $loginId,
                 Role::FIELD_ROLE_ID => $roleId,
             ])
-            ->count_all_results($this->name());
+            ->count_all_results(self::name());
 
         return $result > 0;
+    }
+
+    public function getFromLoginId($loginId) {
+        return $this->db
+            ->where([Login::FIELD_LOGIN_ID => $loginId])
+            ->get(self::name())
+            ->result_array();
+    }
+
+    public function getFromRoleId($roleId) {
+        return $this->db
+            ->where([Role::FIELD_ROLE_ID => $roleId])
+            ->get(self::name())
+            ->result_array();
     }
 
     //======================================
@@ -104,8 +118,10 @@ class LoginRole extends ModelFrame
 
     public function v3() {
         $loginId = $this->Login->getLoginIdFromUsername(Login::INITIAL_LOGIN_USERNAME);
-        $roleId = $this->Role->getRoleIdFromRoleName(Role::ROLE_ADMIN);
+        $roleIdAdmin = $this->Role->getRoleIdFromRoleName(Role::ROLE_ADMIN);
+        $roleIdUser = $this->Role->getRoleIdFromRoleName(Role::ROLE_USER);
 
-        $this->add($loginId, $roleId);
+        $this->add($loginId, $roleIdAdmin);
+        $this->add($loginId, $roleIdUser);
     }
 }

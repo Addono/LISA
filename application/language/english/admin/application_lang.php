@@ -19,6 +19,15 @@ $lang['application_dashboard_title'] = 'Dashboard';
 $lang['application_dashboard_body'] = 'This is your new dashboard!';
 $lang['application_menu_new_user'] = 'New user';
 
+// User overview
+$lang['application_user_overview_title'] = 'User overview';
+$lang['application_user_overview_table_header_username'] = 'Username';
+$lang['application_user_overview_table_header_first_name'] = 'First name';
+$lang['application_user_overview_table_header_last_name'] = 'Last name';
+$lang['application_user_overview_table_header_email'] = 'Email';
+$lang['application_user_overview_table_header_roles'] = 'Roles';
+$lang['application_user_overview_table_header_profile'] = 'Profile';
+
 // Add users
 $lang['application_new_user_title'] = 'Add a new user';
 $lang['application_new_user_form_title'] = 'All fields are required.';

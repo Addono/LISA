@@ -17,6 +17,10 @@
     <!-- MetisMenu CSS -->
     <link href="<?=base_url('./resources/css/metisMenu.min.css')?>" rel="stylesheet">
 
+    <!-- DataTables CSS -->
+    <link href="<?=base_url('./resources/css/dataTables.bootstrap.css')?>" rel="stylesheet" type="text/css">
+    <link href="<?=base_url('./resources/css/dataTables.responsive.css')?>" rel="stylesheet" type="text/css">
+
     <!-- Custom CSS -->
     <link href="<?=base_url('./resources/css/sb-admin-2.css')?>" rel="stylesheet">
 
@@ -80,7 +84,7 @@
     </nav><!-- /Navigation -->
 
     <div id="page-wrapper">
-        <div class="panel-body" style="padding-bottom: 0px">
+        <div class="panel-body" style="margin-bott">
             <?=showMessages($messages,
                 '<div class="alert alert-%s alert-dismissable">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>',

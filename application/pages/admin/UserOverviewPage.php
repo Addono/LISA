@@ -14,7 +14,7 @@ class UserOverviewPage extends PageFrame
      */
     public function getViews()
     {
-        return [];
+        return ['user-overview'];
     }
 
     /**
@@ -32,6 +32,20 @@ class UserOverviewPage extends PageFrame
      */
     public function beforeView()
     {
+        // Get the user information of all users and parse it to the view.
+        $userDataFields = [
+            'id' => Login::FIELD_LOGIN_ID,
+            'username' => Login::FIELD_USERNAME,
+            'first_name' => User::FIELD_FIRST_NAME,
+            'last_name' => User::FIELD_LAST_NAME,
+            'email' => User::FIELD_EMAIL,
+            'roles' => 'roles',
+            'role_name' => Role::FIELD_ROLE_NAME,
+        ];
+        $userData = $this->ci->Login_User_LoginRole_Role->getAllUserData();
+
+        $this->setData('userData', $userData);
+        $this->setdata('userDataFields', $userDataFields);
     }
 
     /**
@@ -70,6 +84,7 @@ class UserOverviewPage extends PageFrame
     {
         return [
             LoginRole::class,
+            Login_User_LoginRole_Role::class,
         ];
     }
 

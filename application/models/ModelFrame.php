@@ -19,7 +19,10 @@ class ModelFrame extends CI_Model
 
         $ci->load->database();
         $this->load->model($dependencies);
-        $this->load->helper('tables');
+        $this->load->helper([
+            'tables',
+            'mdbt_model',
+        ]);
     }
 
     public static function name() {
