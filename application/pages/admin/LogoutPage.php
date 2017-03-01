@@ -3,17 +3,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * @author Adriaan Knapen <a.d.knapen@protonmail.com>
- * @date 6-2-2017
+ * @date 26-2-2017
  */
 
-class DefaultPage extends PageFrame
+// todo implement this
+class LogoutPage extends PageFrame
 {
 
     public function getViews()
     {
         return [
-            'default-header',
-            'intersection',
+            'default-header'
         ];
     }
 
@@ -37,6 +37,7 @@ class DefaultPage extends PageFrame
      */
     public function beforeView()
     {
+        redirect('logout');
     }
 
     /**

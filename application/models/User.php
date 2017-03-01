@@ -11,6 +11,17 @@ class User extends ModelFrame
     const INITIAL_USER_LAST_NAME = 'is super awsome';
     const INITIAL_USER_EMAIL = 'invalid@email.x';
 
+    const FIELD_FIRST_NAME = 'first_name';
+    const FIELD_LAST_NAME = 'last_name';
+    const FIELD_EMAIL = 'email';
+
+    protected function dependencies()
+    {
+        return [
+            Login::class,
+        ];
+    }
+
     /**
      * Adds a new user.
      * todo check if a valid email is parsed.
@@ -27,10 +38,10 @@ class User extends ModelFrame
             return $this->db->insert(
                 $this->name(),
                 [
-                    'login_id' => $loginId,
-                    'first_name' => $firstName,
-                    'last_name' => $lastName,
-                    'email' => $email,
+                    Login::FIELD_LOGIN_ID => $loginId,
+                    self::FIELD_FIRST_NAME => $firstName,
+                    self::FIELD_LAST_NAME => $lastName,
+                    self::FIELD_EMAIL => $email,
                 ]
             );
         } else {
@@ -46,7 +57,7 @@ class User extends ModelFrame
      */
     public function exists($loginId) {
         $result = $this->db
-            ->where(['login_id' => $loginId])
+            ->where([Login::FIELD_LOGIN_ID => $loginId])
             ->count_all_results($this->name());
 
         return $result > 0;
@@ -57,20 +68,20 @@ class User extends ModelFrame
     public function v1() {
         return [
             'add' => [
-                'login_id' => [
+                Login::FIELD_LOGIN_ID => [
                     'type' => 'foreign',
                     'table' => Login::name(),
                     'field' => Login::FIELD_LOGIN_ID,
                 ],
-                'first_name' => [
+                self::FIELD_FIRST_NAME => [
                     'type' => 'VARCHAR',
                     'constraint' => NAME_LENGTH,
                 ],
-                'last_name' => [
+                self::FIELD_LAST_NAME => [
                     'type' => 'VARCHAR',
                     'constraint' => NAME_LENGTH,
                 ],
-                'email' => [
+                self::FIELD_EMAIL => [
                     'type' => 'VARCHAR',
                     'constraint' => NAME_LENGTH,
                 ]

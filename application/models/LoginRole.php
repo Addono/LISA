@@ -5,8 +5,16 @@
  * @author Adriaan Knapen <a.d.knapen@protonmail.com>
  * @date 24-2-2017
  */
-class UserRole extends ModelFrame
+class LoginRole extends ModelFrame
 {
+
+    protected function dependencies()
+    {
+        return [
+            Role::class,
+            Login::class,
+        ];
+    }
 
     /**
      * Adds a role-user relation if it did not exist already.
@@ -21,8 +29,8 @@ class UserRole extends ModelFrame
             return $this->db->insert(
                 $this->name(),
                 [
-                    'login_id' => $loginId,
-                    'role_id' => $roleId,
+                    Login::FIELD_LOGIN_ID => $loginId,
+                    Role::FIELD_ROLE_ID => $roleId,
                 ]
             );
         } else {
@@ -40,8 +48,8 @@ class UserRole extends ModelFrame
     public function exists($loginId, $roleId) {
         $result = $this->db
             ->where([
-                'login_id' => $loginId,
-                'role_id' => $roleId,
+                Login::FIELD_LOGIN_ID => $loginId,
+                Role::FIELD_ROLE_ID => $roleId,
             ])
             ->count_all_results($this->name());
 
@@ -58,11 +66,12 @@ class UserRole extends ModelFrame
     public function userHasRole($loginId, $roleName) {
         $count = $this->db
             ->where([
-                Role::name().'.role_name' => $roleName,
-                UserRole::name().'.login_id' => $loginId,
-                Role::name().'.role_id = '.UserRole::name().'.role_id',
+                Role::name().'.'.Role::FIELD_ROLE_NAME => $roleName,
+                LoginRole::name().'.'.Login::FIELD_LOGIN_ID => $loginId,
             ])
-            ->count_all_results([UserRole::name(), Role::name()]);
+            ->where(Role::name().'.'.Role::FIELD_ROLE_ID.' = '.LoginRole::name().'.'.Role::FIELD_ROLE_ID)
+            ->count_all_results([LoginRole::name(), Role::name()]);
+
 
         return $count > 0;
     }
@@ -110,8 +119,8 @@ class UserRole extends ModelFrame
     }
 
     public function v3() {
-        $loginId = $this->Login->getLoginIdFromUsername(LOGIN::INITIAL_LOGIN_USERNAME);
-        $roleId = $this->Role->getRoleIdFromRoleName(Role::ROLE_SUPERADMIN);
+        $loginId = $this->Login->getLoginIdFromUsername(Login::INITIAL_LOGIN_USERNAME);
+        $roleId = $this->Role->getRoleIdFromRoleName(Role::ROLE_ADMIN);
 
         $this->add($loginId, $roleId);
     }

@@ -70,6 +70,7 @@ class Install extends CI_Controller {
                     $version = self::INITIAL_MODEL_VERSION;
                 }
 
+                // Add the model to the queue.
                 $queue->enqueue($model);
 
                 echo "<i>Current version of " . $modelName . " is " . $version . ".</i><br>";
@@ -95,7 +96,7 @@ class Install extends CI_Controller {
          * unsolvable dependency problem has occurred.
          */
         $unchanged = 0; // Tracks how many models consequently tried to update without making any improvement.
-        while (!$queue->isEmpty() && $unchanged < $queue->count()) {
+        while (!$queue->isEmpty() && $unchanged <= $queue->count()) {
             $model = $queue->dequeue();
 
             echo 'Updating ' . $model->name() . '.<br>';
@@ -118,11 +119,20 @@ class Install extends CI_Controller {
             }
         }
 
+        // Check if all models in the queue where successfully updated. If not this means that an (dependency) issue occurred.
         if ($queue->isEmpty()) {
             echo '<b>Update successful</b><br>';
             return true;
         } else {
-            echo '<b>DEPENDENCY CANNOT BE SOLVED!</b><br>';
+            echo '<b>DEPENDENCY CANNOT BE SOLVED!</b><br>Unfinished models are:';
+
+            // Show the names of all remaining models.
+            while (!$queue->isEmpty()) {
+                $model = $queue->dequeue();
+
+                echo ' - ' . $model->name() . '<br>';
+            }
+
             return false;
         }
     }

@@ -13,10 +13,14 @@ class Handler extends CI_Controller {
     const DEFAULT_PAGE = 'default';
 
     const GROUP_FRONTEND = 'default';
-    const GROUP_ADMIN = 'admin';
 
     private $data = [
-        'errors' => [],
+        'messages' => [
+            'success' => [],
+            'info' => [],
+            'warning' => [],
+            'danger' => [],
+        ],
     ];
 
     public function index($group = self::GROUP_FRONTEND, $page = self::DEFAULT_PAGE, $subPage = null)
@@ -26,6 +30,9 @@ class Handler extends CI_Controller {
             $page = $group;
             $group = self::GROUP_FRONTEND;
         }
+
+        // Add the group to data such that views can generate urls accordingly.
+        $this->data['group'] = $group;
 
         // Import all helpers and libraries.
         $this->load->helper([
@@ -38,15 +45,13 @@ class Handler extends CI_Controller {
         $this->load->model([
             'ModelFrame', // Ensure to load model frame first, since other models might depend on it.
             'Login',
-            'Role',
-            'UserRole',
         ]);
         $this->load->library([
             'session',
             'form_validation'
         ]);
         $this->lang->load('default', 'english');
-        $this->lang->load('application', 'english');
+        $this->lang->load($group.'/application', 'english');
 
         // Check if the user is logged in
         $this->data['loggedIn'] = isLoggedIn($this->session);
@@ -73,41 +78,39 @@ class Handler extends CI_Controller {
             $pageController = new $pageControllerName();
 
             if (!$pageController->hasAccess()) {
-                redirect(); // todo add insufficient rights page
+                redirect($group.'/login'); // todo add insufficient rights page
                 exit;
             }
             $pageController->setParams([$page, $subPage]);
 
+            // Call the form success if a valid form was submitted.
+            if ($pageController->getFormSuccess()) {
+                $pageController->onFormSuccess();
+            }
+
             $pageController->beforeView();
 
-            $header = $pageController->getHeader();
-            $header = $header ? $header : [];
-            $body = $pageController->getBody();
-            $body = $body ? $body : [];
+            $views = $pageController->getViews();
+            $views = $views ? $views : [];
             $data = $pageController->getData();
             $data = $data ? $data : [];
 
-
             $data = array_merge($this->data, $data);
 
-            if (!$header && !$body) {
-                redirect('pageNotFound');
+            if ($views === null) {
+                exit;
             } else {
-                $this->load->view('templates/header', $data);
-                foreach ($header as $h) {
-                    $this->load->view('page/'. $group . '/' . $h, $data);
+                $this->load->view('templates/'.$group.'/header', $data);
+                foreach ($views as $v) {
+                    $this->load->view('page/'.$group.'/' . $v, $data);
                 }
-                $this->load->view('templates/intersection', $data);
-                foreach ($body as $b) {
-                    $this->load->view('page/' . $group . '/' . $b, $data);
-                }
-                $this->load->view('templates/footer', $data);
+                $this->load->view('templates/'.$group.'/footer', $data);
             }
 
             $pageController->afterView();
         } else {
-            if ($page !== 'PageNotFound') {
-                redirect('PageNotFound');
+            if ($page !== 'PageNotFound' && $page !== 'login') {
+                redirect($group.'/PageNotFound');
             } else {
                 show_404();
             }

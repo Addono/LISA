@@ -13,20 +13,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class LogoutPage extends PageFrame
 {
 
-    public function getHeader()
+    public function getViews()
     {
         return [
-            'logout-header'
+            'logout-header',
+            'intersection',
         ];
-    }
-
-    public function getBody()
-    {
-        return false;
-    }
-
-    public function getData() {
-        return false;
     }
 
     public function isVisible()

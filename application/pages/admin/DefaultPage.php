@@ -9,16 +9,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class DefaultPage extends PageFrame
 {
 
-    public function getHeader()
+    public function getViews()
     {
         return [
-            'default-header'
+            'dashboard'
         ];
-    }
-
-    public function getBody()
-    {
-        return false;
     }
 
     public function isVisible()
@@ -28,7 +23,7 @@ class DefaultPage extends PageFrame
 
     public function hasAccess()
     {
-        return true;
+        return isLoggedInAndHasRole($this->ci->session, $this->ci->LoginRole, [Role::ROLE_ADMIN]);
     }
 
     protected function getFormValidationRules()

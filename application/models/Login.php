@@ -20,7 +20,7 @@ class Login extends ModelFrame {
      * @param $password
      * @return bool|mixed Returns the pin of the generated user on success, else returns false.
      */
-    public function addLogin($username, $password) {
+    public function add($username, $password) {
         return $this->db->insert(
             $this->name(),
             [
@@ -65,6 +65,10 @@ class Login extends ModelFrame {
             ->where([self::FIELD_USERNAME => $username])
             ->count_all_results($this->name());
         return $result > 0;
+    }
+
+    public function usernameNotExists($username) {
+        return !$this->usernameExists($username);
     }
 
     public function getUsernames() {
@@ -124,6 +128,6 @@ class Login extends ModelFrame {
      * Creates a login for the admin user.
      */
     public function v2() {
-        $this->addLogin(self::INITIAL_LOGIN_USERNAME, self::INITIAL_LOGIN_PASSWORD);
+        $this->add(self::INITIAL_LOGIN_USERNAME, self::INITIAL_LOGIN_PASSWORD);
     }
 }

@@ -55,3 +55,33 @@ if (! function_exists('setLoggedOut')) {
         $session->loginId = null;
     }
 }
+
+if (! function_exists('isLoggedInAndHasRole')) {
+    /**
+     * Checks if the user is logged in and has at least one of a set of roles.
+     *
+     * @param CI_Session $session
+     * @param LoginRole $loginRole
+     * @param string|array $roles
+     * @return bool True if a user is logged in and has (one of the) roles, else false.
+     */
+    function isLoggedInAndHasRole($session, $loginRole, $roles) {
+        if (!isLoggedIn($session)) {
+            return false;
+        }
+
+        if (is_array($roles)) {
+            // Check for each of the roles if the user has this role.
+            foreach ($roles as $role) {
+                $hasRole = $loginRole->userHasRole(getLoggedInLoginId($session), $role);
+                if ($hasRole) {
+                    return true;
+                }
+            }
+
+            return false; // Return false if the user has non of the roles.
+        } else {
+            return $loginRole->userHasRole(getLoggedInLoginId($session), $roles);
+        }
+    }
+}

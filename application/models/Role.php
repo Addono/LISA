@@ -7,7 +7,6 @@
  */
 class Role extends ModelFrame
 {
-    const ROLE_SUPERADMIN = 'super_admin';
     const ROLE_ADMIN = 'admin';
     const ROLE_USER = 'user';
 
@@ -60,6 +59,17 @@ class Role extends ModelFrame
             ->row_array()[self::FIELD_ROLE_ID];
     }
 
+    /**
+     * Returns all roles as an array.
+     *
+     * @return array
+     */
+    public function getRoles() {
+        return $this->db
+            ->get($this->name())
+            ->result_array();
+    }
+
     //======================================
 
     public function v1() {
@@ -81,7 +91,6 @@ class Role extends ModelFrame
      * Adds the user, admin, and super admin role.
      */
     public function v2() {
-        $this->add(self::ROLE_SUPERADMIN);
         $this->add(self::ROLE_ADMIN);
         $this->add(self::ROLE_USER);
     }
