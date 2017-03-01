@@ -5,5 +5,5 @@
  */
 
 $lang['application_name'] = 'Lisa';
-$lang['application_title'] = 'Lisa is supser awsome';
+$lang['application_title'] = 'Lisa is super awesome';
 $lang['copyright'] = '2017, Adriaan Knapen';
