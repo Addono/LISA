@@ -4,6 +4,6 @@
  * @date 5-2-2017
  */
 
-$lang['application_name'] = 'Lisa';
+$lang['application_name'] = 'Lisa Core';
 $lang['application_title'] = 'Lisa is super awesome';
 $lang['copyright'] = '2017, Adriaan Knapen';

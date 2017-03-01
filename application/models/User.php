@@ -129,7 +129,6 @@ class User extends ModelFrame
                     'constraint' => NAME_LENGTH,
                 ]
             ],
-
         ];
     }
 
