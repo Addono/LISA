@@ -40,13 +40,6 @@ class NewUserPage extends PageFrame
     }
 
     /**
-     * Function which is called after the views are rendered.
-     */
-    public function afterView()
-    {
-    }
-
-    /**
      * If the current user has access to this page.
      *
      * @return boolean
@@ -121,11 +114,12 @@ class NewUserPage extends PageFrame
                 'rules' => [
                     'required',
                     'min_length[8]',
-                    'matches[confirm-password]'
+                    'matches[confirm-password]',
                 ],
                 'errors' => [
                     'required' => lang('application_new_user_error_required'),
                     'min_length[8]' => lang('application_new_user_error_password_not_strong_enough'),
+                    'matches[confirm-password]' => lang('application_new_user_error_password_not_equal'),
                 ],
             ],
             [

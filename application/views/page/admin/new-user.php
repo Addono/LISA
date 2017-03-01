@@ -18,7 +18,7 @@
                 <?=lang('application_new_user_form_title')?>
             </div>
             <div class="panel-body">
-                <form role="form" action="<?=site_url($group.'/NewUser')?>" method="post">
+                <form role="form" method="post">
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">

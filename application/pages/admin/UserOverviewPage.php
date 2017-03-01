@@ -49,13 +49,6 @@ class UserOverviewPage extends PageFrame
     }
 
     /**
-     * Function which is called after the views are rendered.
-     */
-    public function afterView()
-    {
-    }
-
-    /**
      * If the current user has access to this page.
      *
      * @return boolean

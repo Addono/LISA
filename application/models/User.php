@@ -7,9 +7,9 @@
  */
 class User extends ModelFrame
 {
-    const INITIAL_USER_FIRST_NAME = 'Lisa';
-    const INITIAL_USER_LAST_NAME = 'is super awsome';
-    const INITIAL_USER_EMAIL = 'invalid@email.x';
+    const INITIAL_USER_FIRST_NAME = 'admin';
+    const INITIAL_USER_LAST_NAME = 'user';
+    const INITIAL_USER_EMAIL = 'admin@email.x';
 
     const FIELD_FIRST_NAME = 'first_name';
     const FIELD_LAST_NAME = 'last_name';
@@ -24,7 +24,6 @@ class User extends ModelFrame
 
     /**
      * Adds a new user.
-     * todo check if a valid email is parsed.
      *
      * @param $loginId
      * @param $firstName
@@ -61,6 +60,49 @@ class User extends ModelFrame
             ->count_all_results($this->name());
 
         return $result > 0;
+    }
+
+    /**
+     * Updates data of one user.
+     *
+     * @param $loginId
+     * @param $data
+     * @return bool
+     */
+    public function update($loginId, $data) {
+        return $this->db->update(self::name(), $data, [Login::FIELD_LOGIN_ID => $loginId]);
+    }
+
+    /**
+     * Changes the name of one user.
+     *
+     * @param $loginId
+     * @param $firstName
+     * @param $lastName
+     * @return bool
+     */
+    public function updateName($loginId, $firstName, $lastName) {
+        $data = [
+            self::FIELD_FIRST_NAME => $firstName,
+            self::FIELD_LAST_NAME => $lastName,
+        ];
+
+        return $this->update($loginId, $data);
+    }
+
+    /**
+     * Changes the email of one user.
+     *
+     * @param $loginId
+     * @param $email
+     * @return bool
+     */
+    public function updateEmail($loginId, $email) {
+        $data = [
+            self::FIELD_EMAIL => $email,
+        ];
+
+        return $this->update($loginId, $data);
     }
 
     //======================================

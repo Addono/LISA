@@ -15,7 +15,7 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Hover Rows
+                <?=lang('application_user_overview_table_title')?>
             </div>
             <div class="panel-body">
                 <div class="table-responsive" style="overflow-x:inherit">
@@ -27,7 +27,7 @@
                                 <th><?=lang('application_user_overview_table_header_last_name')?></th>
                                 <th><?=lang('application_user_overview_table_header_email')?></th>
                                 <th><?=lang('application_user_overview_table_header_roles')?></th>
-                                <th><?=lang('application_user_overview_table_header_profile')?></th>
+                                <th><?=lang('application_user_overview_table_header_actions')?></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -42,7 +42,13 @@
                                     <?=$role[$userDataFields['role_name']]?>
                                 <?php } ?>
                                 </td>
-                                <td></td>
+                                <td style="display:flex;justify-content:center;align-items:center">
+                                    <a href="<?=site_url($group.'/User/'.$u[$userDataFields['id']])?>">
+                                        <button type="button" class="btn btn-primary btn-circle">
+                                            <i class="glyphicon glyphicon-edit"></i>
+                                        </button>
+                                    </a>
+                                </td>
                             </tr>
                         <?php } ?>
                         </tbody>

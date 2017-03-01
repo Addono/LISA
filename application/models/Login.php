@@ -7,8 +7,8 @@
  */
 class Login extends ModelFrame {
 
-    const INITIAL_LOGIN_USERNAME = 'Lisa';
-    const INITIAL_LOGIN_PASSWORD = 'Lisa';
+    const INITIAL_LOGIN_USERNAME = 'admin';
+    const INITIAL_LOGIN_PASSWORD = 'admin312';
 
     const FIELD_LOGIN_ID = 'login_id';
     const FIELD_USERNAME = 'username';
@@ -28,6 +28,32 @@ class Login extends ModelFrame {
                 self::FIELD_PASSWORD => password_hash($password, PASSWORD_DEFAULT),
             ]
         );
+    }
+
+    /**
+     * Executes an update statement on one tuple in Login.
+     *
+     * @param $loginId
+     * @param $data
+     * @return bool
+     */
+    public function update($loginId, $data) {
+        return $this->db->update(self::name(), $data, [self::FIELD_LOGIN_ID => $loginId]);
+    }
+
+    /**
+     * Updates the password of one login.
+     *
+     * @param $loginId
+     * @param $password
+     * @return bool
+     */
+    public function updatePassword($loginId, $password) {
+        $data = [
+            self::FIELD_PASSWORD => password_hash($password, PASSWORD_DEFAULT),
+        ];
+
+        return $this->update($loginId, $data);
     }
 
     /**

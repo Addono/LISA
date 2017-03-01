@@ -26,3 +26,5 @@ $lang['logout_homepage'] = 'Home';
 $lang['404_page_header_title'] = 'CRASH...#404';
 $lang['404_page_header_body'] = 'Sorry, but we couldn\'t find the page you requested, to get you back on track click the button to go back to the home page.';
 $lang['404_page_homepage'] = 'Homepage';
+
+$lang['unknown_form_error'] = 'Something went wrong while submitting the form, please try again. If the problem persists, please contact the system administrator.';

@@ -12,32 +12,34 @@
  */
 class Login_User_LoginRole_Role extends ModelFrame
 {
+    /**
+     * All columns whom can be selected without sensitive data like passwords.
+     *
+     * @return array
+     */
+    private function selectNonCritical() {
+        return [
+            field(Login::FIELD_LOGIN_ID, Login::name()),
+            field(Login::FIELD_USERNAME, Login::name()),
+            field(User::FIELD_FIRST_NAME, User::name()),
+            field(User::FIELD_LAST_NAME, User::name()),
+            field(User::FIELD_EMAIL, User::name()),
+        ];
+    }
+
     protected function dependencies()
     {
         return [
             Login::class,
             User::class,
-            LoginRole::class,
-            Role::class,
             Role_LoginRole::class,
+            Login_User::class,
         ];
     }
 
     public function getAllUserData() {
-        $users = $this->db
-            ->select([
-                field(Login::FIELD_LOGIN_ID, Login::name()),
-                field(Login::FIELD_USERNAME, Login::name()),
-                field(User::FIELD_FIRST_NAME, User::name()),
-                field(User::FIELD_LAST_NAME, User::name()),
-                field(User::FIELD_EMAIL, User::name()),
-            ]) // Select on the login id, username, first name, last name, and email.
-            ->join(User::name(),
-                eq(
-                    field(Login::FIELD_LOGIN_ID, Login::name()),
-                    field(Login::FIELD_LOGIN_ID, User::name())
-                )
-            ) // Join the Login and User table on login id.
+        $users = $this->Login_User->joinUser()
+            ->select($this->selectNonCritical()) // Select on the login id, username, first name, last name, and email.
             ->get([Login::name()])
             ->result_array();
 
@@ -48,5 +50,17 @@ class Login_User_LoginRole_Role extends ModelFrame
         }
 
         return $users;
+    }
+
+    public function getUserData($loginId) {
+        $user = $this->Login_User->joinUser()
+            ->select($this->selectNonCritical())
+            ->where([field(Login::FIELD_LOGIN_ID, Login::name()) => $loginId])
+            ->get([Login::name()])
+            ->row_array();
+
+        $user['roles'] = $this->Role_LoginRole->getRolesFromLoginId($loginId);
+
+        return $user;
     }
 }

@@ -53,11 +53,6 @@ abstract class PageFrame extends CI_Controller
     abstract public function beforeView();
 
     /**
-     * Function which is called after the views are rendered.
-     */
-    abstract public function afterView();
-
-    /**
      * Will be called when the form is successfully submitted. Overwrite to use it.
      */
     public function onFormSuccess() {}
@@ -78,6 +73,10 @@ abstract class PageFrame extends CI_Controller
      */
     public function setParams($params) {
         $this->params = $params;
+    }
+
+    public function getParams($key) {
+        return $this->params[$key];
     }
 
     /**
@@ -177,7 +176,7 @@ abstract class PageFrame extends CI_Controller
         // Retrieve all form validation rules and check if any of them where set.
         $rules = $this->getFormValidationRules();
         if($rules === false || $rules === []) {
-            return true;
+            return false;
         }
 
         // Check if anything was posted, else no need to validate the form since it wasn't submitted.

@@ -46,13 +46,6 @@ class LogoutPage extends PageFrame
     }
 
     /**
-     * Function which is called after the views are rendered.
-     */
-    public function afterView()
-    {
-    }
-
-    /**
      * Defines which models should be loaded.
      *
      * @return array;

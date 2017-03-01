@@ -81,7 +81,11 @@ class Handler extends CI_Controller {
                 redirect($group.'/login'); // todo add insufficient rights page
                 exit;
             }
-            $pageController->setParams([$page, $subPage]);
+            $pageController->setParams([
+                'group' => $group,
+                'page' => $page,
+                'subpage' => $subPage,
+            ]);
 
             // Call the form success if a valid form was submitted.
             if ($pageController->getFormSuccess()) {
@@ -106,8 +110,6 @@ class Handler extends CI_Controller {
                 }
                 $this->load->view('templates/'.$group.'/footer', $data);
             }
-
-            $pageController->afterView();
         } else {
             if ($page !== 'PageNotFound' && $page !== 'login') {
                 redirect($group.'/PageNotFound');

@@ -19,14 +19,47 @@ $lang['application_dashboard_title'] = 'Dashboard';
 $lang['application_dashboard_body'] = 'This is your new dashboard!';
 $lang['application_menu_new_user'] = 'New user';
 
+// User
+$lang['application_user_title'] = 'Edit user';
+$lang['application_user_change_name'] = 'Change name';
+$lang['application_user_change_password'] = 'Change password';
+$lang['application_user_change_email'] = 'Change email';
+$lang['application_user_submit'] = 'Update';
+
+$lang['application_user_first_name'] = 'First name';
+$lang['application_user_first_name_help'] = 'The first name of the user.';
+
+$lang['application_user_last_name'] = 'Last name';
+$lang['application_user_last_name_help'] = 'The last name of the user.';
+
+$lang['application_user_password'] = 'Password';
+$lang['application_user_password_help'] = 'The new password of the user, should be at least 8 characters long.';
+
+$lang['application_user_confirm_password'] = 'Confirm password';
+$lang['application_user_confirm_password_help'] = 'Re-enter the password.';
+
+$lang['application_user_email'] = 'Email';
+$lang['application_user_email_help'] = 'The new email address.';
+
+$lang['application_user_error_required'] = '%s is required, please do enter this.';
+$lang['application_user_error_password_not_strong_enough'] = 'The password does not meet the security requirements.';
+$lang['application_user_error_password_not_equal'] = 'The entered passwords did not match, please try again.';
+$lang['application_user_error_valid_email'] = 'A valid email address should be entered.';
+
+$lang['application_user_name_change_success'] = 'Name successfully changed.';
+$lang['application_user_password_change_success'] = 'Password successfully changed.';
+$lang['application_user_email_change_success'] = 'Email successfully changed.';
+$lang['application_server_error'] = 'Something went wrong, please try again. If the problem persists please contact the system administrator.';
+
 // User overview
 $lang['application_user_overview_title'] = 'User overview';
+$lang['application_user_overview_table_title'] = 'All users';
 $lang['application_user_overview_table_header_username'] = 'Username';
 $lang['application_user_overview_table_header_first_name'] = 'First name';
 $lang['application_user_overview_table_header_last_name'] = 'Last name';
 $lang['application_user_overview_table_header_email'] = 'Email';
 $lang['application_user_overview_table_header_roles'] = 'Roles';
-$lang['application_user_overview_table_header_profile'] = 'Profile';
+$lang['application_user_overview_table_header_actions'] = 'Actions';
 
 // Add users
 $lang['application_new_user_title'] = 'Add a new user';
