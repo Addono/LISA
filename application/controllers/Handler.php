@@ -54,6 +54,9 @@ class Handler extends CI_Controller {
         ]);
         $this->lang->load('default', 'english');
         $this->lang->load($group.'/application', 'english');
+        if (file_exists('./application/language/english/'.$group.'/custom_lang.php')) {
+            $this->lang->load($group.'/custom', 'english');
+        }
 
         // Check if the user is logged in
         $this->data['loggedIn'] = isLoggedIn($this->session);
