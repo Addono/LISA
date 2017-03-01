@@ -10,84 +10,112 @@ require_once('./application/pages/PageFrame.php');
  * @property    CI_DB_query_builder $db
  */
 class Handler extends CI_Controller {
-    const DefaultValue = 'default';
+    const DEFAULT_PAGE = 'default';
+
+    const GROUP_FRONTEND = 'default';
 
     private $data = [
-        'errors' => [],
+        'messages' => [
+            'success' => [],
+            'info' => [],
+            'warning' => [],
+            'danger' => [],
+        ],
     ];
 
-    public function index($page = self::DefaultValue, $subPage = null)
+    public function index($group = self::GROUP_FRONTEND, $page = self::DEFAULT_PAGE, $subPage = null)
     {
+        if (!file_exists('./application/pages/'.$group)) {
+            $subPage = $page;
+            $page = $group;
+            $group = self::GROUP_FRONTEND;
+        }
+
+        // Add the group to data such that views can generate urls accordingly.
+        $this->data['group'] = $group;
+
+        $this->data['ci'] = $this;
+
         // Import all helpers and libraries.
         $this->load->helper([
             'url',
             'form',
             'language',
             'tables',
+            'login_state',
         ]);
         $this->load->model([
             'ModelFrame', // Ensure to load model frame first, since other models might depend on it.
             'Login',
-            'Role',
-            'UserRole',
         ]);
         $this->load->library([
             'session',
             'form_validation'
         ]);
         $this->lang->load('default', 'english');
-        $this->lang->load('application', 'english');
+        $this->lang->load($group.'/application', 'english');
 
         // Check if the user is logged in
-        $this->data['loggedIn'] = $this->session->userId !== NULL;
-        $this->data['userId'] = $this->session->userId;
+        $this->data['loggedIn'] = isLoggedIn($this->session);
         if($this->data['loggedIn']) {
-            $this->data['username'] = $this->Login->getUsername($this->data['userId']);
+            $this->data['username'] = $this->Login->getUsername(getLoggedInLoginId($this->session));
         }
 
-        $pageControllerName = ucfirst($page).'Page';
-        $pageControllerFile = './application/pages/'.$pageControllerName.'.php';
+        $this->showPage($group, $page, $subPage);
+    }
+
+    /**
+     * @param string $page
+     * @param string $subPage
+     * @param string $group
+     */
+    private function showPage($group, $page, $subPage)
+    {
+        $pageControllerName = ucfirst($page) . 'Page';
+        $pageControllerFile = './application/pages/'.$group.'/' . $pageControllerName . '.php';
         if (file_exists($pageControllerFile)) {
             require_once($pageControllerFile);
 
             /** @var PageFrame $pageController */
             $pageController = new $pageControllerName();
 
-            if(!$pageController->hasAccess()) {
-                redirect(''); // todo add insufficient rights page
+            $pageController->setParams([
+                'group' => $group,
+                'page' => $page,
+                'subpage' => $subPage,
+            ]);
+
+            // Check if the user has access.
+            if (!$pageController->hasAccess()) {
+                redirect($group.'/login'); // todo add insufficient rights page
                 exit;
             }
-            $pageController->setParams([$page, $subPage]);
+            // Call the form success if a valid form was submitted.
+            if ($pageController->getFormSuccess()) {
+                $pageController->onFormSuccess();
+            }
 
             $pageController->beforeView();
 
-            $header = $pageController->getHeader();
-            $header = $header?$header:[];
-            $body = $pageController->getBody();
-            $body = $body?$body:[];
+            $views = $pageController->getViews();
+            $views = $views ? $views : [];
             $data = $pageController->getData();
-            $data = $data?$data:[];
+            $data = $data ? $data : [];
 
             $data = array_merge($this->data, $data);
 
-            if(!$header && !$body) {
-                redirect('pageNotFound');
+            if ($views === null) {
+                exit;
             } else {
-                $this->load->view('templates/header', $data);
-                foreach($header as $h) {
-                    $this->load->view('page/'.$h, $data);
+                $this->load->view('templates/'.$group.'/header', $data);
+                foreach ($views as $v) {
+                    $this->load->view('page/'.$group.'/' . $v, $data);
                 }
-                $this->load->view('templates/intersection', $data);
-                foreach($body as $b) {
-                    $this->load->view('page/'.$b, $data);
-                }
-                $this->load->view('templates/footer', $data);
+                $this->load->view('templates/'.$group.'/footer', $data);
             }
-
-            $pageController->afterView();
         } else {
-            if ($page !== 'pageNotFound') {
-                redirect('pageNotFound');
+            if ($page !== 'PageNotFound' && $page !== 'login') {
+                redirect($group.'/PageNotFound');
             } else {
                 show_404();
             }

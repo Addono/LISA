@@ -9,30 +9,22 @@
  * Class DefaultPage
  * @property    CI_Session          $session
  * @property    Login               $Login
+ * @property    Role                $Role
  */
 class LoginPage extends PageFrame
 {
 
-    public function getHeader()
+    public function getViews()
     {
         return [
-            'login-header'
+            'login-header',
+            'intersection',
         ];
-    }
-
-    public function getBody()
-    {
-        return false;
-    }
-
-    public function getData()
-    {
-        return false;
     }
 
     public function isVisible()
     {
-        return true;
+        return $this->hasAccess();
     }
 
     protected function getFormValidationRules()
@@ -43,27 +35,22 @@ class LoginPage extends PageFrame
                 'label' => lang('login_username'),
                 'rules' => [
                     'required',
+                    ['usernameExists', [$this->ci->Login, 'usernameExists']],
                 ],
                 'errors' => [
                     'required' => lang('login_error_field_required'),
+                    'usernameExists' => lang('login_error_username_does_not_exist'),
                 ],
             ],
             [
                 'field' => 'password',
                 'label' => lang('login_password'),
-                'rules' => 'required',
+                'rules' => [
+                    'trim',
+                    'required',
+                ],
                 'errors' => [
                     'required' => lang('login_error_field_required'),
-                ],
-            ],
-            [
-                'field' => 'username',
-                'label' => lang('login_username'),
-                'rules' => [
-                    ['usernameExists', [$this->ci->Login, 'usernameExists']],
-                ],
-                'errors' => [
-                    'usernameExists' => lang('login_error_username_does_not_exist'),
                 ],
             ],
         ];
@@ -71,6 +58,10 @@ class LoginPage extends PageFrame
 
     public function hasAccess()
     {
+        if (isLoggedIn($this->ci->session)) {
+            redirect('');
+        }
+
         return true;
     }
 
@@ -79,24 +70,18 @@ class LoginPage extends PageFrame
      */
     public function beforeView()
     {
-        if(!$this->hasError) {
+        if ($this->formSuccess) {
             $username = set_value('username');
             $password = set_value('password');
             $validCredentials = $this->ci->Login->checkUsernamePasswordCredentials($username, $password);
-            if($validCredentials) {
-                $this->ci->session->userId = $this->ci->Login->getUsername($username);
+            if ($validCredentials) {
+                $loginId = $this->ci->Login->getLoginIdFromUsername($username);
+                setLoggedIn($this->ci->session, $loginId);
                 redirect();
             } else {
-                $this->appendData('errors', lang('login_error_invalid_credentials'));
+                $this->addWarningMessage(lang('login_error_invalid_credentials'));
             }
         }
-    }
-
-    /**
-     * Function which is called after the views are rendered.
-     */
-    public function afterView()
-    {
     }
 
     /**
@@ -106,7 +91,10 @@ class LoginPage extends PageFrame
      */
     protected function getModels()
     {
-        return ['Login'];
+        return [
+            Login::class,
+            Role::class,
+        ];
     }
 
     /**

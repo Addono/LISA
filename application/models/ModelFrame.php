@@ -15,11 +15,21 @@ class ModelFrame extends CI_Model
     public function __construct()
     {
         $ci =& get_instance();
+        $dependencies = $this->dependencies();
+
         $ci->load->database();
-        $this->load->helper('tables');
+        $this->load->model($dependencies);
+        $this->load->helper([
+            'tables',
+            'mdbt_model',
+        ]);
     }
 
     public static function name() {
         return Install::getTableName(static::class);
+    }
+
+    protected function dependencies() {
+        return [];
     }
 }

@@ -17,11 +17,11 @@
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
 
     <!--     Fonts and icons     -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" /> -->
     <link rel="stylesheet" type="text/css" href="<?=base_url('resources/css/roboto.css')?>" />
     <link rel="stylesheet" type="text/css" href="<?=base_url('resources/css/font-awesome.min.css')?>" />
 
-    <!-- CSS Files -->
+    <!--    CSS Files   -->
     <link href="<?=base_url('resources/css/bootstrap.min.css')?>" rel="stylesheet" />
     <link href="<?=base_url('resources/css/material-kit.css')?>" rel="stylesheet"/>
     <link href="<?=base_url('resources/css/style.css')?>" rel="stylesheet" />
@@ -50,7 +50,7 @@
                 <!-- Buttons for logged in users -->
                 <li>
                     <a href="<?=site_url('logout')?>" class="btn btn-simple btn-white" target="_self">
-                        <i class="material-icons">exit_to_app</i> <?=lang('logout_logout')?>
+                        <i class="fa fa-sign-out"></i> <?=lang('logout_logout')?>
                     </a>
                 </li>
                 <!-- /Buttons for logged in users -->
@@ -58,7 +58,7 @@
                 <!-- Buttons for users whom are not logged in -->
                 <li>
                     <a href="<?=site_url('login')?>" class="btn btn-simple btn-white" target="_self">
-                        <i class="material-icons">account_box</i> <?=lang('login_login')?>
+                        <i class="fa fa-sign-in"></i> <?=lang('login_login')?>
                     </a>
                 </li>
                 <!-- /Buttons for users whom are not logged in -->

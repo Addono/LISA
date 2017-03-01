@@ -6,29 +6,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @date 6-2-2017
  */
 
-class DefaultPage extends PageFrame
+/**
+ * Class LogoutPage
+ * todo remove username from header
+ */
+class LogoutPage extends PageFrame
 {
 
-    public function getHeader()
+    public function getViews()
     {
         return [
-            'default-header'
+            'logout-header',
+            'intersection',
         ];
-    }
-
-    public function getBody()
-    {
-        return false;
     }
 
     public function isVisible()
     {
-        return true;
-    }
-
-    public function hasAccess()
-    {
-        return true;
+        return $this->hasAccess();
     }
 
     protected function getFormValidationRules()
@@ -36,18 +31,18 @@ class DefaultPage extends PageFrame
         return false;
     }
 
+    public function hasAccess()
+    {
+        return isLoggedIn($this->ci->session);
+    }
+
     /**
      * Function which is called after construction and before the views are rendered.
      */
     public function beforeView()
     {
-    }
-
-    /**
-     * Function which is called after the views are rendered.
-     */
-    public function afterView()
-    {
+        setLoggedOut($this->ci->session);
+        redirect();
     }
 
     /**
@@ -67,7 +62,7 @@ class DefaultPage extends PageFrame
      */
     protected function getLibraries()
     {
-        return [];
+        return ['session'];
     }
 
     /**

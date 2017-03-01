@@ -7,20 +7,53 @@
  */
 class Login extends ModelFrame {
 
+    const INITIAL_LOGIN_USERNAME = 'admin';
+    const INITIAL_LOGIN_PASSWORD = 'admin312';
+
+    const FIELD_LOGIN_ID = 'login_id';
+    const FIELD_USERNAME = 'username';
+    const FIELD_PASSWORD = 'password';
+
     /**
      * Adds a new user to the database.
      * @param $username
      * @param $password
      * @return bool|mixed Returns the pin of the generated user on success, else returns false.
      */
-    public function addLogin($username, $password) {
+    public function add($username, $password) {
         return $this->db->insert(
             $this->name(),
             [
-                'username' => $username,
-                'password' => password_hash($password, PASSWORD_DEFAULT),
+                self::FIELD_USERNAME => $username,
+                self::FIELD_PASSWORD => password_hash($password, PASSWORD_DEFAULT),
             ]
         );
+    }
+
+    /**
+     * Executes an update statement on one tuple in Login.
+     *
+     * @param $loginId
+     * @param $data
+     * @return bool
+     */
+    public function update($loginId, $data) {
+        return $this->db->update(self::name(), $data, [self::FIELD_LOGIN_ID => $loginId]);
+    }
+
+    /**
+     * Updates the password of one login.
+     *
+     * @param $loginId
+     * @param $password
+     * @return bool
+     */
+    public function updatePassword($loginId, $password) {
+        $data = [
+            self::FIELD_PASSWORD => password_hash($password, PASSWORD_DEFAULT),
+        ];
+
+        return $this->update($loginId, $data);
     }
 
     /**
@@ -43,11 +76,11 @@ class Login extends ModelFrame {
      */
     public function checkUserIdPasswordCredentials($userId, $password) {
         $result = $this->db
-            ->where(['login_id' => $userId])
+            ->where([self::FIELD_LOGIN_ID => $userId])
             ->get($this->name())
-            ->row();
-        if(isset($result->password)) {
-            return password_verify($password, $result->password);
+            ->row_array();
+        if (key_exists(self::FIELD_PASSWORD, $result)) {
+            return password_verify($password, $result[self::FIELD_PASSWORD]);
         } else {
             return false;
         }
@@ -55,32 +88,40 @@ class Login extends ModelFrame {
 
     public function usernameExists($username) {
         $result = $this->db
-            ->where(['username' => $username])
+            ->where([self::FIELD_USERNAME => $username])
             ->count_all_results($this->name());
         return $result > 0;
     }
 
+    public function usernameNotExists($username) {
+        return !$this->usernameExists($username);
+    }
+
     public function getUsernames() {
         return $this->db
-            ->select(['username'])
+            ->select([self::FIELD_USERNAME])
             ->get($this->name())
             ->result();
     }
 
     public function getUsername($loginId) {
         return $this->db
-            ->where(['login_id' => $loginId])
+            ->where([self::FIELD_LOGIN_ID => $loginId])
             ->get($this->name())
-            ->row()
-            ->username;
+            ->row_array()[self::FIELD_USERNAME];
     }
 
-    private function getLoginIdFromUsername($username) {
-        return $this->db
-            ->where(['username' => $username])
+    public function getLoginIdFromUsername($username) {
+        $row = $this->db
+            ->where([self::FIELD_USERNAME => $username])
             ->get($this->name())
-            ->row()
-            ->login_id;
+            ->row_array();
+
+        if ($row === null) {
+            throw new Exception('Username "'.$username.'" was not found in the login table.');
+        }
+
+        return $row[self::FIELD_LOGIN_ID];
     }
 
     //======================================
@@ -93,17 +134,15 @@ class Login extends ModelFrame {
     public function v1() {
         return [
             'add' => [
-                'login_id' => [
-                    'type' => 'INT',
-                    'constraint' => ID_LENGTH,
-                    'unsigned' => TRUE,
+                self::FIELD_LOGIN_ID => [
+                    'type' => 'primary',
                 ],
-                'username' => [
+                self::FIELD_USERNAME => [
                     'type' => 'VARCHAR',
                     'constraint' => NAME_LENGTH,
                     'unique' => TRUE,
                 ],
-                'password' => [
+                self::FIELD_PASSWORD => [
                     'type' => 'VARCHAR',
                     'constraint' => NAME_LENGTH,
                 ],
@@ -112,23 +151,9 @@ class Login extends ModelFrame {
     }
 
     /**
-     * Ensures that login_id is a primary key.
-     * todo implement this
-     *
-     * @return array
-     */
-    public function v2() {
-        return [
-            'requires' => [
-                User::class => 1,
-            ],
-        ]; // todo add login_id as a primary key
-    }
-
-    /**
      * Creates a login for the admin user.
      */
-    public function v3() {
-        $this->addLogin('admin', 'banana');
+    public function v2() {
+        $this->add(self::INITIAL_LOGIN_USERNAME, self::INITIAL_LOGIN_PASSWORD);
     }
 }
