@@ -6,6 +6,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @date 6-2-2017
  */
 
+/**
+ * Class UserPage
+ */
 class UserPage extends PageFrame
 {
 
@@ -23,7 +26,14 @@ class UserPage extends PageFrame
 
     public function hasAccess()
     {
-        return isLoggedInAndHasRole($this->ci, [Role::ROLE_ADMIN]);
+        // Check if the user is logged in and has the required rights.
+        $hasRights = isLoggedInAndHasRole($this->ci, [Role::ROLE_ADMIN]);
+
+        // Check if the given login id is valid and has a user account connected to it.
+        $loginId = $this->params['subpage'];
+        $validLoginId = $loginId !== null && $this->ci->Login_User->exists($loginId);
+
+        return $hasRights && $validLoginId;
     }
 
     public function onFormSuccess()
@@ -60,6 +70,14 @@ class UserPage extends PageFrame
 
                 if ($success) {
                     $this->addSuccessMessage(lang('application_user_email_change_success'));
+                }
+                break;
+            case 'roles';
+                $roles = array_keys(set_value('roles'));
+
+                $success = $this->ci->LoginRole->setRolesForLoginId($loginId, $roles);
+                if ($success) {
+                    $this->addSuccessMessage(lang('application_user_roles_change_success'));
                 }
                 break;
             default:
@@ -137,6 +155,8 @@ class UserPage extends PageFrame
                     ],
                 ];
                 break;
+            case 'roles':
+                return true;
             case '': // If the user didn't submit any form.
                 break;
             default: // Something went wrong since it should have been caught by one of the others.
@@ -154,20 +174,35 @@ class UserPage extends PageFrame
     {
         $loginId = $this->params['subpage'];
 
-        // Check if the given login id is valid and has a user account connected to it.
-        if ($loginId === null || ! $this->ci->Login_User->exists($loginId)) {
-            redirect($this->params['group'].'/UserOverview');
-        }
-
+        // Get the user data.
         $userData = $this->ci->Login_User_LoginRole_Role->getUserData($loginId);
         $userDataFields = [
             'email' => User::FIELD_EMAIL,
             'first_name' => User::FIELD_FIRST_NAME,
             'last_name' => User::FIELD_LAST_NAME,
         ];
-
         $this->setData('userData', $userData);
         $this->setData('userDataFields', $userDataFields);
+
+        // Get the username
+        $username = $this->ci->Login->getUsername($loginId);
+        $this->setData('username', $username);
+
+        // Get all available roles.
+        $roles = [];
+        $allRoles = $this->ci->Role->getRoles();
+        $userRoles = array_column($this->ci->LoginRole->getFromLoginId($loginId), Role::FIELD_ROLE_ID);
+        foreach ($allRoles as $role) {
+            $roleId = $role[Role::FIELD_ROLE_ID];
+            $roles[$roleId] = [
+                'name' => $role[Role::FIELD_ROLE_NAME],
+                'userHas' => array_search($roleId, $userRoles) !== false,
+            ];
+        }
+
+        $this->setData('roles', $roles);
+        $this->setData('roleIdKey', Role::FIELD_ROLE_ID);
+        $this->setData('roleNameKey', Role::FIELD_ROLE_NAME);
     }
 
     /**

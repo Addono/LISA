@@ -34,6 +34,8 @@ class Handler extends CI_Controller {
         // Add the group to data such that views can generate urls accordingly.
         $this->data['group'] = $group;
 
+        $this->data['ci'] = $this;
+
         // Import all helpers and libraries.
         $this->load->helper([
             'url',
@@ -77,16 +79,17 @@ class Handler extends CI_Controller {
             /** @var PageFrame $pageController */
             $pageController = new $pageControllerName();
 
-            if (!$pageController->hasAccess()) {
-                redirect($group.'/login'); // todo add insufficient rights page
-                exit;
-            }
             $pageController->setParams([
                 'group' => $group,
                 'page' => $page,
                 'subpage' => $subPage,
             ]);
 
+            // Check if the user has access.
+            if (!$pageController->hasAccess()) {
+                redirect($group.'/login'); // todo add insufficient rights page
+                exit;
+            }
             // Call the form success if a valid form was submitted.
             if ($pageController->getFormSuccess()) {
                 $pageController->onFormSuccess();

@@ -79,7 +79,7 @@ class LoginPage extends PageFrame
                 setLoggedIn($this->ci->session, $loginId);
                 redirect();
             } else {
-                $this->appendData('errors', lang('login_error_invalid_credentials'));
+                $this->addWarningMessage(lang('login_error_invalid_credentials'));
             }
         }
     }

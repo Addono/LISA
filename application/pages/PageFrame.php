@@ -175,7 +175,9 @@ abstract class PageFrame extends CI_Controller
     private function formValidate() {
         // Retrieve all form validation rules and check if any of them where set.
         $rules = $this->getFormValidationRules();
-        if($rules === false || $rules === []) {
+        if (is_bool($rules)) {
+            return $rules;
+        } elseif ($rules === []) {
             return false;
         }
 

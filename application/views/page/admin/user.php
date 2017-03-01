@@ -7,7 +7,7 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header"><?=lang('application_user_title')?></h1>
+        <h1 class="page-header"><?=sprintf(lang('application_user_title'), '<i>'.$username.'</i>')?></h1>
     </div><!-- /.col-lg-12 -->
 </div><!-- /.row -->
 
@@ -75,6 +75,30 @@
                             <input type="email" name="email" class="form-control" placeholder="<?=$userData[$userDataFields['email']]?>">
                         </div><!-- ./input-group -->
                         <p class="help-block"><?=lang('application_user_email_help')?></p>
+                    </div>
+                    <button type="submit" class="btn btn-outline btn-primary btn-lg btn-block"><?=lang('application_user_submit')?></button>
+                </form>
+            </div><!-- /.panel-body -->
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <?=lang('application_user_change_roles')?>
+            </div>
+            <div class="panel-body">
+                <form role="form" method="post">
+                    <input type="hidden" name="type" value="roles" />
+                    <div class="form-group">
+                        <label><?=lang('application_user_roles')?></label>
+                        <?php foreach($roles as $roleId => $role) { ?>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="roles[<?=$roleId?>]" <?=$role['userHas']?'checked ':''?>value="1"><?=$role['name']?>
+                                </label>
+                            </div>
+                        <?php } ?>
                     </div>
                     <button type="submit" class="btn btn-outline btn-primary btn-lg btn-block"><?=lang('application_user_submit')?></button>
                 </form>

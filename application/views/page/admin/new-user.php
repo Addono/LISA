@@ -74,13 +74,13 @@
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <label><?=lang('application_name_user_roles')?></label>
-                            <?php foreach($roles as $role) { ?>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="roles_<?=$role[$roleIdKey]?>" value="1"><?=$role[$roleNameKey]?>
-                                    </label>
-                                </div>
-                            <?php } ?>
+                                <?php foreach($roles as $role) { ?>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="roles[<?=$role[$roleIdKey]?>]"><?=$role[$roleNameKey]?>
+                                        </label>
+                                    </div>
+                                <?php } ?>
                             </div><!-- /.form-groupp -->
                         </div><!-- /.col-lg-12 -->
                     </div><!-- /.row -->

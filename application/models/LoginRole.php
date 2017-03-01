@@ -47,7 +47,7 @@ class LoginRole extends ModelFrame
      *
      * @param $loginId
      * @param $roleId
-     * @return bool
+     * @return bool True if it exists, else false.
      */
     public function exists($loginId, $roleId) {
         $result = $this->db
@@ -60,6 +60,12 @@ class LoginRole extends ModelFrame
         return $result > 0;
     }
 
+    /**
+     * Get all roles associated with a login id.
+     *
+     * @param $loginId
+     * @return array
+     */
     public function getFromLoginId($loginId) {
         return $this->db
             ->where([Login::FIELD_LOGIN_ID => $loginId])
@@ -67,11 +73,45 @@ class LoginRole extends ModelFrame
             ->result_array();
     }
 
+    /**
+     * Get all roles associated with a role id.
+     *
+     * @param $roleId
+     * @return array
+     */
     public function getFromRoleId($roleId) {
         return $this->db
             ->where([Role::FIELD_ROLE_ID => $roleId])
             ->get(self::name())
             ->result_array();
+    }
+
+    /**
+     * Sets the roles linked to a login id. NOTE: Removes all others.
+     *
+     * @param int $loginId
+     * @param array $roleIds
+     * @return bool True on success, else false.
+     */
+    public function setRolesForLoginId($loginId, array $roleIds) {
+        $this->db->trans_start();
+            $this->deleteRolesForLoginId($loginId);
+
+            foreach ($roleIds as $roleId) {
+                $this->add($loginId, $roleId);
+            }
+        $this->db->trans_complete();
+
+        return $this->db->trans_status();
+    }
+
+    /**
+     * Unlinkes all roles from a login id.
+     *
+     * @param int $loginId
+     */
+    private function deleteRolesForLoginId($loginId) {
+        $this->db->delete(self::name(), [Login::FIELD_LOGIN_ID => $loginId]);
     }
 
     //======================================
