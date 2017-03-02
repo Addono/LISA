@@ -65,6 +65,8 @@ $lang['application_user_overview_table_header_email'] = 'Email';
 $lang['application_user_overview_table_header_roles'] = 'Roles';
 $lang['application_user_overview_table_header_actions'] = 'Actions';
 
+$lang['application_user_overview_tooltip_edit_user'] = 'Edit user';
+
 // Add users
 $lang['application_new_user_title'] = 'Add a new user';
 $lang['application_new_user_form_title'] = 'All fields are required.';
