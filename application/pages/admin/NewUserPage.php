@@ -60,7 +60,7 @@ class NewUserPage extends PageFrame
 
         $success = $this->ci->Login_User_LoginRole->add($username, $password, $firstName, $lastName, $email, $userRoles);
 
-        if (true || $success) {
+        if ($success) {
             $this->addSuccessMessage(sprintf(lang('application_new_user_success'), $username));
         } else {
             $this->addWarningMessage(lang('application_new_user_error_unknown'));
