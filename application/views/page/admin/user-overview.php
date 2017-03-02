@@ -43,16 +43,18 @@
                                 <?php } ?>
                                 </td>
                                 <td style="display:flex;justify-content:center;align-items:center">
-                                    <a href="<?=site_url($group.'/GiveUser/'.$u[$userDataFields['id']])?>">
-                                        <button type="button" class="btn btn-warning btn-circle">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </a>
-                                    <a href="<?=site_url($group.'/User/'.$u[$userDataFields['id']])?>">
-                                        <button type="button" class="btn btn-primary btn-circle">
-                                            <i class="glyphicon glyphicon-edit"></i>
-                                        </button>
-                                    </a>
+                                    <div class="button-tooltip">
+                                        <a href="<?=site_url($group.'/GiveUser/'.$u[$userDataFields['id']])?>">
+                                            <button type="button" class="btn btn-warning btn-circle">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </a>
+                                        <a href="<?=site_url($group.'/User/'.$u[$userDataFields['id']])?>">
+                                            <button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="left" title="<?=lang('application_user_overview_tooltip_edit_user')?>">
+                                                <i class="glyphicon glyphicon-edit"></i>
+                                            </button>
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                         <?php } ?>

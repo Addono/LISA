@@ -83,11 +83,7 @@
 <div class="wrapper">
     <div class="header first">
         <?=showMessages(
-<<<<<<< HEAD
-                $messages,
-=======
             $messages,
->>>>>>> upstream/master
             '<div class="alert alert-%s">
                 <div class="container-fluid">
                     <div class="alert-icon">

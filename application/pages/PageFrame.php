@@ -158,6 +158,10 @@ abstract class PageFrame extends CI_Controller
         $this->addMessage($message, 'danger');
     }
 
+    protected function addScript($script) {
+        $this->appendData('scripts', $script);
+    }
+
     /**
      * Getter for the data to be accessible to views.
      *

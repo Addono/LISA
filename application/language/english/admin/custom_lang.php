@@ -19,3 +19,8 @@ $lang['application_give_user_error_not_integer'] = 'Invalid amount given, only w
 $lang['application_give_user_error_amount_not_positive'] = 'Only positive amounts can be given.';
 
 $lang['application_give_user_submit'] = 'Give';
+
+
+//@Overwrite
+$lang['application_name'] = 'Lisa Backend';
+$lang['application_title'] = 'Lisa Backend';

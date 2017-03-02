@@ -21,6 +21,7 @@ class Handler extends CI_Controller {
             'warning' => [],
             'danger' => [],
         ],
+        'scripts' => [],
     ];
 
     public function index($group = self::GROUP_FRONTEND, $page = self::DEFAULT_PAGE, $subPage = null)

@@ -21,14 +21,12 @@
         <script src="<?=base_url('./resources/js/jquery.dataTables.min.js')?>"></script>
         <script src="<?=base_url('./resources/js/dataTables.bootstrap.min.js')?>"></script>
         <script src="<?=base_url('./resources/js/dataTables.responsive.js')?>"></script>
-        <script>
-            $(document).ready(function() {
-                $('.data-table-responsive').DataTable({
-                    responsive: true
-                });
-            });
-        </script>
 
+        <?php foreach ($scripts as $script) { ?>
+        <script>
+            <?=$script?>
+        </script>
+        <?php } ?>
     </body>
 
 </html>
