@@ -167,6 +167,10 @@ abstract class PageFrame extends CI_Controller
         return $this->data;
     }
 
+    public final function getDataKey($key) {
+        return $this->data[$key];
+    }
+
     /**
      * Validates a form given the rules of the class.
      *

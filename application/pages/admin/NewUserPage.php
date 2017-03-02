@@ -56,11 +56,17 @@ class NewUserPage extends PageFrame
         $firstName  = set_value('first-name');
         $lastName   = set_value('last-name');
         $email      = set_value('email');
-        $userRoles  = array_keys(set_value('roles'));
+        $userRoles  = set_value('roles');
+
+        if (is_array($userRoles)) {
+            $userRoles = array_keys($userRoles);
+        } else {
+            $userRoles = [];
+        }
 
         $success = $this->ci->Login_User_LoginRole->add($username, $password, $firstName, $lastName, $email, $userRoles);
 
-        if (true || $success) {
+        if ($success) {
             $this->addSuccessMessage(sprintf(lang('application_new_user_success'), $username));
         } else {
             $this->addWarningMessage(lang('application_new_user_error_unknown'));

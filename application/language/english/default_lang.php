@@ -24,4 +24,8 @@ $lang['404_page_header_title'] = 'CRASH...#404';
 $lang['404_page_header_body'] = 'Sorry, but we couldn\'t find the page you requested, to get you back on track click the button to go back to the home page.';
 $lang['404_page_homepage'] = 'Homepage';
 
+$lang['insufficient_rights_page_header_title'] = 'Insufficient rights';
+$lang['insufficient_rights_page_header_body'] = 'You do not have the rights required to view that page, if you think you should have access then please contact your system administrator.';
+$lang['insiffucient_rights_page_homepage'] = 'Homepage';
+
 $lang['unknown_form_error'] = 'Something went wrong while submitting the form, please try again. If the problem persists, please contact the system administrator.';

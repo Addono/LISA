@@ -12,7 +12,6 @@
                 <?=form_open()?>
                     <div class="header header-primary text-center">
                         <h4><?=lang('login_login')?></h4>
-                        <?=showMessages($messages)?>
                     </div>
                     <p class="text-divider"></p>
                     <div class="content">

@@ -46,23 +46,23 @@
 
         <div class="collapse navbar-collapse" id="navigation">
             <ul class="nav navbar-nav navbar-right">
-            <?php if($loggedIn) { ?>
-                <!-- Buttons for logged in users -->
-                <li>
-                    <a href="<?=site_url('logout')?>" class="btn btn-simple btn-white" target="_self">
-                        <i class="fa fa-sign-out"></i> <?=lang('logout_logout')?>
-                    </a>
-                </li>
-                <!-- /Buttons for logged in users -->
-            <?php } else { ?>
-                <!-- Buttons for users whom are not logged in -->
-                <li>
-                    <a href="<?=site_url('login')?>" class="btn btn-simple btn-white" target="_self">
-                        <i class="fa fa-sign-in"></i> <?=lang('login_login')?>
-                    </a>
-                </li>
-                <!-- /Buttons for users whom are not logged in -->
-            <?php } ?>
+                <?php if($loggedIn) { ?>
+                    <!-- Buttons for logged in users -->
+                    <li>
+                        <a href="<?=site_url('logout')?>" class="btn btn-simple btn-white" target="_self">
+                            <i class="fa fa-sign-out"></i> <?=lang('logout_logout')?>
+                        </a>
+                    </li>
+                    <!-- /Buttons for logged in users -->
+                <?php } else { ?>
+                    <!-- Buttons for users whom are not logged in -->
+                    <li>
+                        <a href="<?=site_url('login')?>" class="btn btn-simple btn-white" target="_self">
+                            <i class="fa fa-sign-in"></i> <?=lang('login_login')?>
+                        </a>
+                    </li>
+                    <!-- /Buttons for users whom are not logged in -->
+                <?php } ?>
                 <!-- Buttons for everyone -->
                 <li>
                     <a href="https://twitter.com/" target="_blank" class="btn btn-simple btn-white btn-just-icon">
@@ -83,7 +83,11 @@
 <div class="wrapper">
     <div class="header first">
         <?=showMessages(
+<<<<<<< HEAD
                 $messages,
+=======
+            $messages,
+>>>>>>> upstream/master
             '<div class="alert alert-%s">
                 <div class="container-fluid">
                     <div class="alert-icon">
