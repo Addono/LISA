@@ -133,7 +133,7 @@ class User extends ModelFrame
             ],
             'add' => [
                 Login::FIELD_LOGIN_ID => [
-                    'type' => 'foreign',
+                    'type' => 'primary|foreign',
                     'table' => Login::name(),
                     'field' => Login::FIELD_LOGIN_ID,
                 ],
