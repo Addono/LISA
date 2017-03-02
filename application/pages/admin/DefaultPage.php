@@ -53,7 +53,7 @@ class DefaultPage extends PageFrame
     protected function getModels()
     {
         return [
-            'Role',
+            Role::class,
         ];
     }
 
