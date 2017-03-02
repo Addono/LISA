@@ -38,11 +38,6 @@ html {
     margin-right: 0px;
 }
 
-.horizontal-align-radio .radio {
-    float: left !important;
-    width: inherit !important;
-}
-
 .radio+.radio {
     margin-top: 10px !important;
 }
@@ -54,4 +49,22 @@ body {
 
 .input-group span.input-group-addon {
     padding-top: 0px;
+}
+
+.pagination.horizontal-radio {
+    margin: 0px;
+}
+
+.pagination.horizontal-radio input[type=radio] {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    margin-left: -11px;
+    opacity: 0;
+}
+
+.pagination.horizontal-radio li.active label {
+    color: #fff;
+    width: 8px;
+    display: inline;
 }

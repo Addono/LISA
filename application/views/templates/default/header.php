@@ -81,6 +81,21 @@
 </nav>
 
 <div class="wrapper">
-    <div class="header header-filter first">
+    <div class="header first">
+        <?=showMessages(
+                $messages,
+            '<div class="alert alert-%s">
+                <div class="container-fluid">
+                    <div class="alert-icon">
+                        <i class="material-icons"></i>
+                    </div>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true"><i class="fa fa-times"></i></span>
+                </button>',
+            '</div>
+            </div>'
+        );
+        ?>
+
         <div class="container">
             <div class="row">

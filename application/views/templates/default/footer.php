@@ -5,18 +5,18 @@
  */
 ?>
 
-            <footer class="footer">
-                <div class="container">
-                    <div class="copyright">
-                        &copy; <?=lang('copyright')?>
+                <footer class="footer">
+                    <div class="container">
+                        <div class="copyright">
+                            &copy; <?=lang('copyright')?>
+                        </div>
                     </div>
-                </div>
-            </footer>
+                </footer>
+            </div>
         </div>
     </div>
-</div>
 
-</body>
+    </body>
 
     <!--   Core JS Files   -->
     <script src="<?php echo base_url('resources/js/jquery.min.js')?>" type="text/javascript"></script>
@@ -28,4 +28,17 @@
 
     <!-- Control Center for Material Kit: activating the ripples, parallax effects, scripts from the example pages etc -->
     <script src="<?php echo base_url('resources/js/material-kit.js')?>" type="text/javascript"></script>
+
+    <script>
+        $(document).ready(function() {
+            $("input[type=radio").change(function() {
+                $(this).parents('ul').children('.active').removeClass('active');
+                $(this).parents('li').addClass('active');
+            });
+
+            $(".pagination.horizontal-radio").click(function() {
+                $(this).find('input[type=radio]').attr('checked', true);
+            });
+        });
+    </script>
 </html>

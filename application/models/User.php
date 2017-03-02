@@ -63,6 +63,18 @@ class User extends ModelFrame
         return $result > 0;
     }
 
+    public function getName($loginId) {
+        $row = $this->db
+            ->where([Login::FIELD_LOGIN_ID => $loginId])
+            ->get(self::name())
+            ->row_array();
+
+        $firstName = $row[self::FIELD_FIRST_NAME];
+        $lastName = $row[self::FIELD_LAST_NAME];
+
+        return ucfirst($firstName) . ' ' . $lastName;
+    }
+
     /**
      * Updates data of one user.
      *

@@ -6,6 +6,8 @@
  */
 class ConsumePage extends PageFrame
 {
+    const MIN = 0;
+    const MAX = 5;
 
     /**
      * The views to be shown.
@@ -35,6 +37,57 @@ class ConsumePage extends PageFrame
      */
     public function beforeView()
     {
+        $userRoleId = $this->ci->Role->getRoleIdFromRoleName(Role::ROLE_USER);
+        $users = $this->ci->User_Consumption_LoginRole->get($userRoleId);
+        $this->setData('users', $users);
+
+        $fields = [
+            'login_id' => Login::FIELD_LOGIN_ID,
+            'first_name' => User::FIELD_FIRST_NAME,
+            'last_name' => User::FIELD_LAST_NAME,
+            'amount' => Consumption::FIELD_AMOUNT,
+        ];
+        $this->setData('fields', $fields);
+
+        $this->setData('min', self::MIN);
+        $this->setData('max', self::MAX);
+    }
+
+    public function onFormSuccess()
+    {
+        $amount = set_value('amount');
+
+        // Check if the given amounts are valid.
+        foreach ($amount as $loginId => $delta) {
+            if ($delta < self::MIN || $delta > self::MAX) {
+                $this->addDangerMessage(lang('consume_form_invalid_amount'));
+                return;
+            }
+        }
+
+        // Check if the given users are all actually useres.
+        $userRoleId = $this->ci->Role->getRoleIdFromRoleName(Role::ROLE_USER);
+        foreach ($amount as $loginId => $delta) {
+            if (! $this->ci->LoginRole->exists($loginId, $userRoleId)) {
+                $this->addDangerMessage(lang('consume_form_invalid_user'));
+                return;
+            }
+        }
+
+        foreach($amount as $loginId => $delta) {
+            // Skip all users for whom noting changed.
+            if ($delta == 0) {
+                continue;
+            }
+
+            $name = $this->ci->User->getName($loginId);
+            $userSuccess = $this->ci->Consumption->change($loginId, -$delta);
+            if ($userSuccess) {
+                $this->addSuccessMessage(sprintf(lang('consume_form_user_success'), $delta, $name));
+            } else {
+                $this->addDangerMessage(sprintf(lang('consume_form_user_failure'), $delta, $name));
+            }
+        }
     }
 
     /**
@@ -54,7 +107,7 @@ class ConsumePage extends PageFrame
      */
     protected function getFormValidationRules()
     {
-        return false;
+        return is_array(set_value('amount'));
     }
 
     /**
@@ -65,7 +118,12 @@ class ConsumePage extends PageFrame
     protected function getModels()
     {
         return [
+            Login::class,
+            Consumption::class,
+            User::class,
             Role::class,
+            LoginRole::class,
+            User_Consumption_LoginRole::class,
         ];
     }
 
