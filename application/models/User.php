@@ -109,6 +109,9 @@ class User extends ModelFrame
 
     public function v1() {
         return [
+            'requires' => [
+                Login::class => 1,
+            ],
             'add' => [
                 Login::FIELD_LOGIN_ID => [
                     'type' => 'foreign',

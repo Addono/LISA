@@ -34,7 +34,7 @@
                         </div>
                     </div>
                     <div class="footer text-center">
-                        <input type="submit" value="<?=lang('login_submit')?>" class="btn btn-simple btn-primary btn-lg">
+                        <input type="submit" value="<?=lang('login_submit')?>" class="btn btn-primary btn-lg">
                     </div>
                 </form>
             </div>

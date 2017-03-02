@@ -108,14 +108,17 @@ class Install extends CI_Controller {
 
             $newVersion = $this->getModelVersion($model);
 
+            // Add the model to the back of the queue while it isn't finished updating.
             if ($finished !== TRUE) {
                 $queue->enqueue($model);
+            }
 
-                if ($oldVersion == $newVersion) {
-                    $unchanged++;
-                } else {
-                    $unchanged = 0;
-                }
+            // Reset unchanged if the model managed to progress (either finished or increased in version), else increase
+            // the unchanged counter.
+            if ($oldVersion != $newVersion || $finished) {
+                $unchanged = 0;
+            } else {
+                $unchanged++;
             }
         }
 
