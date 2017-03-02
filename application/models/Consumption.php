@@ -15,6 +15,13 @@ class Consumption extends ModelFrame
 
     const CONSUMPTION_DEFAULT_AMOUNT = 0;
 
+    protected function dependencies()
+    {
+        return [
+            Transaction::class,
+        ];
+    }
+
     private function add($loginId) {
         return $this->db
             ->insert(self::name(), [
@@ -38,7 +45,7 @@ class Consumption extends ModelFrame
         }
     }
 
-    public function change($loginId, $delta) {
+    public function change($loginId, $authorId, $delta) {
         $this->db->trans_start();
             $oldAmount = $this->get($loginId);
 
@@ -49,7 +56,7 @@ class Consumption extends ModelFrame
                 $newAmount = $oldAmount + $delta;
             }
 
-            $success = $this->set($loginId, $newAmount);
+            $success = $this->set($loginId, $authorId, $newAmount, $delta);
         $this->db->trans_complete();
 
         return $this->db->trans_status() && $success;
@@ -59,18 +66,24 @@ class Consumption extends ModelFrame
      * Sets the amount for a login id. NOTE: Creates a new tuple if the login id didn't have one already.
      *
      * @param $loginId
+     * @param $authorId
      * @param $amount
      * @return bool
      */
-    private function set($loginId, $amount) {
-        return $this->db
-            ->replace(
-                self::name(),
-                [
-                    self::FIELD_AMOUNT => $amount,
-                    Login::FIELD_LOGIN_ID => $loginId
-                ]
-            );
+    private function set($loginId, $authorId, $amount, $delta) {
+        $this->db->trans_start();
+            $result = $this->db
+                ->replace(
+                    self::name(),
+                    [
+                        self::FIELD_AMOUNT => $amount,
+                        Login::FIELD_LOGIN_ID => $loginId
+                    ]
+                );
+            $this->Transaction->add($loginId, $authorId, $amount, $delta);
+        $this->db->trans_complete();
+
+        return $result;
     }
 
     public function v1() {

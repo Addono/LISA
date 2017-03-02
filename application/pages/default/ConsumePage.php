@@ -56,6 +56,7 @@ class ConsumePage extends PageFrame
     public function onFormSuccess()
     {
         $amount = set_value('amount');
+        $authorId = getLoggedInLoginId($this->ci->session);
 
         // Check if the given amounts are valid.
         foreach ($amount as $loginId => $delta) {
@@ -81,7 +82,7 @@ class ConsumePage extends PageFrame
             }
 
             $name = $this->ci->User->getName($loginId);
-            $userSuccess = $this->ci->Consumption->change($loginId, -$delta);
+            $userSuccess = $this->ci->Consumption->change($loginId, $authorId, -$delta);
             if ($userSuccess) {
                 $this->addSuccessMessage(sprintf(lang('consume_form_user_success'), $delta, $name));
             } else {
