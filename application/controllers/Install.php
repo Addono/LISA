@@ -288,7 +288,7 @@ class Install extends CI_Controller {
     /**
      * Makes changes to a table.
      *
-     * @param string $name The name of the table.
+     * @param string $tableName The name of the table.
      * @param array $actions The actions to be executed.
      * @param array $attr
      */
@@ -315,6 +315,13 @@ class Install extends CI_Controller {
                                     break;
                                 case 'foreign':
                                     // Add a new key as foreign key.
+                                    $this->dbforge->add_field([$name => $keyType]);
+                                    $this->dbforge->add_field('CONSTRAINT FOREIGN KEY ('.$name.') REFERENCES '.$properties['table'].'('.$properties['field'].')');
+                                    $keyType['auto_increment'] = false; // Ensure that only the first field will auto increment.
+                                    break;
+                                case 'foreign|primary':
+                                case 'primary|foreign':
+                                    $this->dbforge->add_key($name, true);
                                     $this->dbforge->add_field([$name => $keyType]);
                                     $this->dbforge->add_field('CONSTRAINT FOREIGN KEY ('.$name.') REFERENCES '.$properties['table'].'('.$properties['field'].')');
                                     $keyType['auto_increment'] = false; // Ensure that only the first field will auto increment.
