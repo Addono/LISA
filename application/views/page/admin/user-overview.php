@@ -45,7 +45,7 @@
                                 <td style="display:flex;justify-content:center;align-items:center">
                                     <div class="button-tooltip">
                                         <a href="<?=site_url($group.'/GiveUser/'.$u[$userDataFields['id']])?>">
-                                            <button type="button" class="btn btn-warning btn-circle">
+                                            <button type="button" class="btn btn-warning btn-circle" data-toggle="tooltip" data-placement="left" title="<?=lang('application_user_overview_tooltip_give_user')?>">
                                                 <i class="fa fa-plus"></i>
                                             </button>
                                         </a>

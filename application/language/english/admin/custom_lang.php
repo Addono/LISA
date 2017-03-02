@@ -20,6 +20,8 @@ $lang['application_give_user_error_amount_not_positive'] = 'Only positive amount
 
 $lang['application_give_user_submit'] = 'Give';
 
+$lang['application_user_overview_tooltip_give_user'] = 'Give user consumptions';
+
 
 //@Overwrite
 $lang['application_name'] = 'Lisa Backend';
