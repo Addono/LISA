@@ -50,6 +50,26 @@ class User extends ModelFrame
     }
 
     /**
+     * Gives an array for all names corresponding with each login id. The keys of the array are the login ids.
+     *
+     * @return array
+     */
+    public function getLoginIdToName() {
+        $data = $this->db
+            ->select([Login::FIELD_LOGIN_ID, self::FIELD_FIRST_NAME, self::FIELD_LAST_NAME])
+            ->get(self::name())
+            ->result_array();
+
+        // Combine first and last name.
+        foreach ($data as $key => $row) {
+            $data[$key]['name'] = ucfirst($row[self::FIELD_FIRST_NAME]) . ' ' . $row[self::FIELD_LAST_NAME];
+        }
+
+        // Make the ID key and return.
+        return array_column($data, 'name', Login::FIELD_LOGIN_ID);
+    }
+
+    /**
      * Checks if a user for this login id already exists.
      *
      * @param $loginId
