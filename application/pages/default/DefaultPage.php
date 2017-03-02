@@ -37,6 +37,9 @@ class DefaultPage extends PageFrame
      */
     public function beforeView()
     {
+        if (isLoggedInAndHasRole($this->ci, Role::ROLE_USER)) {
+            redirect('consume');
+        }
     }
 
     /**
@@ -46,7 +49,9 @@ class DefaultPage extends PageFrame
      */
     protected function getModels()
     {
-        return [];
+        return [
+            Role::class,
+        ];
     }
 
     /**

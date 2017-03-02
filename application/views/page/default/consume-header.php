@@ -14,7 +14,7 @@
             </div>
             <p class="text-divider"></p>
             <div class="content">
-                <div class="input-group form-group label-floating">
+                <div class="input-group form-group label-floating center-block">
                     <table class="table table-striped">
                         <thead>
                             <tr>

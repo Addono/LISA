@@ -15,7 +15,7 @@ class Consumption extends ModelFrame
 
     const CONSUMPTION_DEFAULT_AMOUNT = 0;
 
-    public function add($loginId) {
+    private function add($loginId) {
         return $this->db
             ->insert(self::name(), [
                 Login::FIELD_LOGIN_ID => $loginId,
@@ -62,8 +62,8 @@ class Consumption extends ModelFrame
      * @param $amount
      * @return bool
      */
-    public function set($loginId, $amount) {
-        $this->db
+    private function set($loginId, $amount) {
+        return $this->db
             ->replace(
                 self::name(),
                 [
@@ -71,8 +71,6 @@ class Consumption extends ModelFrame
                     Login::FIELD_LOGIN_ID => $loginId
                 ]
             );
-
-        echo $this->db->last_query();
     }
 
     public function v1() {
@@ -82,7 +80,7 @@ class Consumption extends ModelFrame
             ],
             'add' => [
                 Login::FIELD_LOGIN_ID => [
-                    'type' => 'foreign',
+                    'type' => 'primary|foreign',
                     'table' => Login::name(),
                     'field' => Login::FIELD_LOGIN_ID,
                     'unique' => true,
