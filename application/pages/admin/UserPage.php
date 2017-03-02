@@ -215,6 +215,7 @@ class UserPage extends PageFrame
         return [
             Login::class,
             Role::class,
+            User::class,
             Login_User::class,
             Login_User_LoginRole_Role::class,
         ];
