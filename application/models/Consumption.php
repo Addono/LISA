@@ -68,6 +68,7 @@ class Consumption extends ModelFrame
      * @param $loginId
      * @param $authorId
      * @param $amount
+     * @param $delta
      * @return bool
      */
     private function set($loginId, $authorId, $amount, $delta) {
@@ -80,6 +81,8 @@ class Consumption extends ModelFrame
                         Login::FIELD_LOGIN_ID => $loginId
                     ]
                 );
+
+            // Log this action as a new transaction.
             $this->Transaction->add($loginId, $authorId, $amount, $delta);
         $this->db->trans_complete();
 

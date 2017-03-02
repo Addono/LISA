@@ -37,6 +37,26 @@ class Transaction extends ModelFrame
         );
     }
 
+    public function getAllFromSubject($subjectId) {
+        return $this->db
+            ->where([self::FIELD_SUBJECT_ID => $subjectId])
+            ->get(self::name())
+            ->result_array();
+    }
+
+    public function getAllFromAuthor($authorId) {
+        return $this->db
+            ->where([self::FIELD_AUTHOR_ID => $authorId])
+            ->get(self::name())
+            ->result_array();
+    }
+
+    public function getAll() {
+        return $this->db
+            ->get(self::name())
+            ->result_array();
+    }
+
     public function v1() {
         return [
             'requires' => [
