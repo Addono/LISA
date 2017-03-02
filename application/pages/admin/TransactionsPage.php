@@ -36,7 +36,24 @@ class TransactionsPage extends PageFrame
      */
     public function beforeView()
     {
+        $transactions = $this->ci->User_Transaction->getAll();
+        $this->setData('transactions', $transactions);
 
+        $fields = [
+            'author' => 'author_name',
+            'subject' => 'subject_name',
+            'amount' => Consumption::FIELD_AMOUNT,
+            'delta' => Transaction::FIELD_DELTA,
+            'time' => Transaction::FIELD_TIME,
+        ];
+        $this->setData('fields', $fields);
+
+        $this->addScript(
+            '$(document).ready(function() {
+                $(\'.data-table-responsive\').DataTable({
+                    responsive: true
+                });
+            });');
     }
 
     /**
@@ -55,6 +72,7 @@ class TransactionsPage extends PageFrame
     {
         return [
             Role::class,
+            User_Transaction::class,
         ];
     }
 

@@ -25,6 +25,13 @@ class User_Transaction extends ModelFrame
             ->get(Transaction::name())
             ->result_array();
 
-        $users = $this->User
+        $users = $this->User->getLoginIdToName();
+
+        foreach ($transactions as $key => $t) {
+            $transactions[$key]['author_name'] = $users[$t[Transaction::FIELD_AUTHOR_ID]];
+            $transactions[$key]['subject_name'] = $users[$t[Transaction::FIELD_SUBJECT_ID]];
+        }
+
+        return $transactions;
     }
 }

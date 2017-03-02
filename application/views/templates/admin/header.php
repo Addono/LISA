@@ -63,6 +63,9 @@
                         <a href="<?=site_url($group)?>"><i class="fa fa-dashboard fa-fw"></i> <?=lang('application_menu_dashboard')?></a>
                     </li>
                     <li>
+                        <a href="<?=site_url($group.'/Transactions')?>"><i class="glyphicon glyphicon-transfer fa-fw"></i> <?=lang('application_menu_transactions')?></a>
+                    </li>
+                    <li>
                         <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> <?=lang('application_menu_manage_users')?><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
