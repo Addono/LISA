@@ -22,7 +22,8 @@ $lang['application_give_user_submit'] = 'Give';
 
 $lang['application_user_overview_tooltip_give_user'] = 'Give user consumptions';
 
-
 //@Overwrite
 $lang['application_name'] = 'Lisa Backend';
 $lang['application_title'] = 'Lisa Backend';
+
+$lang['application_dashboard_body'] = 'One day this might contain widgets, but for now it will just give you a quick intro. You can add users under new user Manage Users > Add User.<p>To view all users go to Manage Users > Overview, here you can also edit each user or give them consumption credits.<p><b>Note:</b> Only users with the <i>User</i>-role are able to spend them.';

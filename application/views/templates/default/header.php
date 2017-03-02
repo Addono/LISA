@@ -64,16 +64,6 @@
                     <!-- /Buttons for users whom are not logged in -->
                 <?php } ?>
                 <!-- Buttons for everyone -->
-                <li>
-                    <a href="https://twitter.com/" target="_blank" class="btn btn-simple btn-white btn-just-icon">
-                        <i class="fa fa-twitter"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://www.facebook.com/" target="_blank" class="btn btn-simple btn-white btn-just-icon">
-                        <i class="fa fa-facebook-square"></i>
-                    </a>
-                </li>
                 <!-- /Buttons for everyone -->
             </ul>
         </div>

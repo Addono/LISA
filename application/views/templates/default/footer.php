@@ -4,14 +4,11 @@
  * @date 29-1-2017
  */
 ?>
-
-                <footer class="footer">
-                    <div class="container">
-                        <div class="copyright">
-                            &copy; <?=lang('copyright')?>
-                        </div>
-                    </div>
-                </footer>
+            <footer>
+                <div class="copyright">
+                    &copy; <?=lang('copyright')?>
+                </div>
+            </footer>
             </div>
         </div>
     </div>
