@@ -56,7 +56,13 @@ class NewUserPage extends PageFrame
         $firstName  = set_value('first-name');
         $lastName   = set_value('last-name');
         $email      = set_value('email');
-        $userRoles  = array_keys(set_value('roles'));
+        $userRoles  = set_value('roles');
+
+        if (is_array($userRoles)) {
+            $userRoles = array_keys($userRoles);
+        } else {
+            $userRoles = [];
+        }
 
         $success = $this->ci->Login_User_LoginRole->add($username, $password, $firstName, $lastName, $email, $userRoles);
 

@@ -90,7 +90,11 @@ class Handler extends CI_Controller {
 
             // Check if the user has access.
             if (!$pageController->hasAccess()) {
-                redirect($group.'/login'); // todo add insufficient rights page
+                if (isLoggedIn($this->session)) {
+                    redirect('InsufficientRights');
+                } else {
+                    redirect($group.'/login');
+                }
                 exit;
             }
             // Call the form success if a valid form was submitted.
