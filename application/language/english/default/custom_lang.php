@@ -24,5 +24,10 @@ $lang['transactions_table_header_delta'] = 'Difference';
 $lang['transactions_table_header_time'] = 'Time';
 
 // @Overwrite
+$lang['application_name'] = 'Lisa';
+$lang['application_title'] = 'Lisa is super awesome';
+$lang['copyright'] = '2017, Adriaan Knapen';
+$lang['application_version'] = 'Core v1.1-beta';
+
 $lang['default_page_header_title'] = 'Welcome';
 $lang['default_page_header_body'] = 'This is Lisa, login to proceed.';

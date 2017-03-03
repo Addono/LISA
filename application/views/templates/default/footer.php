@@ -4,18 +4,12 @@
  * @date 29-1-2017
  */
 ?>
-<<<<<<< HEAD
-            <footer>
-                <div class="copyright">
-                    &copy; <?=lang('copyright')?>
-=======
 
             <footer class="footer">
                 <div class="container">
                     <div class="copyright">
                        <?=lang('application_name').' '.lang('application_version')?> &copy; <?=lang('copyright')?>
                     </div>
->>>>>>> upstream/master
                 </div>
             </footer>
             </div>
