@@ -23,3 +23,9 @@ $lang['logout_success_header'] = 'Je bent nu uitgelogd';
 $lang['404_page_header_title'] = 'CRASH...#404';
 $lang['404_page_header_body'] = 'Sorry, maar de pagina die jij probeerde te bereiken kunnen wij niet vinden. Om je weer op gang te helpen kan je met de volgende knop terug naar de startpagina gaan.';
 $lang['404_page_homepage'] = 'Startpagina';
+
+$lang['insufficient_rights_page_header_title'] = 'Geen toegang';
+$lang['insufficient_rights_page_header_body'] = 'Je hebt niet de benodigde rechten om deze pagina te kunnen zien, als je denkt dat je wel recht hebt om deze pagina te mogen bezoeken neem dan contact op met de systeem beheerder.';
+$lang['insiffucient_rights_page_homepage'] = 'Startpagina';
+
+$lang['unknown_form_error'] = 'Something went wrong while submitting the form, please try again. If the problem persists, please contact the system administrator.';
