@@ -54,10 +54,11 @@ class Handler extends CI_Controller {
             'session',
             'form_validation'
         ]);
-        $this->lang->load('default', 'english');
-        $this->lang->load($group.'/application', 'english');
-        if (file_exists('./application/language/english/'.$group.'/custom_lang.php')) {
-            $this->lang->load($group.'/custom', 'english');
+        $language = 'nederlands';
+        $this->lang->load('default', $language);
+        $this->lang->load($group.'/application', $language);
+        if (file_exists('./application/language/'.$language.'/'.$group.'/custom_lang.php')) {
+            $this->lang->load($group.'/custom', $language);
         }
 
         // Check if the user is logged in
