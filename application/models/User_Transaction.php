@@ -20,8 +20,10 @@ class User_Transaction extends ModelFrame
         ];
     }
 
-    public function getAll() {
+    public function getAll($where = []) {
         $transactions = $this->db
+            ->order_by(Transaction::FIELD_TIME, 'DESC')
+            ->where($where)
             ->get(Transaction::name())
             ->result_array();
 
@@ -33,5 +35,13 @@ class User_Transaction extends ModelFrame
         }
 
         return $transactions;
+    }
+
+    public function getAllForSubjectId($subjectId) {
+        return $this->getAll([Transaction::FIELD_SUBJECT_ID => $subjectId]);
+    }
+
+    public function getAllForAuthorId($authorId) {
+        return $this->getAll([Transaction::FIELD_AUTHOR_ID => $authorId]);
     }
 }

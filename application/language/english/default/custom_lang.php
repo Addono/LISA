@@ -13,3 +13,16 @@ $lang['consume_form_invalid_amount'] = 'Something went wrong with the given amou
 $lang['consume_form_invalid_user'] = 'An invalid user has been selected, therefore the transaction is aborted. Please try again, if the problem persist please contact the system administrator.';
 $lang['consume_form_user_success'] = 'Successfully purchased %s consumption(s) for %s.';
 $lang['consume_form_user_failure'] = 'Failed purchasing %s consumptions for %s. Please try again, if the problem persists please contact the system administrator.';
+
+// Transactions
+$lang['transactions_title'] = 'My transactions';
+
+$lang['transactions_table_header_author'] = 'Author';
+$lang['transactions_table_header_subject'] = 'Subject';
+$lang['transactions_table_header_amount'] = 'New amount';
+$lang['transactions_table_header_delta'] = 'Difference';
+$lang['transactions_table_header_time'] = 'Time';
+
+// @Overwrite
+$lang['default_page_header_title'] = 'Welcome';
+$lang['default_page_header_body'] = 'This is Lisa, login to proceed.';

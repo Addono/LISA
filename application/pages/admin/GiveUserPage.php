@@ -39,10 +39,11 @@ class GiveUserPage extends PageFrame
     public function onFormSuccess()
     {
         $loginId = $this->params['subpage'];
+        $authorId = getLoggedInLoginId($this->ci->session);
         $name = $this->ci->User->getName($loginId);
         $amount = set_value('amount');
 
-        $success = $this->ci->Consumption->change($loginId, $amount);
+        $success = $this->ci->Consumption->change($loginId, $authorId, $amount);
         if ($success) {
             $this->addSuccessMessage(sprintf(lang('application_give_user_success'), '<i>' . $name . '</i>', $amount));
         } else {
