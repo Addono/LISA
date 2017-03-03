@@ -31,4 +31,4 @@ $lang['insufficient_rights_page_header_title'] = 'Geen toegang';
 $lang['insufficient_rights_page_header_body'] = 'Je hebt niet de benodigde rechten om deze pagina te kunnen zien, als je denkt dat je wel recht hebt om deze pagina te mogen bezoeken neem dan contact op met de systeem beheerder.';
 $lang['insufficient_rights_page_homepage'] = 'Startpagina';
 
-$lang['unknown_form_error'] = 'Something went wrong while submitting the form, please try again. If the problem persists, please contact the system administrator.';
+$lang['unknown_form_error'] = 'Er is iets fout gegaan bij het verwerken van het formulier, probeer het aljeblieft opnieuw. Als het probleem blijft optreden, neem dan contact op met de systeem beheerder.';
