@@ -8,6 +8,14 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
+    <?php $tc = '#f97400'?>
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#<?=$tc?>">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#<?=$tc?>">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="#<?=$tc?>">
+
     <link rel="apple-touch-icon" sizes="76x76" href="<?=base_url('resources/img/apple-icon.png')?>">
     <link rel="icon" type="image/png" href="<?=base_url('resources/img/favicon.png')?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
