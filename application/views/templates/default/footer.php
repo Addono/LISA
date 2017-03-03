@@ -8,7 +8,7 @@
             <footer class="footer">
                 <div class="container">
                     <div class="copyright">
-                        &copy; <?=lang('copyright')?>
+                       <?=lang('application_name').' '.lang('application_version')?> &copy; <?=lang('copyright')?>
                     </div>
                 </div>
             </footer>

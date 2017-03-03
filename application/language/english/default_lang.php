@@ -7,9 +7,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $lang['navigation_toggle'] = 'Toggle navigation';
 
-$lang['default_page_header_title'] = 'Welcome';
-$lang['default_page_header_body'] = 'This is your new homepage!';
-
 $lang['login_login'] = 'Login';
 $lang['login_username'] = 'Username';
 $lang['login_password'] = 'Password';
