@@ -8,9 +8,9 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <?php $tc = '#f97400'?>
+    <?php $tc = '220000'?>
     <!-- Chrome, Firefox OS and Opera -->
-    <meta name="theme-color" content="#<?=$tc?>">
+    <meta name="theme-color" content="#<?=$tc?>"><meta name="theme-color" content="#db5945">
     <!-- Windows Phone -->
     <meta name="msapplication-navbutton-color" content="#<?=$tc?>">
     <!-- iOS Safari -->
