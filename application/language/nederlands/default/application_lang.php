@@ -11,3 +11,4 @@ $lang['copyright'] = '2017, Adriaan Knapen';
 
 $lang['default_page_header_title'] = 'Welkom';
 $lang['default_page_header_body'] = 'Dit is jouw nieuwe startpagina!';
+$lang['menu_admin'] = 'Beheerders paneel';
