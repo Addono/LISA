@@ -8,7 +8,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <?php $tc = '#f97400'?>
+    <?php $tc = '555555'?>
     <!-- Chrome, Firefox OS and Opera -->
     <meta name="theme-color" content="#<?=$tc?>">
     <!-- Windows Phone -->
