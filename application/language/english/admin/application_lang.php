@@ -13,11 +13,11 @@ $lang['copyright'] = '2017, Adriaan Knapen';
 $lang['application_menu_dashboard'] = 'Dashboard';
 $lang['application_menu_manage_users'] = 'Manage users';
 $lang['application_menu_overview'] = 'Overview';
+$lang['application_menu_new_user'] = 'New user';
 
 // Dashboard
 $lang['application_dashboard_title'] = 'Dashboard';
 $lang['application_dashboard_body'] = 'This is your new dashboard!';
-$lang['application_menu_new_user'] = 'New user';
 
 // User
 $lang['application_user_title'] = 'Edit user %s';
