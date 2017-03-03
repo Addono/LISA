@@ -3,6 +3,12 @@
  * @author Adriaan Knapen <a.d.knapen@protonmail.com>
  * @date 1-3-2017
  */
+
+// Menu
+$lang['menu_transactions'] = 'Mijn transacties';
+$lang['menu_consume'] = 'Consumeer';
+
+// Consume
 $lang['consume_title'] = 'Consumeer!';
 
 $lang['consume_table_head_name'] = 'Naam';
@@ -22,6 +28,10 @@ $lang['transactions_table_header_subject'] = 'Gebruiker';
 $lang['transactions_table_header_amount'] = 'Nieuwe hoeveelheid';
 $lang['transactions_table_header_delta'] = 'Verschil';
 $lang['transactions_table_header_time'] = 'Datum';
+
+// Not user
+$lang['not_user_page_header_title'] = 'Eeuhm... sorry :(';
+$lang['not_user_page_header_body'] = 'Je hebt niet de rechten om deze applicatie te mogen gebruiker, als je denkt dat je dit wel zou mogen neem dan contact op met de systeem beheerder.';
 
 // @Overwrite
 $lang['application_name'] = 'Lisa';

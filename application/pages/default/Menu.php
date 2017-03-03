@@ -9,7 +9,8 @@ class Menu extends MenuFrame
 
     protected function menuElements() {
         return [
-            new MenuPage('Transactions', TransactionsPage::class, 'glyphicon glyphicon-transfer'),
+            new MenuPage(lang('menu_consume'), ConsumePage::class, 'fa fa-glass fa-fw'),
+            new MenuPage(lang('menu_transactions'), TransactionsPage::class, 'fa fa-history fa-fw'),
             // Since only the pages which the user has access rights for will be shown, only one of these will be displayed.
             new MenuPage(lang('login_login'), LoginPage::class, 'fa fa-sign-in fa-fw'),
             new MenuPage(lang('logout_logout'), LogoutPage::class, 'fa fa-sign-out fa-fw'),

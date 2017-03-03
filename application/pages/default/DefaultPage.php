@@ -11,10 +11,17 @@ class DefaultPage extends PageFrame
 
     public function getViews()
     {
-        return [
-            'default-header',
-            'intersection',
-        ];
+        if (isLoggedIn($this->ci->session)) {
+            return [
+                'not-user-header',
+                'intersection',
+            ];
+        } else {
+            return [
+                'default-header',
+                'intersection',
+            ];
+        }
     }
 
     public function isVisible()
