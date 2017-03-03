@@ -2,6 +2,7 @@
 
 require_once('Install.php');
 require_once('./application/pages/PageFrame.php');
+require_once('./application/pages/MenuFrame.php');
 
 /**
  * @property    CI_Form_validation  $form_validation
@@ -65,6 +66,7 @@ class Handler extends CI_Controller {
             $this->data['username'] = $this->Login->getUsername(getLoggedInLoginId($this->session));
         }
 
+        $this->buildMenu($group);
         $this->showPage($group, $page, $subPage);
     }
 
@@ -98,6 +100,7 @@ class Handler extends CI_Controller {
                 }
                 exit;
             }
+
             // Call the form success if a valid form was submitted.
             if ($pageController->getFormSuccess()) {
                 $pageController->onFormSuccess();
@@ -128,5 +131,12 @@ class Handler extends CI_Controller {
                 show_404();
             }
         }
+    }
+
+    private function buildMenu($group) {
+        require_once(APPPATH.'/pages/'.$group.'/Menu.php');
+        $menu = new Menu($group);
+
+        $this->data['menu'] = $menu->getMenu();
     }
 }

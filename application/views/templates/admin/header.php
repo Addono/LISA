@@ -58,26 +58,7 @@
 
         <div class="navbar-default sidebar" role="navigation">
             <div class="sidebar-nav navbar-collapse">
-                <ul class="nav" id="side-menu">
-                    <li>
-                        <a href="<?=site_url($group)?>"><i class="fa fa-dashboard fa-fw"></i> <?=lang('application_menu_dashboard')?></a>
-                    </li>
-                    <li>
-                        <a href="<?=site_url($group.'/Transactions')?>"><i class="glyphicon glyphicon-transfer fa-fw"></i> <?=lang('application_menu_transactions')?></a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> <?=lang('application_menu_manage_users')?><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="<?=site_url($group.'/UserOverview');?>"><?=lang('application_menu_overview')?></a>
-                            </li>
-                            <li>
-                                <a href="<?=site_url($group.'/NewUser')?>"><?=lang('application_menu_new_user')?></a>
-                            </li>
-                        </ul>
-                        <!-- /.nav-second-level -->
-                    </li>
-                </ul>
+                <?=$menu?>
             </div>
             <!-- /.sidebar-collapse -->
         </div>
