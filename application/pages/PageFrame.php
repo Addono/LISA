@@ -20,7 +20,7 @@ abstract class PageFrame extends CI_Controller
     private   $libraries = [];
     private   $helpers = ['tables'];
 
-    public function  __construct() {
+    public function  __construct($validateForm = true) {
         $this->models += $this->getModels();
         $this->libraries += $this->getLibraries();
         $this->helpers += $this->getHelpers();
@@ -30,7 +30,11 @@ abstract class PageFrame extends CI_Controller
         $this->ci->load->library($this->libraries);
         $this->ci->load->helper($this->helpers);
 
-        $this->formSuccess = $this->formValidate();
+        if ($validateForm) {
+            $this->formSuccess = $this->formValidate();
+        } else {
+            $this->formSuccess = true;
+        }
     }
 
     /**
