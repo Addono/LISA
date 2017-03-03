@@ -58,11 +58,7 @@ class LoginPage extends PageFrame
 
     public function hasAccess()
     {
-        if (isLoggedIn($this->ci->session)) {
-            redirect('');
-        }
-
-        return true;
+        return !isLoggedIn($this->ci->session);
     }
 
     /**
