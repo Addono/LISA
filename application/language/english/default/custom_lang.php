@@ -29,5 +29,5 @@ $lang['application_title'] = 'Lisa is super awesome';
 $lang['copyright'] = '2017, Adriaan Knapen';
 $lang['application_version'] = 'Core v0.2.1-beta';
 
-$lang['default_page_header_title'] = 'Welcome';
-$lang['default_page_header_body'] = 'This is Lisa, login to get started!';
+$lang['default_page_header_title'] = 'Hello, I am Lisa!';
+$lang['default_page_header_body'] = 'Login to get started';
