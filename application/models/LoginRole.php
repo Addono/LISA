@@ -159,9 +159,7 @@ class LoginRole extends ModelFrame
     public function v3() {
         $loginId = $this->Login->getLoginIdFromUsername(Login::INITIAL_LOGIN_USERNAME);
         $roleIdAdmin = $this->Role->getRoleIdFromRoleName(Role::ROLE_ADMIN);
-        $roleIdUser = $this->Role->getRoleIdFromRoleName(Role::ROLE_USER);
 
         $this->add($loginId, $roleIdAdmin);
-        $this->add($loginId, $roleIdUser);
     }
 }
