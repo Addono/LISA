@@ -9,11 +9,7 @@ class Menu extends MenuFrame
 
     protected function menuElements() {
         return [
-            [
-                new MenuItem('Sublevel'),
-                new MenuLink('Github', 'https://github.com/Addono', 'fa fa-github fa-fw'),
-                new MenuLink('Another link', 'https://w3.org'),
-            ],
+            new MenuPage('Transactions', TransactionsPage::class, 'glyphicon glyphicon-transfer'),
             // Since only the pages which the user has access rights for will be shown, only one of these will be displayed.
             new MenuPage('Login', LoginPage::class, 'fa fa-sign-in fa-fw'),
             new MenuPage('Logout', LogoutPage::class, 'fa fa-sign-out fa-fw'),
