@@ -12,6 +12,8 @@
  */
 class ModelFrame extends CI_Model
 {
+    private static $tablePrefix;
+
     public function __construct()
     {
         $ci =& get_instance();
@@ -23,10 +25,12 @@ class ModelFrame extends CI_Model
             'tables',
             'mdbt_model',
         ]);
+
+        self::$tablePrefix = $this->db->dbprefix(null);
     }
 
     public static function name() {
-        return Install::getTableName(static::class);
+        return Install::getTableName(static::class, self::$tablePrefix);
     }
 
     protected function dependencies() {

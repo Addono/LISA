@@ -265,8 +265,13 @@ class Install extends CI_Controller {
      * @param $modelName string
      * @return string
      */
-    public static function getTableName($modelName) {
-        return strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $modelName));
+    public static function getTableName($modelName, $tablePrefix) {
+        // Check if the model name already contains the prefix.
+        if (stripos($modelName, $tablePrefix) === 0) {
+            $tablePrefix = '';
+        }
+
+        return $tablePrefix . strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $modelName));
     }
 
     /**
@@ -335,7 +340,10 @@ class Install extends CI_Controller {
                             }
                         }
 
-                        if ($this->dbforge->create_table($tableName, TRUE, $attr)) {
+                        // Remove the table prefix if it has one, since create_table will add it.
+                        $createTableName = substr(self::getTableName($tableName, $this->db->dbprefix), strlen($this->db->dbprefix));
+
+                        if ($this->dbforge->create_table($createTableName, TRUE, $attr)) {
                             echo " - Added table '$tableName'<br>";
                         } else {
                             echo "<b> - Failed adding table '$tableName'</b><br>";
