@@ -10,11 +10,12 @@ class Menu extends MenuFrame
     protected function menuElements()
     {
         return [
-            new MenuPage(lang('application_menu_dashboard'), DefaultPage::class, ' fa fa-dashboard fa-fw'),
+            new MenuPage(lang('application_menu_dashboard'), DefaultPage::class, 'fa fa-dashboard fa-fw'),
+            new MenuPage(lang('application_menu_transactions'), TransactionsPage::class, 'fa fa-exchange fa-fw'),
             [
                 new MenuItem(lang('application_menu_manage_users'), 'fa fa-bar-chart-o'),
-                new MenuPage(lang('application_menu_overview'), UserOverviewPage::class, ' fa fa-th-list fa-fw'),
-                new MenuPage(lang('application_menu_new_user'), NewUserPage::class, ' fa fa-plus-circle fa-fw'),
+                new MenuPage(lang('application_menu_overview'), UserOverviewPage::class, 'fa fa-th-list fa-fw'),
+                new MenuPage(lang('application_menu_new_user'), NewUserPage::class, 'fa fa-plus-circle fa-fw'),
             ],
             new MenuLink(lang('application_menu_main_environment'), '../', 'fa fa-home fa-fw'),
         ];
