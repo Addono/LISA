@@ -1,8 +1,8 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 require_once('Install.php');
-require_once('./application/pages/PageFrame.php');
-require_once('./application/pages/MenuFrame.php');
+require_once(APPPATH . 'pages/PageFrame.php');
+require_once(APPPATH . 'pages/MenuFrame.php');
 
 /**
  * @property    CI_Form_validation  $form_validation
@@ -27,7 +27,7 @@ class Handler extends CI_Controller {
 
     public function index($group = self::GROUP_FRONTEND, $page = self::DEFAULT_PAGE, $subPage = null)
     {
-        if (!file_exists('./application/pages/'.$group)) {
+        if (!file_exists(APPPATH . 'pages/'.$group)) {
             $subPage = $page;
             $page = $group;
             $group = self::GROUP_FRONTEND;
