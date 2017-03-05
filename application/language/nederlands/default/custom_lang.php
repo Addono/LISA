@@ -15,6 +15,8 @@ $lang['consume_table_head_name'] = 'Naam';
 $lang['consume_table_head_credit'] = 'Credit';
 $lang['consume_table_head_consumptions'] = '#Consumpties';
 
+$lang['consume_submit'] = 'Koop';
+
 $lang['consume_form_invalid_amount'] = 'Er is iets mis gegaan met de opgegeven hoeveelheden, daarom is de volledige transactie afgebroken. Probeer het alsjeblieft opnieuw, als dit probleem blijft neem dan contact op met uw systeembeheerder.';
 $lang['consume_form_invalid_user'] = 'Een ongeldige (verouderd?) pagina is gebruikt, daarom is de volledige transactie afgebroken. Probeer het alsjeblieft opnieuw, als dit probleem blijft neem dan contact op met uw systeembeheerder.';
 $lang['consume_form_user_success'] = 'Succesvol %s consumptie(s) voor %s gekocht.';
