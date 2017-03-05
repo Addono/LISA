@@ -51,7 +51,7 @@ abstract class MenuFrame extends CI_Controller
             /** @var MenuPage $menuItem*/
             $pageClass = $menuItem->getPage();
 
-            require_once(APPPATH.'pages\\'.$this->group.'\\'.$pageClass.'.php');
+            require_once(APPPATH.'pages/'.$this->group.'/'.$pageClass.'.php');
 
             /** @var PageFrame $page */
             $page = new $pageClass(false);
@@ -81,7 +81,7 @@ abstract class MenuFrame extends CI_Controller
             case MenuPage::class:
                 /** @var MenuPage $menuItem */
                 $page = $menuItem->getPage();
-                $fileName = APPPATH.'pages\\' . $this->group . '\\' . $page . '.php';
+                $fileName = APPPATH.'pages/' . $this->group . '/' . $page . '.php';
 
                 require_once($fileName);
                 $pageName = substr($page, 0, -strlen('Page'));
