@@ -16,6 +16,7 @@ class Menu extends MenuFrame
                 new MenuPage(lang('application_menu_overview'), UserOverviewPage::class, ' fa fa-th-list fa-fw'),
                 new MenuPage(lang('application_menu_new_user'), NewUserPage::class, ' fa fa-plus-circle fa-fw'),
             ],
+            new MenuLink(lang('application_menu_main_environment'), '../', 'fa fa-home fa-fw'),
         ];
     }
 

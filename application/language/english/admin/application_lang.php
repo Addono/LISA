@@ -14,6 +14,7 @@ $lang['application_menu_dashboard'] = 'Dashboard';
 $lang['application_menu_manage_users'] = 'Manage users';
 $lang['application_menu_overview'] = 'Overview';
 $lang['application_menu_new_user'] = 'New user';
+$lang['application_menu_main_environment'] = 'Main application';
 
 // Dashboard
 $lang['application_dashboard_title'] = 'Dashboard';

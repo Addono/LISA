@@ -14,6 +14,7 @@ $lang['application_menu_dashboard'] = 'Dashboard';
 $lang['application_menu_manage_users'] = 'Beheer gebruikers';
 $lang['application_menu_overview'] = 'Overzicht';
 $lang['application_menu_new_user'] = 'Nieuwe gebruiker';
+$lang['application_menu_main_environment'] = 'Hoofdapplicatie';
 
 // Dashboard
 $lang['application_dashboard_title'] = 'Dashboard';
