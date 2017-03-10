@@ -32,20 +32,15 @@ class User extends ModelFrame
      * @return bool True on success, else false.
      */
     public function add($loginId, $firstName, $lastName, $email) {
-        $exists = $this->exists($loginId);
-        if (!$exists) {
-            return $this->db->insert(
-                $this->name(),
-                [
-                    Login::FIELD_LOGIN_ID => $loginId,
-                    self::FIELD_FIRST_NAME => $firstName,
-                    self::FIELD_LAST_NAME => $lastName,
-                    self::FIELD_EMAIL => $email,
-                ]
-            );
-        } else {
-            return false;
-        }
+        return $this->db->insert(
+            $this->name(),
+            [
+                Login::FIELD_LOGIN_ID => $loginId,
+                self::FIELD_FIRST_NAME => $firstName,
+                self::FIELD_LAST_NAME => $lastName,
+                self::FIELD_EMAIL => $email,
+            ]
+        );
     }
 
     /**
