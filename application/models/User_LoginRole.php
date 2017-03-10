@@ -22,6 +22,8 @@ class User_LoginRole extends ModelFrame
 
     public function getUsersWithRole($roleId) {
         return $this->join()
+            ->order_by(User::FIELD_FIRST_NAME)
+            ->order_by(User::FIELD_LAST_NAME)
             ->where([field(Role::FIELD_ROLE_ID, LoginRole::name()) => $roleId])
             ->get(LoginRole::name())
             ->result_array();
