@@ -22,7 +22,7 @@ class LoginReset extends ModelFrame
     }
 
     public function add($loginId) {
-        $key = sha1(mt_rand(0, mt_getrandmax()));
+        $key = sha1(random_bytes(30));
 
         $this->db->replace(
             self::name(),
