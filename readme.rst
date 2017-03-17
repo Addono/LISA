@@ -1,70 +1,25 @@
-###################
-What is CodeIgniter
-###################
-
-CodeIgniter is an Application Development Framework - a toolkit - for people
-who build web sites using PHP. Its goal is to enable you to develop projects
-much faster than you could if you were writing code from scratch, by providing
-a rich set of libraries for commonly needed tasks, as well as a simple
-interface and logical structure to access these libraries. CodeIgniter lets
-you creatively focus on your project by minimizing the amount of code needed
-for a given task.
-
-*******************
-Release Information
-*******************
-
-This repo contains in-development code for future releases. To download the
-latest stable release please visit the `CodeIgniter Downloads
-<https://codeigniter.com/download>`_ page.
-
-**************************
-Changelog and New Features
-**************************
-
-You can find a list of all changes for each release in the `user
-guide change log <https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/changelog.rst>`_.
-
-*******************
-Server Requirements
-*******************
-
-PHP version 5.6 or newer is recommended.
-
-It should work on 5.3.7 as well, but we strongly advise you NOT to run
-such old versions of PHP, because of potential security and performance
-issues, as well as missing features.
+***************
+Getting started
+***************
+1. Download a copy/make a clone/make a fork of the project and move it to a folder in your web server.
+1. Rename/duplicate config.php-setup and database.php-setup to config.php and database.php respectively.
+1. Edit these config files to match your system. Most important is:
+    * Add your hostname.
+    * Enter the settings of your database.
+1. Navigate to __YOUR_HOSTNAME__/index.php/Install to initialise the database.
 
 ************
-Installation
+Requirements
 ************
-
-Please see the `installation section <https://codeigniter.com/user_guide/installation/index.html>`_
-of the CodeIgniter User Guide.
+ * PHP 7.1, although it might also work on PHP7 (untested). The mysqli extension of PHP should be enabled.
+ * MySQL database, although it might also work on other database types supported by CodeIgniter, but non of them are tested nor are focus during development.
 
 *******
-License
+Licence
 *******
-
-Please see the `license
-agreement <https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/license.rst>`_.
-
-*********
-Resources
-*********
-
--  `User Guide <https://codeigniter.com/docs>`_
--  `Language File Translations <https://github.com/bcit-ci/codeigniter3-translations>`_
--  `Community Forums <http://forum.codeigniter.com/>`_
--  `Community Wiki <https://github.com/bcit-ci/CodeIgniter/wiki>`_
--  `Community IRC <https://webchat.freenode.net/?channels=%23codeigniter>`_
-
-Report security issues to our `Security Panel <mailto:security@codeigniter.com>`_
-or via our `page on HackerOne <https://hackerone.com/codeigniter>`_, thank you.
-
-***************
-Acknowledgement
-***************
-
-The CodeIgniter team would like to thank EllisLab, all the
-contributors to the CodeIgniter project and you, the CodeIgniter user.
+This project is released under the MIT licence, except for all other sources which are included.
+For these their own licence will still be in place. Projects included are:
+CodeIgniter <https://codeigniter.com> (MIT)
+Font Awsome <https://github.com/FortAwesome/Font-Awesome> (MIT and SIL OFL 1.1)
+Material Kit <https://github.com/creativetimofficial/material-kit/blob/master/LICENSE.md> (MIT)
+SB Admin 2 <https://github.com/BlackrockDigital/startbootstrap-sb-admin-2> (MIT)
