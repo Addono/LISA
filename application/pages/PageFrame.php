@@ -45,13 +45,6 @@ abstract class PageFrame extends CI_Controller
     abstract public function getViews();
 
     /**
-     * If the page should be visible in the menu.
-     *
-     * @return boolean
-     */
-    abstract public function isVisible();
-
-    /**
      * Function which is called after construction and before the views are rendered.
      */
     abstract public function beforeView();

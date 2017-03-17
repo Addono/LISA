@@ -20,7 +20,7 @@
                             <span class="input-group-addon">
                                 <i class="fa fa-key fa-lg"></i>
                             </span>
-                            <label class="control-label"><?=lang('reset_password')?></label>
+                            <label class="control-label"><?=lang('form_field_new_password')?></label>
                             <input type="password" name="password" class="form-control" />
                         </div>
 
@@ -28,12 +28,12 @@
                             <span class="input-group-addon">
                                 <i class="fa fa-key fa-lg"></i>
                             </span>
-                            <label class="control-label"><?=lang('reset_confirm_password')?></label>
+                            <label class="control-label"><?=lang('form_field_confirm_password')?></label>
                             <input type="password" name="confirm-password" class="form-control" />
                         </div>
                     </div>
                     <div class="footer text-center">
-                        <input type="submit" value="<?=lang('reset_submit')?>" class="btn btn-primary btn-lg">
+                        <input type="submit" value="<?=lang('form_field_submit')?>" class="btn btn-primary btn-lg">
                     </div>
                     </form>
                 </div>

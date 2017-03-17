@@ -18,16 +18,6 @@ class UserOverviewPage extends PageFrame
     }
 
     /**
-     * If the page should be visible in the menu.
-     *
-     * @return boolean
-     */
-    public function isVisible()
-    {
-        return true;
-    }
-
-    /**
      * Function which is called after construction and before the views are rendered.
      */
     public function beforeView()

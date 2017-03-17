@@ -22,7 +22,9 @@ class LoginReset extends ModelFrame
     }
 
     public function add($loginId) {
-        $key = sha1(random_bytes(30));
+        do {
+            $key = sha1(random_bytes(30));
+        } while ($this->exists($key));
 
         $this->db->replace(
             self::name(),
@@ -44,6 +46,18 @@ class LoginReset extends ModelFrame
         } else {
             return $res[Login::FIELD_LOGIN_ID];
         }
+    }
+
+    public function get($key) {
+        return $this->db
+            ->where([self::FIELD_RESET_KEY => $key])
+            ->get(self::name())
+            ->row_array();
+    }
+
+    public function remove($key) {
+        return $this->db
+            ->delete(self::name(), [self::FIELD_RESET_KEY => $key]);
     }
 
     public function v1() {

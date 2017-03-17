@@ -8,27 +8,46 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * Class ResetPage
- * @property CI_DB_query_builder    $db
  */
 class ResetPage extends PageFrame
 {
 
+    private $showForm;
+
+    const SUCCESS_STATUS = self::SHOW_SUCCESS;
+    private $success = false;
+    private $show;
+
+    const SHOW_KEY_NOT_FOUND = 'KeyNotFound';
+    const SHOW_SUCCESS = 'success';
+    const SHOW_FORM = 'form';
+
     public function getViews()
     {
-        return [
-            'reset-header',
-            'intersection',
-        ];
-    }
-
-    public function isVisible()
-    {
-        return true;
+        switch ($this->show) {
+            case self::SHOW_SUCCESS:
+                $this->addSuccessMessage(lang('reset_success'));
+                return [
+                    'reset-success-header',
+                    'intersection',
+                ];
+            case self::SHOW_KEY_NOT_FOUND:
+                $this->addWarningMessage(lang('reset_error_key_not_found'));
+                return [
+                    '404-header',
+                    'intersection',
+                ];
+            case self::SHOW_FORM:
+                return [
+                    'reset-header',
+                    'intersection',
+                ];
+        }
     }
 
     public function hasAccess()
     {
-        return true;
+        return !isLoggedIn($this->ci->session);
     }
 
     protected function getFormValidationRules()
@@ -36,26 +55,26 @@ class ResetPage extends PageFrame
         return [
             [
                 'field' => 'password',
-                'label' => lang('reset_field_password'),
+                'label' => lang('form_field_password'),
                 'rules' => [
                     'required',
                     'min_length[8]',
                     'matches[confirm-password]',
                 ],
                 'errors' => [
-                    'required' => lang('reset_error_required'),
-                    'min_length[8]' => lang('reset_error_password_not_strong_enough'),
-                    'matches[confirm-password]' => lang('reset_error_password_not_equal'),
+                    'required' => lang('form_error_required'),
+                    'min_length[8]' => lang('form_error_password_not_strong_enough'),
+                    'matches[confirm-password]' => lang('form_error_password_not_equal'),
                 ],
             ],
             [
                 'field' => 'confirm-password',
-                'label' => lang('reset_field_confirm_password'),
+                'label' => lang('form_field_confirm_password'),
                 'rules' => [
                     'required',
                 ],
                 'errors' => [
-                    'required' => lang('reset_error_required'),
+                    'required' => lang('form_error_required'),
                 ],
             ],
         ];
@@ -64,13 +83,11 @@ class ResetPage extends PageFrame
     public function onFormSuccess()
     {
         $key = $this->params['subpage'];
+        $password = set_value('password');
 
-        if ($this->ci->LoginReset->exists($key)) {
-            $password = set_value('password');
-
-
-        } else {
-            $this->addWarningMessage('key not found');
+        $this->success = $this->ci->LoginReset_User->updatePassword($key, $password);
+        if (!$this->success) {
+            $this->addDangerMessage(lang('reset_error_update_password_failed'));
         }
     }
 
@@ -79,11 +96,17 @@ class ResetPage extends PageFrame
      */
     public function beforeView()
     {
-        $key = $this->params['subpage'];
-
-        $exists = $this->ci->LoginReset->exists($key);
-        if (!$exists) {
-            redirect();
+        if ($this->success) {
+            $this->showForm = false;
+            $this->show = self::SHOW_SUCCESS;
+        } else {
+            $key = $this->params['subpage'];
+            $exists = $this->ci->LoginReset->exists($key);
+            if ($exists) {
+                $this->show = self::SHOW_FORM;
+            } else {
+                $this->show = self::SHOW_KEY_NOT_FOUND;
+            }
         }
     }
 
@@ -96,6 +119,7 @@ class ResetPage extends PageFrame
     {
         return [
             LoginReset::class,
+            LoginReset_User::class,
         ];
     }
 
