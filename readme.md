@@ -19,7 +19,7 @@ Licence
 *******
 This project is released under the MIT licence, except for all other sources which are included.
 For these their own licence will still be in place. Projects included are:
-CodeIgniter <https://codeigniter.com> (MIT)
-Font Awsome <https://github.com/FortAwesome/Font-Awesome> (MIT and SIL OFL 1.1)
-Material Kit <https://github.com/creativetimofficial/material-kit/blob/master/LICENSE.md> (MIT)
-SB Admin 2 <https://github.com/BlackrockDigital/startbootstrap-sb-admin-2> (MIT)
+ - [CodeIgniter](https://codeigniter.com) (MIT)
+ - [Font Awsome](https://github.com/FortAwesome/Font-Awesome) (MIT and SIL OFL 1.1)
+ - [Material Kit](https://github.com/creativetimofficial/material-kit/blob/master/LICENSE.md) (MIT)
+ - [SB Admin 2](https://github.com/BlackrockDigital/startbootstrap-sb-admin-2) (MIT)
