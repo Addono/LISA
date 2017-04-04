@@ -50,8 +50,9 @@ class TransactionsPage extends PageFrame
 
         $this->addScript(
             '$(document).ready(function() {
-                $(\'.data-table-responsive\').DataTable({
-                    responsive: true
+                $(".data-table-responsive").DataTable({
+                    responsive: true,
+                    order: [4, "desc"]
                 });
             });');
     }
