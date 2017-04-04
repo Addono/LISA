@@ -39,7 +39,7 @@ $lang['not_user_page_header_body'] = 'You currently do not have the rights to us
 $lang['application_name'] = 'Lisa';
 $lang['application_title'] = 'Lisa is super awesome';
 $lang['copyright'] = '2017, Adriaan Knapen';
-$lang['application_version'] = 'Core v0.2.1-beta';
+$lang['application_version'] = 'Core v0.2.3';
 
 $lang['default_page_header_title'] = 'Hello, I am Lisa!';
 $lang['default_page_header_body'] = 'Login to get started';
