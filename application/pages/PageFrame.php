@@ -4,8 +4,6 @@
  * @date 6-2-2017
  */
 
-require_once(APPPATH . 'pages/RequestInterface.php');
-
 /**
  * Class PageFrame
  * @property    CI_Form_validation  $form_validation
