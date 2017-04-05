@@ -12,20 +12,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class UserPage extends PageFrame
 {
 
-    public function getViews()
+    public function getViews(): array
     {
         return [
             'user'
         ];
     }
 
-    public function hasAccess()
+    public function hasAccess(): bool
     {
         // Check if the user is logged in and has the required rights.
         $hasRights = isLoggedInAndHasRole($this->ci, [Role::ROLE_ADMIN]);
 
         // Check if the given login id is valid and has a user account connected to it.
-        $loginId = $this->params['subpage'];
+        $loginId = $this->getDataKey('subpage');
         $validLoginId = $loginId !== null && $this->ci->Login_User->exists($loginId);
 
         return $hasRights && $validLoginId;
@@ -33,7 +33,7 @@ class UserPage extends PageFrame
 
     public function onFormSuccess()
     {
-        $loginId = $this->params['subpage'];
+        $loginId = $this->getDataKey('subpage');
 
         switch (set_value('type')) {
             case 'name':
@@ -167,7 +167,7 @@ class UserPage extends PageFrame
      */
     public function beforeView()
     {
-        $loginId = $this->params['subpage'];
+        $loginId = $this->getDataKey('subpage');
 
         // Get the user data.
         $userData = $this->ci->Login_User_LoginRole_Role->getUserData($loginId);

@@ -54,7 +54,7 @@ abstract class MenuFrame extends CI_Controller
             require_once(APPPATH.'pages/'.$this->group.'/'.$pageClass.'.php');
 
             /** @var PageFrame $page */
-            $page = new $pageClass(false);
+            $page = new $pageClass(['group' => $this->group], false);
 
             if (!$page->hasAccess()) {
                 return '';

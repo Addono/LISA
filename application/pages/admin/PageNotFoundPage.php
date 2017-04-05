@@ -9,13 +9,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class PageNotFoundPage extends PageFrame
 {
 
-    public function getViews()
+    public function getViews(): array
     {
         return [
         ];
     }
 
-    public function hasAccess()
+    public function hasAccess(): bool
     {
         return true;
     }

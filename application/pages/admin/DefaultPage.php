@@ -9,14 +9,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class DefaultPage extends PageFrame
 {
 
-    public function getViews()
+    public function getViews(): array
     {
         return [
             'dashboard'
         ];
     }
 
-    public function hasAccess()
+    public function hasAccess(): bool
     {
         return isLoggedInAndHasRole($this->ci, [Role::ROLE_ADMIN]);
     }

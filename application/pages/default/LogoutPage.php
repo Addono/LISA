@@ -13,7 +13,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class LogoutPage extends PageFrame
 {
 
-    public function getViews()
+    public function getViews(): array
     {
         return [
             'logout-header',
@@ -26,7 +26,7 @@ class LogoutPage extends PageFrame
         return false;
     }
 
-    public function hasAccess()
+    public function hasAccess(): bool
     {
         return isLoggedIn($this->ci->session);
     }

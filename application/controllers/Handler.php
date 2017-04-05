@@ -1,7 +1,8 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 require_once('Install.php');
-require_once(APPPATH . 'pages/PageFrame.php');
+require_once(APPPATH . 'pages/RequestFrame.php');
+require_once(APPPATH . 'pages/RequestInterface.php');
 require_once(APPPATH . 'pages/MenuFrame.php');
 
 /**
@@ -83,48 +84,10 @@ class Handler extends CI_Controller {
         if (file_exists($pageControllerFile)) {
             require_once($pageControllerFile);
 
-            /** @var PageFrame $pageController */
-            $pageController = new $pageControllerName();
+            /** @var RequestInterface $pageController */
+            $pageController = new $pageControllerName($this->data);
 
-            $pageController->setParams([
-                'group' => $group,
-                'page' => $page,
-                'subpage' => $subPage,
-            ]);
-
-            // Check if the user has access.
-            if (!$pageController->hasAccess()) {
-                if (isLoggedIn($this->session)) {
-                    redirect('InsufficientRights');
-                } else {
-                    redirect($group.'/login');
-                }
-                exit;
-            }
-
-            // Call the form success if a valid form was submitted.
-            if ($pageController->getFormSuccess()) {
-                $pageController->onFormSuccess();
-            }
-
-            $pageController->beforeView();
-
-            $views = $pageController->getViews();
-            $views = $views ? $views : [];
-            $data = $pageController->getData();
-            $data = $data ? $data : [];
-
-            $data = array_merge($this->data, $data);
-
-            if ($views === null) {
-                exit;
-            } else {
-                $this->load->view('templates/'.$group.'/header', $data);
-                foreach ($views as $v) {
-                    $this->load->view('page/'.$group.'/' . $v, $data);
-                }
-                $this->load->view('templates/'.$group.'/footer', $data);
-            }
+            $pageController->show();
         } else {
             if ($page !== 'PageNotFound' && $page !== 'login') {
                 redirect($group.'/PageNotFound');
