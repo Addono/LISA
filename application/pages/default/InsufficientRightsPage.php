@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class InsufficientRightsPage extends PageFrame
 {
 
-    public function getViews()
+    public function getViews(): array
     {
         return [
             '../../error/insufficientRights',
@@ -17,7 +17,7 @@ class InsufficientRightsPage extends PageFrame
         ];
     }
 
-    public function hasAccess()
+    public function hasAccess(): bool
     {
         return true;
     }

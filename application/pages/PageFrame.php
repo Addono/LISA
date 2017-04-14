@@ -8,10 +8,9 @@
  * Class PageFrame
  * @property    CI_Form_validation  $form_validation
  */
-abstract class PageFrame extends CI_Controller
+abstract class PageFrame extends CI_Controller implements RequestInterface
 {
 
-    protected $params;
     protected $formSuccess = false;
     protected $data = [];
     protected $ci;
@@ -20,7 +19,9 @@ abstract class PageFrame extends CI_Controller
     private   $libraries = [];
     private   $helpers = ['tables'];
 
-    public function  __construct($validateForm = true) {
+    public function  __construct(array $data, $validateForm = true) {
+        $this->data = $data;
+
         $this->models += $this->getModels();
         $this->libraries += $this->getLibraries();
         $this->helpers += $this->getHelpers();
@@ -37,12 +38,44 @@ abstract class PageFrame extends CI_Controller
         }
     }
 
+    public function show() {
+        $group = $this->getDataKey('group');
+
+        // Check if the user has access.
+        if (!$this->hasAccess()) {
+            if (isLoggedIn($this->session)) {
+                redirect('InsufficientRights');
+            } else {
+                redirect($group .'/login');
+            }
+            exit;
+        }
+
+        // Call the form success if a valid form was submitted.
+        if ($this->getFormSuccess()) {
+            $this->onFormSuccess();
+        }
+
+        $this->beforeView();
+
+        $views = $this->getViews();
+
+        if ($views === null) {
+            exit;
+        } else {
+            $this->ci->load->view('templates/'.$group.'/header', $this->data);
+            foreach ($views as $v) {
+                $this->ci->load->view('page/'.$group.'/' . $v, $this->data);
+            }
+            $this->ci->load->view('templates/'.$group.'/footer', $this->data);
+        }
+    }
     /**
      * The views to be shown.
      *
      * @return array|null Array with the names of the views inbetween the header and footer, null if no views should be shown.
      */
-    abstract public function getViews();
+    abstract public function getViews(): array;
 
     /**
      * Function which is called after construction and before the views are rendered.
@@ -64,24 +97,11 @@ abstract class PageFrame extends CI_Controller
     }
 
     /**
-     * Setter for parameters from the page handler.
-     *
-     * @param array
-     */
-    public function setParams($params) {
-        $this->params = $params;
-    }
-
-    public function getParams($key) {
-        return $this->params[$key];
-    }
-
-    /**
      * If the current user has access to this page.
      *
-     * @return boolean
+     * @return bool
      */
-    abstract public function hasAccess();
+    abstract public function hasAccess(): bool;
 
     /**
      * The form validation rules.
@@ -157,15 +177,6 @@ abstract class PageFrame extends CI_Controller
 
     protected function addScript($script) {
         $this->appendData('scripts', $script);
-    }
-
-    /**
-     * Getter for the data to be accessible to views.
-     *
-     * @return array
-     */
-    public final function getData() {
-        return $this->data;
     }
 
     public final function getDataKey($key) {

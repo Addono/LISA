@@ -10,14 +10,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class LoginPage extends PageFrame
 {
 
-    public function getViews()
+    public function getViews(): array
     {
         return [
             'default-header'
         ];
     }
 
-    public function hasAccess()
+    public function hasAccess(): bool
     {
         return true;
     }

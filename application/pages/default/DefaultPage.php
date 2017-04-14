@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class DefaultPage extends PageFrame
 {
 
-    public function getViews()
+    public function getViews(): array
     {
         if (isLoggedIn($this->ci->session)) {
             return [
@@ -24,7 +24,7 @@ class DefaultPage extends PageFrame
         }
     }
 
-    public function hasAccess()
+    public function hasAccess(): bool
     {
         return true;
     }

@@ -22,7 +22,7 @@ class ResetPage extends PageFrame
     const SHOW_SUCCESS = 'success';
     const SHOW_FORM = 'form';
 
-    public function getViews()
+    public function getViews(): array
     {
         switch ($this->show) {
             case self::SHOW_SUCCESS:
@@ -45,7 +45,7 @@ class ResetPage extends PageFrame
         }
     }
 
-    public function hasAccess()
+    public function hasAccess(): bool
     {
         return !isLoggedIn($this->ci->session);
     }
@@ -82,7 +82,7 @@ class ResetPage extends PageFrame
 
     public function onFormSuccess()
     {
-        $key = $this->params['subpage'];
+        $key = $this->data['subpage'];
         $password = set_value('password');
 
         $this->success = $this->ci->LoginReset_User->updatePassword($key, $password);
@@ -100,7 +100,7 @@ class ResetPage extends PageFrame
             $this->showForm = false;
             $this->show = self::SHOW_SUCCESS;
         } else {
-            $key = $this->params['subpage'];
+            $key = $this->getDataKey('subpage');
             $exists = $this->ci->LoginReset->exists($key);
             if ($exists) {
                 $this->show = self::SHOW_FORM;

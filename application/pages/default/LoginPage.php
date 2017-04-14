@@ -14,7 +14,7 @@
 class LoginPage extends PageFrame
 {
 
-    public function getViews()
+    public function getViews(): array
     {
         return [
             'login-header',
@@ -51,7 +51,7 @@ class LoginPage extends PageFrame
         ];
     }
 
-    public function hasAccess()
+    public function hasAccess(): bool
     {
         return !isLoggedIn($this->ci->session);
     }

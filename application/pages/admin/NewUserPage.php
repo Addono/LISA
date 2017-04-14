@@ -12,7 +12,7 @@ class NewUserPage extends PageFrame
      *
      * @return array|null
      */
-    public function getViews()
+    public function getViews(): array
     {
         return [
             'new-user'
@@ -34,7 +34,7 @@ class NewUserPage extends PageFrame
      *
      * @return boolean
      */
-    public function hasAccess()
+    public function hasAccess(): bool
     {
         return isLoggedInAndHasRole($this->ci, [Role::ROLE_ADMIN]);
     }
