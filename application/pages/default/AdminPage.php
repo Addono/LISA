@@ -15,11 +15,6 @@ class AdminPage extends PageFrame
         ];
     }
 
-    public function isVisible()
-    {
-        return true;
-    }
-
     public function hasAccess()
     {
         return isLoggedInAndHasRole($this->ci, Role::ROLE_ADMIN);

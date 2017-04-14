@@ -7,4 +7,4 @@
 <div class="col-md-6 vmargin">
     <h1><?=lang('404_page_header_title')?></h1>
     <h4><?=lang('404_page_header_body')?></h4>
-    <a href="<?php echo site_url()?>" class="btn btn-simple btn-primary btn-lg btn-background-white"><?=lang('404_page_homepage')?></a>
+    <a href="<?=site_url()?>" class="btn btn-simple btn-primary btn-lg btn-background-white"><?=lang('404_page_homepage')?></a>

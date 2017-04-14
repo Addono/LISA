@@ -77,19 +77,21 @@ abstract class MenuFrame extends CI_Controller
             case MenuLink::class:
                 /** @var MenuLink $menuItem */
                 return $menuItem->getLink();
-                break;
             case MenuPage::class:
                 /** @var MenuPage $menuItem */
                 $page = $menuItem->getPage();
-                $fileName = APPPATH.'pages/' . $this->group . '/' . $page . '.php';
-
-                require_once($fileName);
                 $pageName = substr($page, 0, -strlen('Page'));
-                return site_url($this->group . '/' . $pageName);
-                break;
+
+                $pageParams = $menuItem->getParams();
+                if (empty($pageParams)) {
+                    $linkParams = '';
+                } else {
+                    $linkParams = '/' . implode('/', $pageParams);
+                }
+
+                return site_url($this->group . '/' . $pageName . $linkParams);
             case MenuItem::class:
                 return null;
-                break;
             default:
                 throw new Exception('Invalid menu item parsed.');
         }
@@ -141,11 +143,13 @@ class MenuLink extends MenuItem {
 
 class MenuPage extends MenuItem {
     protected $page;
+    protected $params;
 
-    public function __construct($title, $page, $icon = null) {
+    public function __construct($title, $page, $icon = null, $params = []) {
         parent::__construct($title, $icon);
 
         $this->page = $page;
+        $this->params = $params;
     }
 
     public function setPage($page) {
@@ -154,5 +158,9 @@ class MenuPage extends MenuItem {
 
     public function getPage() {
         return $this->page;
+    }
+
+    public function getParams() {
+        return $this->params;
     }
 }

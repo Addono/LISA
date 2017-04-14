@@ -6,14 +6,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @date 26-2-2017
  */
 
-// todo implement this
-class LogoutPage extends PageFrame
+class PageNotFoundPage extends PageFrame
 {
 
     public function getViews()
     {
         return [
-            'default-header'
         ];
     }
 
@@ -32,14 +30,7 @@ class LogoutPage extends PageFrame
      */
     public function beforeView()
     {
-        redirect('logout');
-    }
-
-    /**
-     * Function which is called after the views are rendered.
-     */
-    public function afterView()
-    {
+        redirect('PageNotFound'); // todo give it its own PNF page.
     }
 
     /**

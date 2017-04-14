@@ -12,14 +12,9 @@ class PageNotFoundPage extends PageFrame
     public function getViews()
     {
         return [
-            '../../error/pageNotFound',
+            '404-header',
             'intersection',
         ];
-    }
-
-    public function isVisible()
-    {
-        return false;
     }
 
     public function hasAccess()
