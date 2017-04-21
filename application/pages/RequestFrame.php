@@ -38,9 +38,9 @@ abstract class RequestFrame extends CI_Controller implements RequestInterface
     /**
      * If the current user has access to this page.
      *
-     * @return boolean
+     * @return bool
      */
-    abstract function hasAccess(): boolean;
+    abstract function hasAccess(): bool;
 
     /**
      * Defines which models should be loaded.
