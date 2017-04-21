@@ -79,7 +79,7 @@ class UserOverviewPage extends PageFrame
      *
      * @return array;
      */
-    protected function getModels()
+    protected function getModels(): array
     {
         return [
             LoginRole::class,
@@ -92,7 +92,7 @@ class UserOverviewPage extends PageFrame
      *
      * @return array;
      */
-    protected function getLibraries()
+    protected function getLibraries(): array
     {
         return [];
     }
@@ -102,7 +102,7 @@ class UserOverviewPage extends PageFrame
      *
      * @return array;
      */
-    protected function getHelpers()
+    protected function getHelpers(): array
     {
         return [];
     }

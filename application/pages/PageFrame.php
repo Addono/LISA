@@ -8,28 +8,16 @@
  * Class PageFrame
  * @property    CI_Form_validation  $form_validation
  */
-abstract class PageFrame extends CI_Controller implements RequestInterface
+abstract class PageFrame extends RequestFrame
 {
 
     protected $formSuccess = false;
     protected $data = [];
     protected $ci;
     protected $accessibleBy;
-    private   $models = [];
-    private   $libraries = [];
-    private   $helpers = ['tables'];
 
     public function  __construct(array $data, $validateForm = true) {
-        $this->data = $data;
-
-        $this->models += $this->getModels();
-        $this->libraries += $this->getLibraries();
-        $this->helpers += $this->getHelpers();
-
-        $this->ci = self::get_instance();
-        $this->ci->load->model($this->models);
-        $this->ci->load->library($this->libraries);
-        $this->ci->load->helper($this->helpers);
+        parent::__construct($data);
 
         if ($validateForm) {
             $this->formSuccess = $this->formValidate();
@@ -109,27 +97,6 @@ abstract class PageFrame extends CI_Controller implements RequestInterface
      * @return array|bool
      */
     abstract protected function getFormValidationRules();
-
-    /**
-     * Defines which models should be loaded.
-     *
-     * @return array;
-     */
-    abstract protected function getModels();
-
-    /**
-     * Defines which libraries should be loaded.
-     *
-     * @return array;
-     */
-    abstract protected function getLibraries();
-
-    /**
-     * Defines which helpers should be loaded.
-     *
-     * @return array;
-     */
-    abstract protected function getHelpers();
 
     /**
      * Adds a data pair which is accessible for all views.

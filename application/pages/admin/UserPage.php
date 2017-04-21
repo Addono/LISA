@@ -205,7 +205,7 @@ class UserPage extends PageFrame
      *
      * @return array;
      */
-    protected function getModels()
+    protected function getModels(): array
     {
         return [
             Login::class,
@@ -221,7 +221,7 @@ class UserPage extends PageFrame
      *
      * @return array;
      */
-    protected function getLibraries()
+    protected function getLibraries(): array
     {
         return [];
     }
@@ -231,7 +231,7 @@ class UserPage extends PageFrame
      *
      * @return array;
      */
-    protected function getHelpers()
+    protected function getHelpers(): array
     {
         return [];
     }

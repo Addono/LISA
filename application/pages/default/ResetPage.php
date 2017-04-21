@@ -115,7 +115,7 @@ class ResetPage extends PageFrame
      *
      * @return array;
      */
-    protected function getModels()
+    protected function getModels(): array
     {
         return [
             LoginReset::class,
@@ -128,7 +128,7 @@ class ResetPage extends PageFrame
      *
      * @return array;
      */
-    protected function getLibraries()
+    protected function getLibraries(): array
     {
         return [];
     }
@@ -138,7 +138,7 @@ class ResetPage extends PageFrame
      *
      * @return array;
      */
-    protected function getHelpers()
+    protected function getHelpers(): array
     {
         return [];
     }

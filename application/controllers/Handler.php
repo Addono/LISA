@@ -2,6 +2,7 @@
 
 require_once('Install.php');
 require_once(APPPATH . 'pages/RequestInterface.php');
+require_once(APPPATH . 'pages/RequestFrame.php');
 require_once(APPPATH . 'pages/PageFrame.php');
 require_once(APPPATH . 'pages/ApiFrame.php');
 require_once(APPPATH . 'pages/MenuFrame.php');
