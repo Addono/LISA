@@ -14,22 +14,12 @@ class ConsumePage extends PageFrame
      *
      * @return array|null Array with the names of the views inbetween the header and footer, null if no views should be shown.
      */
-    public function getViews()
+    public function getViews(): array
     {
         return [
             'consume-header',
             'intersection'
         ];
-    }
-
-    /**
-     * If the page should be visible in the menu.
-     *
-     * @return boolean
-     */
-    public function isVisible()
-    {
-        return $this->hasAccess();
     }
 
     /**
@@ -96,7 +86,7 @@ class ConsumePage extends PageFrame
      *
      * @return boolean
      */
-    public function hasAccess()
+    public function hasAccess(): bool
     {
         return isLoggedInAndHasRole($this->ci, [Role::ROLE_USER]);
     }

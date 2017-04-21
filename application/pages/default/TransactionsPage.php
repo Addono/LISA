@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class TransactionsPage extends PageFrame
 {
 
-    public function getViews()
+    public function getViews(): array
     {
         return [
             'transactions-header',
@@ -17,12 +17,7 @@ class TransactionsPage extends PageFrame
         ];
     }
 
-    public function isVisible()
-    {
-        return true;
-    }
-
-    public function hasAccess()
+    public function hasAccess(): bool
     {
         return isLoggedInAndHasRole($this->ci, Role::ROLE_USER);
     }
