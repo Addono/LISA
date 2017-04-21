@@ -86,7 +86,7 @@ class ConsumePage extends PageFrame
      *
      * @return boolean
      */
-    public function hasAccess(): bool
+    public function hasAccess(): boolean
     {
         return isLoggedInAndHasRole($this->ci, [Role::ROLE_USER]);
     }

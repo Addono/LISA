@@ -12,7 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class GiveUserPage extends PageFrame
 {
 
-    public function getViews()
+    public function getViews(): array
     {
         return [
             'give-user'
@@ -24,7 +24,7 @@ class GiveUserPage extends PageFrame
         return true;
     }
 
-    public function hasAccess()
+    public function hasAccess(): boolean
     {
         // Check if the user is logged in and has the required rights.
         $hasRights = isLoggedInAndHasRole($this->ci, [Role::ROLE_ADMIN]);
