@@ -49,7 +49,7 @@ class DefaultPage extends PageFrame
      *
      * @return array;
      */
-    protected function getModels()
+    protected function getModels(): array
     {
         return [
             Role::class,
@@ -61,7 +61,7 @@ class DefaultPage extends PageFrame
      *
      * @return array;
      */
-    protected function getLibraries()
+    protected function getLibraries(): array
     {
         return [];
     }
@@ -71,7 +71,7 @@ class DefaultPage extends PageFrame
      *
      * @return array;
      */
-    protected function getHelpers()
+    protected function getHelpers(): array
     {
         return [];
     }

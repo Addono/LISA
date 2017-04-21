@@ -80,7 +80,7 @@ class LoginPage extends PageFrame
      *
      * @return array
      */
-    protected function getModels()
+    protected function getModels(): array
     {
         return [
             Login::class,
@@ -93,7 +93,7 @@ class LoginPage extends PageFrame
      *
      * @return array;
      */
-    protected function getLibraries()
+    protected function getLibraries(): array
     {
         return ['session'];
     }
@@ -103,7 +103,7 @@ class LoginPage extends PageFrame
      *
      * @return array;
      */
-    protected function getHelpers()
+    protected function getHelpers(): array
     {
         return ['tables'];
     }

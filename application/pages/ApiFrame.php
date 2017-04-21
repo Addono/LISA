@@ -4,15 +4,9 @@
  * @author Adriaan Knapen <a.d.knapen@protonmail.com>
  * @date 5-4-2017
  */
-abstract class ApiFrame implements RequestInterface
+abstract class ApiFrame extends RequestFrame implements RequestInterface
 {
-    private $data;
     protected $result = [];
-
-    public function __construct(array $data)
-    {
-        $this->data = $data;
-    }
 
     abstract function call();
 
