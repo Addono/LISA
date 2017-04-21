@@ -84,12 +84,6 @@ abstract class PageFrame extends RequestFrame
         return $this->formSuccess;
     }
 
-    /**
-     * If the current user has access to this page.
-     *
-     * @return bool
-     */
-    abstract public function hasAccess(): bool;
 
     /**
      * The form validation rules.

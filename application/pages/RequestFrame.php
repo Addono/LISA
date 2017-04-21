@@ -35,6 +35,12 @@ abstract class RequestFrame extends CI_Controller implements RequestInterface
         $this->ci->load->helper($this->helpers);
     }
 
+    /**
+     * If the current user has access to this page.
+     *
+     * @return boolean
+     */
+    abstract function hasAccess(): boolean;
 
     /**
      * Defines which models should be loaded.

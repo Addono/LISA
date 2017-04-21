@@ -10,8 +10,6 @@ abstract class ApiFrame extends RequestFrame implements RequestInterface
 
     abstract function call();
 
-    abstract function hasAccess(): bool;
-
     final function setResult(string $key, $value) {
         $this->result[$key] = $value;
     }
