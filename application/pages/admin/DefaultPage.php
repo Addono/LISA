@@ -16,7 +16,7 @@ class DefaultPage extends PageFrame
         ];
     }
 
-    public function hasAccess(): boolean
+    public function hasAccess(): bool
     {
         return isLoggedInAndHasRole($this->ci, [Role::ROLE_ADMIN]);
     }

@@ -15,7 +15,7 @@ class ApiPage extends ApiFrame
     {
     }
 
-    function hasAccess(): boolean
+    function hasAccess(): bool
     {
         return $this->getData('loggedIn');
     }

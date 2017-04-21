@@ -51,7 +51,7 @@ class LoginPage extends PageFrame
         ];
     }
 
-    public function hasAccess(): boolean
+    public function hasAccess(): bool
     {
         return !isLoggedIn($this->ci->session);
     }

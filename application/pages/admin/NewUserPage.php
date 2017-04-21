@@ -32,9 +32,9 @@ class NewUserPage extends PageFrame
     /**
      * If the current user has access to this page.
      *
-     * @return boolean
+     * @return bool
      */
-    public function hasAccess(): boolean
+    public function hasAccess(): bool
     {
         return isLoggedInAndHasRole($this->ci, [Role::ROLE_ADMIN]);
     }

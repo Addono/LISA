@@ -17,7 +17,7 @@ class DefaultPage extends PageFrame
         ];
     }
 
-    public function hasAccess(): boolean
+    public function hasAccess(): bool
     {
         return true;
     }
