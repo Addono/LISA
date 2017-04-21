@@ -57,7 +57,7 @@ class TransactionsPage extends PageFrame
      *
      * @return array;
      */
-    protected function getModels()
+    protected function getModels(): array
     {
         return [
             Role::class,
@@ -70,7 +70,7 @@ class TransactionsPage extends PageFrame
      *
      * @return array;
      */
-    protected function getLibraries()
+    protected function getLibraries(): array
     {
         return [];
     }
@@ -80,7 +80,7 @@ class TransactionsPage extends PageFrame
      *
      * @return array;
      */
-    protected function getHelpers()
+    protected function getHelpers(): array
     {
         return [];
     }
