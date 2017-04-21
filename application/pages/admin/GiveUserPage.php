@@ -24,7 +24,7 @@ class GiveUserPage extends PageFrame
         return true;
     }
 
-    public function hasAccess(): boolean
+    public function hasAccess(): bool
     {
         // Check if the user is logged in and has the required rights.
         $hasRights = isLoggedInAndHasRole($this->ci, [Role::ROLE_ADMIN]);
