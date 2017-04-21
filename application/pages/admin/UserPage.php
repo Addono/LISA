@@ -19,7 +19,7 @@ class UserPage extends PageFrame
         ];
     }
 
-    public function hasAccess(): bool
+    public function hasAccess(): boolean
     {
         // Check if the user is logged in and has the required rights.
         $hasRights = isLoggedInAndHasRole($this->ci, [Role::ROLE_ADMIN]);
