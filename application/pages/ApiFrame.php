@@ -34,6 +34,10 @@ abstract class ApiFrame extends RequestFrame implements RequestInterface
         $this->setResult(self::STATUS, self::STATUS_ERROR);
     }
 
+    final function setStatus(string $status) {
+        $this->setResult(self::STATUS, $status);
+    }
+
     /**
      * Show the page.
      *
