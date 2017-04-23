@@ -29,6 +29,12 @@ class Consumption extends ModelFrame
             ]);
     }
 
+    /**
+     * Retrieves the amount of consumptions a user has.
+     *
+     * @param $loginId
+     * @return int
+     */
     public function get($loginId) {
         $result = $this->db
             ->where([Login::FIELD_LOGIN_ID => $loginId])

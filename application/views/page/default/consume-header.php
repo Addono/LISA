@@ -8,7 +8,6 @@
 <div class="col-md-12 vmargin col-md-offset-0">
     <div class="container">
         <div class="card card-signup">
-            <?=form_open()?>
             <div class="header header-primary text-center">
                 <h4><?=lang('consume_title')?></h4>
             </div>
@@ -27,20 +26,9 @@
                         <?php foreach($users as $u) { ?>
                             <tr>
                                 <th><?=$u[$fields['first_name']] . ' ' . $u[$fields['last_name']]?></th>
-                                <th><?=$u[$fields['amount']]?></th>
+                                <th class="amount"><?=$u[$fields['amount']]?></th>
                                 <th>
-                                    <ul class="pagination pagination-primary horizontal-radio">
-                                        <?php for($i = $min; $i <= $max; $i++) { ?>
-                                        <li <?=$i===0?'class="active"':''?>>
-                                            <a>
-                                                <label>
-                                                    <input type="radio" name="amount[<?=$u[$fields['login_id']]?>]" value="<?=$i?>" <?=$i===0?'checked':''?>>
-                                                    <?=$i?>
-                                                </label>
-                                            </a>
-                                        </li>
-                                        <?php } ?>
-                                    </ul>
+                                    <button data-id="<?=$u[$fields['login_id']]?>" class="buy btn btn-primary btn-lg">-1</button>
                                 </th>
                             </tr>
                         <?php } ?>
@@ -48,9 +36,9 @@
                     </table>
                 </div>
             </div>
-            <div class="footer text-center">
-                <input type="submit" value="<?=lang('consume_submit')?>" class="btn btn-simple btn-primary btn-lg">
-            </div>
-            </form>
         </div>
+    </div>
+    <div id="snackbar" class="mdl-js-snackbar mdl-snackbar">
+        <div class="mdl-snackbar__text"></div>
+        <button class="mdl-snackbar__action" type="button"></button>
     </div>

@@ -31,6 +31,13 @@ $lang['transactions_table_header_amount'] = 'Nieuwe hoeveelheid';
 $lang['transactions_table_header_delta'] = 'Verschil';
 $lang['transactions_table_header_time'] = 'Datum';
 
+$lang['transactions_ajax_message_success'] = 'Aankoop voor [name] gelukt! Nieuwe hoeveelheid [newAmount].';
+$lang['transactions_ajax_message_unknown_error'] = 'Sorry, er ging iets fout. Ververs de pagina en probeer opnieuw.';
+$lang['transactions_ajax_message_internal_server_error'] = 'Ongeldige aanvraag was verstuurd, als het probleem aanhoud neem dan contact op met de systeembeheerder.';
+$lang['transactions_ajax_message_access_denied'] = 'Je hebt niet genoeg rechten voor deze actie, mogelijk ben je niet ingelogd.';
+$lang['transactions_ajax_message_invalid_request'] = 'Ongeldige aanvraag was verstuurd, als het probleem aanhoud neem dan contact op met de systeembeheerder.';
+$lang['transactions_ajax_message_database_error'] = 'Ongeldige aanvraag was verstuurd, als het probleem aanhoud neem dan contact op met de systeembeheerder.';
+
 // Not user
 $lang['not_user_page_header_title'] = 'Eeuhm... sorry :(';
 $lang['not_user_page_header_body'] = 'Je hebt niet de rechten om deze applicatie te mogen gebruiker, als je denkt dat je dit wel zou mogen neem dan contact op met de systeem beheerder.';

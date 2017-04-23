@@ -11,26 +11,46 @@
 class ApiBuyPage extends ApiFrame
 {
 
+    const USER_NOT_FOUND = 'userNotFound';
+    const INVALID_ARGUMENT = 'invalidArgument';
+    const DATABASE_ERROR = 'databaseError';
+
     function call()
     {
         $id = set_value('id');
 
+        // Check that id is set.
         if ($id === '' || ! is_numeric($id)) {
-            $this->setResult('error', 'invalidArgument');
+            $this->setError(self::INVALID_ARGUMENT);
+            $this->setResult('id', $id);
+            return;
+        }
+
+        // Check that an valid id is passed.
+        if (!$this->ci->Role_LoginRole->userHasRole($id, Role::ROLE_USER)) {
+            // error invalid user specified.
+            $this->setError(self::USER_NOT_FOUND);
+            return;
+        }
+
+        $authorId = getLoggedInLoginId($this->ci->session);
+
+        $amount = 1;
+        $result = $this->ci->Consumption->change($id, $authorId, -$amount);
+
+        if ($result) {
+            $this->setStatus(ApiFrame::STATUS_SUCCESS);
+            $this->setResult('name', $this->ci->User->getName($id));
+            $this->setResult('newAmount', $this->ci->Consumption->get($id));
+            $this->setResult('amount', $amount);
         } else {
-            if ($this->ci->Role_LoginRole->userHasRole($id)) {
-
-
-                $authorId = getLoggedInLoginId($this->ci->session);
-                $this->ci->Consumption->change($id, $authorId, -1);
-            } else {
-                // error invalid user specified.
-            }
+            $this->setError(self::DATABASE_ERROR);
         }
     }
 
     function hasAccess(): bool
     {
+        // Ensure that the request originates from a user.
         return isLoggedInAndHasRole($this->ci, [Role::ROLE_USER]);
     }
 

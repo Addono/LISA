@@ -31,6 +31,13 @@ $lang['transactions_table_header_amount'] = 'New amount';
 $lang['transactions_table_header_delta'] = 'Difference';
 $lang['transactions_table_header_time'] = 'Time';
 
+$lang['transactions_ajax_message_success'] = 'Purchase for [name] successful, [newAmount] remaining';
+$lang['transactions_ajax_message_unknown_error'] = 'Something went wrong, refresh the page and try again.';
+$lang['transactions_ajax_message_internal_server_error'] = 'The request caused an internal server error.';
+$lang['transactions_ajax_message_access_denied'] = 'Not enough rights, you might be logged out.';
+$lang['transactions_ajax_message_invalid_request'] = 'Invalid request was sent, refresh the page and try again.';
+$lang['transactions_ajax_message_database_error'] = 'The request caused an internal database error, please contact the system administrator.';
+
 // Not user
 $lang['not_user_page_header_title'] = 'Eeuhm... sorry :(';
 $lang['not_user_page_header_body'] = 'You currently do not have the rights to use this application, if you think you should please contact the administrator.';
