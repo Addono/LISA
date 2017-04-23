@@ -28,4 +28,10 @@
 
     <!-- Control Center for Material Kit: activating the ripples, parallax effects, scripts from the example pages etc -->
     <script src="<?php echo base_url('resources/js/material-kit.js')?>" type="text/javascript"></script>
+
+    <?php foreach ($scripts as $script) { ?>
+        <script>
+            <?=$script?>
+        </script>
+    <?php } ?>
 </html>
