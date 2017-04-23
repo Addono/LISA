@@ -49,12 +49,15 @@ class TransactionsPage extends PageFrame
         $this->setData('fields', $fields);
 
         $this->addScript(
-            '$(document).ready(function() {
-                $(".data-table-responsive").DataTable({
-                    responsive: true,
-                    order: [4, "desc"]
-                });
-            });');
+            '<script>
+                        $(document).ready(function() {
+                            $(".data-table-responsive").DataTable({
+                                responsive: true,
+                                order: [4, "desc"]
+                            });
+                        });
+                    </script>'
+        );
     }
 
     /**

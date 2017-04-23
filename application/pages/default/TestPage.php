@@ -55,7 +55,6 @@ class TestPage extends PageFrame
     </script><?php
         $this->addScript(ob_get_contents());
         ob_clean();
-        $this->addScript('abc');
     }
 
     /**

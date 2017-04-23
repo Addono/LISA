@@ -47,7 +47,8 @@ class TransactionsPage extends PageFrame
         $this->setData('fields', $fields);
 
         $this->addScript("
-        $(document).ready(function() {
+        <script>
+            $(document).ready(function() {
                 $(\"input[type=radio\").change(function() {
                     $(this).parents('ul').children('.active').removeClass('active');
                     $(this).parents('li').addClass('active');
@@ -56,7 +57,8 @@ class TransactionsPage extends PageFrame
                 $(\".pagination.horizontal-radio\").click(function() {
                     $(this).find('input[type=radio]').attr('checked', true);
                 });
-            });"
+            });
+        </script>"
         );
     }
 
