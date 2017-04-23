@@ -40,17 +40,21 @@ class UserOverviewPage extends PageFrame
         $this->setdata('userDataFields', $userDataFields);
 
         $this->addScript(
-            '$(document).ready(function() {
+            '<script>
+                    $(document).ready(function() {
                 $(\'.data-table-responsive\').DataTable({
                     responsive: true
                 });
-            });'
+            });
+            </script>'
         );
         $this->addScript(
-            '$(".button-tooltip").tooltip({
+            '<script>
+            $(".button-tooltip").tooltip({
                 selector: "[data-toggle=tooltip]",
                 container: "body"
-            })'
+            })
+            </script>'
         );
     }
 
