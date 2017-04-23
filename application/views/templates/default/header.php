@@ -24,6 +24,9 @@
 
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
 
+    <!-- Google Material Design -->
+    <link href="<?=base_url('./resources/css/mdl/material.min.css')?>" rel="stylesheet" type="text/css">
+
     <!--     Fonts and icons     -->
     <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" /> -->
     <link rel="stylesheet" type="text/css" href="<?=base_url('resources/css/roboto.css')?>" />
