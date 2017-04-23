@@ -32,10 +32,10 @@ class TestPage extends PageFrame
      */
     public function beforeView()
     {
-    ob_start();
-    ?><script>
-    $(document).ready(function() {
-        $('.buy').onclick(function () {
+        ob_start();
+        ?><script>
+
+        $('.buy').click(function () {
             $.ajax({
                 url: "<?=site_url($this->data['group'] . '/ApiBuy')?>",
                 data: {
@@ -43,15 +43,15 @@ class TestPage extends PageFrame
                 },
                 type: "POST",
                 dataType: "json"
-            });
-        })
-            .done(function (json) {
-                console.log(json);
             })
-            .fail(function (xhr, status, errorMessage) {
-                alert(errorMessage);
-            });
-    });
+                .done(function (json) {
+                    console.log(json);
+                })
+                .fail(function (xhr, status, errorMessage) {
+                    alert(errorMessage);
+                });
+        });
+
     </script><?php
         $this->addScript(ob_get_contents());
         ob_clean();

@@ -18,10 +18,14 @@ class ApiBuyPage extends ApiFrame
         if ($id === '' || ! is_numeric($id)) {
             $this->setResult('error', 'invalidArgument');
         } else {
-            $id = set_value('id');
+            if ($this->ci->Role_LoginRole->userHasRole($id)) {
 
-            $authorId = getLoggedInLoginId($this->ci->session);
-            $this->ci->Consumption->change($id, $authorId, -1);
+
+                $authorId = getLoggedInLoginId($this->ci->session);
+                $this->ci->Consumption->change($id, $authorId, -1);
+            } else {
+                // error invalid user specified.
+            }
         }
     }
 
@@ -43,6 +47,7 @@ class ApiBuyPage extends ApiFrame
             User::class,
             Role::class,
             LoginRole::class,
+            Role_LoginRole::class,
             User_Consumption_LoginRole::class,
         ];
     }
