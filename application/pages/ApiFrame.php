@@ -8,8 +8,12 @@ abstract class ApiFrame extends RequestFrame implements RequestInterface
 {
     protected $result = [];
 
+    const STATUS_SUCCESS = 'success';
     const STATUS_ERROR = 'error';
     const STATUS_ACCESS_DENIED = 'accessDenied';
+    const STATUS_INTERNAL_SERVER_ERROR = 'internalServerError';
+
+    const STATUS = 'status';
 
     abstract function call();
 
@@ -27,7 +31,7 @@ abstract class ApiFrame extends RequestFrame implements RequestInterface
 
     final function setError(string $message) {
         $this->setResult(self::STATUS_ERROR, $message);
-        $this->setResult('status', self::STATUS_ERROR);
+        $this->setResult(self::STATUS, self::STATUS_ERROR);
     }
 
     /**
@@ -42,7 +46,15 @@ abstract class ApiFrame extends RequestFrame implements RequestInterface
         if ($this->hasAccess()) {
             $result = $this->result;
         } else {
-            $result = ['status' => self::STATUS_ACCESS_DENIED];
+            $result = [self::STATUS => self::STATUS_ACCESS_DENIED];
+        }
+
+        // Check if the status is set, else return an internal server error instead.
+        if (! array_key_exists(self::STATUS, $this->result)) {
+            $this->result = [
+                self::STATUS => self::STATUS_INTERNAL_SERVER_ERROR,
+                self::STATUS_ERROR => 'statusNotSet',
+            ];
         }
 
         echo json_encode($result);
