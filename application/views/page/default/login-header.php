@@ -21,7 +21,7 @@
                                 <i class="fa fa-user fa-lg"></i>
                             </span>
                             <label class="control-label"><?=lang('login_username')?></label>
-                            <input type="text" name="username" class="form-control" value="<?=set_value('username')?>" />
+                            <input type="text" name="username" class="form-control" value="<?=set_value('username')?>" autofocus />
                         </div>
 
                         <div class="input-group form-group label-floating">
