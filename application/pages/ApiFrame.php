@@ -45,9 +45,8 @@ abstract class ApiFrame extends RequestFrame implements RequestInterface
      */
     public function show()
     {
-        $this->call();
-
         if ($this->hasAccess()) {
+            $this->call();
             $result = $this->result;
         } else {
             $result = [self::STATUS => self::STATUS_ACCESS_DENIED];
