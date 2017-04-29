@@ -10,6 +10,7 @@ $lang['menu_consume'] = 'Consume';
 
 // Consume
 $lang['consume_title'] = 'Consume!';
+$lang['consume_description'] = 'Double click on the button to make a purchase..';
 
 $lang['consume_table_head_name'] = 'Name';
 $lang['consume_table_head_credit'] = 'Credit';

@@ -54,7 +54,7 @@ class ConsumePage extends PageFrame
             }
         };
 
-        $('.buy').click(function () {
+        $('.buy').dblclick(function () {
             var $button = $(this);
 
             $.ajax({

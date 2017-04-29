@@ -5,13 +5,11 @@
  */
 ?>
 
-            <footer class="footer">
+
                 <div class="container">
-                    <div class="copyright">
-                       <?=lang('application_name').' '.lang('application_version')?> &copy; <?=lang('copyright')?>
-                    </div>
+                   <?=lang('application_name').' '.lang('application_version')?> &copy; <?=lang('copyright')?>
                 </div>
-            </footer>
+
             </div>
         </div>
     </div>

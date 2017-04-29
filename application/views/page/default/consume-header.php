@@ -10,6 +10,7 @@
         <div class="card card-signup">
             <div class="header header-primary text-center">
                 <h4><?=lang('consume_title')?></h4>
+                <p><?=lang('consume_description')?></p>
             </div>
             <p class="text-divider"></p>
             <div class="content">
