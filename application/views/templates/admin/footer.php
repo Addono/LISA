@@ -22,11 +22,9 @@
         <script src="<?=base_url('./resources/js/dataTables.bootstrap.min.js')?>"></script>
         <script src="<?=base_url('./resources/js/dataTables.responsive.js')?>"></script>
 
-        <?php foreach ($scripts as $script) { ?>
-        <script>
-            <?=$script?>
-        </script>
-        <?php } ?>
+        <?php foreach ($scripts as $script) {
+            echo $script;
+        } ?>
     </body>
 
 </html>
