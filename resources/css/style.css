@@ -54,3 +54,11 @@ body {
 .mdl-snackbar {
     z-index: 100;
 }
+
+body {
+    background-color: #001b23;
+}
+
+.btn-no-margin {
+    margin: 0 !important;
+}
