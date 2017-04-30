@@ -19,11 +19,6 @@ class GiveUserPage extends PageFrame
         ];
     }
 
-    public function isVisible()
-    {
-        return true;
-    }
-
     public function hasAccess(): bool
     {
         // Check if the user is logged in and has the required rights.
