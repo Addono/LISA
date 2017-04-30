@@ -51,28 +51,6 @@ body {
     padding-top: 0px;
 }
 
-.pagination.horizontal-radio {
-    margin: 0px;
-}
-
-.pagination.horizontal-radio input[type=radio] {
-    width: 30px;
-    height: 30px;
-    position: absolute;
-    margin-left: -11px;
-    opacity: 0;
-}
-
-.pagination.horizontal-radio li.active label {
-    color: #fff;
-    width: 8px;
-    display: inline;
-}
-
-.btn-no-margin {
-    margin: 0 !important;
-}
-
-body {
-    background-color: #001B23;
+.mdl-snackbar {
+    z-index: 100;
 }
