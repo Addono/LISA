@@ -55,3 +55,7 @@ body {
 .input-group span.input-group-addon {
     padding-top: 0px;
 }
+
+.mdl-snackbar {
+    z-index: 100;
+}
