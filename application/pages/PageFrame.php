@@ -19,8 +19,6 @@ abstract class PageFrame extends RequestFrame
     public function  __construct(array $data, $validateForm = true) {
         parent::__construct($data);
 
-        var_dump($data);
-
         if ($validateForm) {
             $this->formSuccess = $this->formValidate();
         } else {
