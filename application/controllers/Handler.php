@@ -38,6 +38,7 @@ class Handler extends CI_Controller {
 
         // Add the group to data such that views can generate urls accordingly.
         $this->data['group'] = $group;
+        $this->data['subpage'] = $subPage;
 
         $this->data['ci'] = $this;
 
