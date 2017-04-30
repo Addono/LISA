@@ -10,7 +10,7 @@ $lang['menu_consume'] = 'Consume';
 
 // Consume
 $lang['consume_title'] = 'Consume!';
-$lang['consume_description'] = 'Double click on the button to make a purchase..';
+$lang['consume_description'] = '<b>Double click</b> on the button to make a purchase.';
 
 $lang['consume_table_head_name'] = 'Name';
 $lang['consume_table_head_credit'] = 'Credit';
@@ -43,11 +43,15 @@ $lang['transactions_ajax_message_database_error'] = 'The request caused an inter
 $lang['not_user_page_header_title'] = 'Eeuhm... sorry :(';
 $lang['not_user_page_header_body'] = 'You currently do not have the rights to use this application, if you think you should please contact the administrator.';
 
+// Footer
+$lang['footer_hosted_by'] = 'Hosted by';
+$lang['footer_source'] = 'Source';
+
 // @Overwrite
 $lang['application_name'] = 'Lisa';
 $lang['application_title'] = 'Lisa is super awesome';
 $lang['copyright'] = '2017, Adriaan Knapen';
-$lang['application_version'] = 'Core v0.2.3';
+$lang['application_version'] = 'Core v1.0';
 
 $lang['default_page_header_title'] = 'Hello, I am Lisa!';
 $lang['default_page_header_body'] = 'Login to get started';

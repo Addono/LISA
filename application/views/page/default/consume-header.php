@@ -26,11 +26,11 @@
                         <tbody>
                         <?php foreach($users as $u) { ?>
                             <tr>
-                                <th><?=$u[$fields['first_name']] . ' ' . $u[$fields['last_name']]?></th>
-                                <th class="amount"><?=$u[$fields['amount']]?></th>
-                                <th>
-                                    <button data-id="<?=$u[$fields['login_id']]?>" class="buy btn btn-primary btn-lg">-1</button>
-                                </th>
+                                <td><?=$u[$fields['first_name']] . ' ' . $u[$fields['last_name']]?></td>
+                                <td class="amount"><?=$u[$fields['amount']]?></td>
+                                <td>
+                                    <button data-id="<?=$u[$fields['login_id']]?>" class="buy btn btn-primary btn-no-margin">-1</button>
+                                </td>
                             </tr>
                         <?php } ?>
                         </tbody>
@@ -49,3 +49,4 @@
             <button class="mdl-snackbar__action" type="button"></button>
         </div>
     </div>
+</div>

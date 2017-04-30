@@ -10,7 +10,7 @@ $lang['menu_consume'] = 'Consumeer';
 
 // Consume
 $lang['consume_title'] = 'Consumeer!';
-$lang['consume_description'] = 'Dubbel klik op een knop om een consumptie te kopen.';
+$lang['consume_description'] = '<b>Dubbel klik</b> op een knop om een consumptie te kopen.';
 
 $lang['consume_table_head_name'] = 'Naam';
 $lang['consume_table_head_credit'] = 'Credit';
@@ -43,11 +43,15 @@ $lang['transactions_ajax_message_database_error'] = 'Ongeldige aanvraag was vers
 $lang['not_user_page_header_title'] = 'Eeuhm... sorry :(';
 $lang['not_user_page_header_body'] = 'Je hebt niet de rechten om deze applicatie te mogen gebruiker, als je denkt dat je dit wel zou mogen neem dan contact op met de systeem beheerder.';
 
+// Footer
+$lang['footer_hosted_by'] = 'Gehost door';
+$lang['footer_source'] = 'Broncode';
+
 // @Overwrite
 $lang['application_name'] = 'Lisa';
 $lang['application_title'] = 'Lisa is super awesome';
 $lang['copyright'] = '2017, Adriaan Knapen';
-$lang['application_version'] = 'Core v0.2.3';
+$lang['application_version'] = 'Core v1.0';
 
 $lang['default_page_header_title'] = 'Hoi ik ben Lisa!';
 $lang['default_page_header_body'] = 'Log in om te beginnen';

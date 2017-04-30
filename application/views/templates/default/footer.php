@@ -5,14 +5,33 @@
  */
 ?>
 
-
-                <div class="container">
-                   <?=lang('application_name').' '.lang('application_version')?> &copy; <?=lang('copyright')?>
                 </div>
-
             </div>
         </div>
     </div>
+
+    <footer class="footer">
+        <div class="container" style="color: white">
+            <nav class="pull-left">
+                <ul>
+                    <li>
+                        <a href="https://www.sdhd.nl/">
+                            <?=lang('footer_hosted_by')?>
+                            <img src="<?=base_url('resources/img/sdhd/logo.png')?>" style="height:3em"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/Addono/lisa">
+                            <?=lang('footer_source')?>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="copyright pull-right">
+                <b><?=lang('application_name').' '.lang('application_version')?></b> &copy; <?=lang('copyright')?>
+            </div>
+        </div>
+    </footer>
 
     </body>
 

@@ -8,3 +8,4 @@
     <h1><?=lang('default_page_header_title')?></h1>
     <h4><?=lang('default_page_header_body')?></h4>
     <a href="<?php echo site_url($group.'/login')?>" class="btn btn-simple btn-primary btn-lg btn-background-white"><?=lang('login_login')?></a>
+</div>

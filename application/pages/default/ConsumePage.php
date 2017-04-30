@@ -66,7 +66,7 @@ class ConsumePage extends PageFrame
                 dataType: "json"
             })
                 .done(function (json) {
-                    var message;
+                    var message, status;
 
                     switch (json.status) {
                         // On success

@@ -68,3 +68,11 @@ body {
     width: 8px;
     display: inline;
 }
+
+.btn-no-margin {
+    margin: 0 !important;
+}
+
+body {
+    background-color: #001B23;
+}

@@ -4,9 +4,3 @@
  * @date 29-1-2017
  */
 ?>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="main main-raised">
-    <div class="container">
