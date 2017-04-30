@@ -25,7 +25,8 @@ class GiveUserPage extends PageFrame
         $hasRights = isLoggedInAndHasRole($this->ci, [Role::ROLE_ADMIN]);
 
         // Check if the given login id is valid and has a user account connected to it.
-        $loginId = $this->params['subpage'];
+        $loginId = $this->getDataKey('subpage');
+
         $validLoginId = $loginId !== null && $this->ci->Login_User->exists($loginId);
 
         return $hasRights && $validLoginId;
@@ -33,7 +34,7 @@ class GiveUserPage extends PageFrame
 
     public function onFormSuccess()
     {
-        $loginId = $this->params['subpage'];
+        $loginId = $this->getDataKey('subpage');
         $authorId = getLoggedInLoginId($this->ci->session);
         $name = $this->ci->User->getName($loginId);
         $amount = set_value('amount');
@@ -71,7 +72,7 @@ class GiveUserPage extends PageFrame
      */
     public function beforeView()
     {
-        $loginId = $this->params['subpage'];
+        $loginId = $this->getDataKey('subpage');
 
         // Get the users name.
         $name = $this->ci->User->getName($loginId);

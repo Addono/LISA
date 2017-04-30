@@ -82,7 +82,7 @@ class ResetPage extends PageFrame
 
     public function onFormSuccess()
     {
-        $key = $this->data['subpage'];
+        $key = $this->getDataKey('subpage');
         $password = set_value('password');
 
         $this->success = $this->ci->LoginReset_User->updatePassword($key, $password);

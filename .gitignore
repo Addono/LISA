@@ -1,6 +1,8 @@
 application/cache/*
 !application/cache/index.html
 !application/cache/.htaccess
+!application/cache/sessions
+application/cache/sessions/*
 !application/cache/sessions/index.html
 !application/cache/sessions/.htaccess
 
