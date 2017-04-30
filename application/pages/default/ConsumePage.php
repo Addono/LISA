@@ -66,7 +66,6 @@ class ConsumePage extends PageFrame
                 dataType: "json"
             })
                 .done(function (json) {
-                    var status;
                     var message;
 
                     switch (json.status) {
@@ -108,14 +107,12 @@ class ConsumePage extends PageFrame
                             break;
                     }
 
-                    var snackbarContainer = document.querySelector('#snackbar');
-
                     var data = {
                         timeout: colorType[status].timeout,
                         message: message
                     };
 
-                    snackbarContainer.classList.add(colorType[status].class); // Add the coloring
+                    var snackbarContainer = document.querySelector('#snackbar > .'+status);
                     snackbarContainer.MaterialSnackbar.showSnackbar(data); // Show the snackbar
                 })
                 .fail(function (xhr, status, errorMessage) {
