@@ -116,7 +116,7 @@ class ConsumePage extends PageFrame
                 .fail(function (xhr, status, errorMessage) {
                     alert(errorMessage);
                 });
-        }
+        };
 
         var touchTime = 0;
         $('.buy').on('click', function() {
