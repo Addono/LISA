@@ -54,9 +54,7 @@ class ConsumePage extends PageFrame
             }
         };
 
-        $('.buy').dblclick(function () {
-            var $button = $(this);
-
+        purchase = function ($button) {
             $.ajax({
                 url: "<?=site_url($this->data['group'] . '/ApiBuy')?>",
                 data: {
@@ -118,6 +116,24 @@ class ConsumePage extends PageFrame
                 .fail(function (xhr, status, errorMessage) {
                     alert(errorMessage);
                 });
+        }
+
+        var touchTime = 0;
+        $('.buy').on('click', function() {
+            if(touchTime === 0) {
+                //set first click
+                touchTime = new Date().getTime();
+            } else {
+                //compare first click to this click and see if they occurred within double click threshold
+                if(((new Date().getTime())-touchTime) < 800) {
+                    //double click occurred
+                    purchase($(this));
+                    touchTime = 0;
+                } else {
+                    //not a double click so set as a new first click
+                    touchTime = new Date().getTime();
+                }
+            }
         });
 
         </script><?php
