@@ -29,7 +29,7 @@
                                 <td><?=$u[$fields['first_name']] . ' ' . $u[$fields['last_name']]?></td>
                                 <td class="amount"><?=$u[$fields['amount']]?></td>
                                 <td>
-                                    <button data-id="<?=$u[$fields['login_id']]?>" class="buy btn btn-primary btn-no-margin">-1</button>
+                                    <a href="#" data-id="<?=$u[$fields['login_id']]?>" class="buy btn btn-primary btn-no-margin">-1</a>
                                 </td>
                             </tr>
                         <?php } ?>
