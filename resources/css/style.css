@@ -62,3 +62,8 @@ body {
 .btn-no-margin {
     margin: 0 !important;
 }
+
+/* Possible iOS bugfix */
+button, .btn, .buy {
+    cursor: pointer;
+}
