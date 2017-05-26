@@ -16,6 +16,10 @@ $lang['consume_table_head_name'] = 'Name';
 $lang['consume_table_head_credit'] = 'Credit';
 $lang['consume_table_head_consumptions'] = '#Consumptions';
 
+$lang['consume_group_first_name'] = 'First name';
+$lang['consume_group_last_name'] = 'Last name';
+$lang['consume_group_amount_name'] = 'Amount';
+
 $lang['consume_submit'] = 'Buy';
 
 $lang['consume_form_invalid_amount'] = 'Something went wrong with the given amounts, therefore the transaction is aborted. Please try again, if the problem persists please contact the system administrator.';

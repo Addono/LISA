@@ -16,6 +16,10 @@ $lang['consume_table_head_name'] = 'Naam';
 $lang['consume_table_head_credit'] = 'Credit';
 $lang['consume_table_head_consumptions'] = '#Consumpties';
 
+$lang['consume_group_first_name'] = 'Voornaam';
+$lang['consume_group_last_name'] = 'Achternaam';
+$lang['consume_group_amount_name'] = 'Hoeveelheid';
+
 $lang['consume_submit'] = 'Koop';
 
 $lang['consume_form_invalid_amount'] = 'Er is iets mis gegaan met de opgegeven hoeveelheden, daarom is de volledige transactie afgebroken. Probeer het alsjeblieft opnieuw, als dit probleem blijft neem dan contact op met uw systeembeheerder.';

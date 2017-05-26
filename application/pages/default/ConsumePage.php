@@ -140,9 +140,63 @@ class ConsumePage extends PageFrame
         $this->addScript(ob_get_contents());
         ob_clean();
 
-        $userRoleId = $this->ci->Role->getRoleIdFromRoleName(Role::ROLE_USER);
-        $users = $this->ci->User_Consumption_LoginRole->get($userRoleId);
-        $this->setData('users', $users);
+        $roles = $this->ci->Role->getRoles();
+        foreach ($roles as $role) {
+            if ($role[Role::FIELD_ROLE_NAME] !== Role::ROLE_ADMIN) {
+                $users[$role[Role::FIELD_ROLE_NAME]] = $this->ci->User_Consumption_LoginRole->get($role[Role::FIELD_ROLE_ID]);
+            }
+        }
+
+        $byFirstName = $users[Role::ROLE_USER];
+        usort($byFirstName, function($a, $b) {
+            return strcmp(strtolower($a[User::FIELD_FIRST_NAME]), strtolower($b[User::FIELD_FIRST_NAME]));
+        });
+        $byLastName = $users[Role::ROLE_USER];
+        usort($byLastName, function($a, $b) {
+            return strcmp(strtolower($a[User::FIELD_LAST_NAME]), strtolower($b[User::FIELD_LAST_NAME]));
+        });
+        $byAmount = $users[Role::ROLE_USER];
+        usort($byAmount, function($a, $b) {
+            return $b['amount'] - $a['amount'];
+        });
+
+        $tabs = [
+            'ordered' => [
+                'title' => lang('consume_group_first_name'),
+                'icon' => 'fa-sort-alpha-asc',
+                'users' => $byFirstName,
+            ],
+            'abc' => [
+                'title' => lang('consume_group_last_name'),
+                'icon' => 'fa-sort-alpha-asc',
+                'users' => $byLastName,
+            ],
+            'amount' => [
+                'title' => lang('consume_group_amount_name'),
+                'icon' => 'fa-sort-amount-desc',
+                'users' => $byAmount,
+            ],
+        ];
+
+        foreach ($users as $name => $group) {
+            if ($name !== Role::ROLE_USER) {
+                $groupUsers = array_uintersect($group, $users[Role::ROLE_USER], function ($a, $b) {
+                    if ($a[Login::FIELD_LOGIN_ID] === $b[Login::FIELD_LOGIN_ID]) {
+                        return 0;
+                    } else {
+                        return 1;
+                    }
+                });
+
+                $tabs[$name] = [
+                    'title' => $name,
+                    'icon' => '',
+                    'users' => $groupUsers,
+                ];
+            }
+        }
+
+        $this->setData('tabs', $tabs);
 
         $fields = [
             'login_id' => Login::FIELD_LOGIN_ID,
