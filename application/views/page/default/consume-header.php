@@ -19,6 +19,10 @@
                         <ul class="nav nav-tabs" data-tabs="tabs"><?php
                         $count = 0;
                         foreach ($tabs as $id => $tab) {
+                            // Skip all empty tabs.
+                            if (count($tab['users']) === 0) {
+                                continue;
+                            }
                             ?><li class="<?=++$count==1?'active':''?>">
                                 <a href="#<?=$id?>" data-toggle="tab">
                                     <i class="fa <?=$tab['icon']?>"></i>
