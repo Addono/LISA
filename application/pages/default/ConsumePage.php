@@ -143,30 +143,30 @@ class ConsumePage extends PageFrame
         $roles = $this->ci->Role->getRoles();
         foreach ($roles as $role) {
             if ($role[Role::FIELD_ROLE_NAME] !== Role::ROLE_ADMIN) {
-                $users[$role[Role::FIELD_ROLE_NAME]] = $this->ci->User_Consumption_LoginRole->get($role[Role::FIELD_ROLE_ID]);
+                $allUsersByRole[$role[Role::FIELD_ROLE_NAME]] = $this->ci->User_Consumption_LoginRole->get($role[Role::FIELD_ROLE_ID]);
             }
         }
 
-        $byFirstName = $users[Role::ROLE_USER];
+        $byFirstName = $allUsersByRole[Role::ROLE_USER];
         usort($byFirstName, function($a, $b) {
             return strcmp(strtolower($a[User::FIELD_FIRST_NAME]), strtolower($b[User::FIELD_FIRST_NAME]));
         });
-        $byLastName = $users[Role::ROLE_USER];
+        $byLastName = $allUsersByRole[Role::ROLE_USER];
         usort($byLastName, function($a, $b) {
             return strcmp(strtolower($a[User::FIELD_LAST_NAME]), strtolower($b[User::FIELD_LAST_NAME]));
         });
-        $byAmount = $users[Role::ROLE_USER];
+        $byAmount = $allUsersByRole[Role::ROLE_USER];
         usort($byAmount, function($a, $b) {
             return $b['amount'] - $a['amount'];
         });
 
         $tabs = [
-            'ordered' => [
+            'ordered-first-name' => [
                 'title' => lang('consume_group_first_name'),
                 'icon' => 'fa-sort-alpha-asc',
                 'users' => $byFirstName,
             ],
-            'abc' => [
+            'ordered-last-name' => [
                 'title' => lang('consume_group_last_name'),
                 'icon' => 'fa-sort-alpha-asc',
                 'users' => $byLastName,
@@ -178,18 +178,21 @@ class ConsumePage extends PageFrame
             ],
         ];
 
-        foreach ($users as $name => $group) {
-            if ($name !== Role::ROLE_USER) {
-                $groupUsers = array_uintersect($group, $users[Role::ROLE_USER], function ($a, $b) {
-                    if ($a[Login::FIELD_LOGIN_ID] === $b[Login::FIELD_LOGIN_ID]) {
-                        return 0;
-                    } else {
-                        return 1;
+        foreach ($allUsersByRole as $roleName => $users) {
+            if ($roleName !== Role::ROLE_USER) {
+                // Intersect the roles of user and every non-admin or user role. (1)
+                $groupUsers = [];
+                foreach ($users as $user1) {
+                    foreach ($allUsersByRole[Role::ROLE_USER] as $user2) {
+                        if ($user1[Login::FIELD_LOGIN_ID] == $user2[Login::FIELD_LOGIN_ID]) {
+                            $groupUsers[] = $user1;
+                            break;
+                        }
                     }
-                });
+                }
 
-                $tabs[$name] = [
-                    'title' => $name,
+                $tabs[$roleName] = [
+                    'title' => $roleName,
                     'icon' => '',
                     'users' => $groupUsers,
                 ];
@@ -267,3 +270,12 @@ class ConsumePage extends PageFrame
         return [];
     }
 }
+
+/*
+ * 1) Running time is O(n*m) with n the amount of logins with the user role and m the amount of logins with the
+ *      other evaluated role, this has to be done for every role (except user and admin). Hence this results in a total
+ *      running time of O(n*m*r) with r the amount of roles. A more scalable way would be to sort all role groups
+ *      and traverse them, only maintaining the users for each role whom are also present in the user role. Which would
+ *      give a running time of O(r*\max(x; roles.has(x); size(x) * log (size(x))), caused by the sorting. The n log n
+ *      running time is a lot better than the n^2 running time it now has.
+ */
