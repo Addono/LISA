@@ -49,10 +49,12 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <?php foreach ($tab['users'] as $u) { ?>
-                                <tr>
+                            <?php
+                            foreach ($tab['users'] as $u) {
+                            $amount = $u[$fields['amount']];
+                            ?><tr class="<?=$amount<0?'text-danger':''?>">
                                     <td><?= $u[$fields['first_name']] . ' ' . $u[$fields['last_name']] ?></td>
-                                    <td class="amount"><?= $u[$fields['amount']] ?></td>
+                                    <td class="amount"><?=$amount?></td>
                                     <td>
                                         <a href="javascript:void(0)" data-id="<?= $u[$fields['login_id']] ?>"
                                            class="buy btn btn-primary btn-no-margin">-1</a>
