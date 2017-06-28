@@ -56,6 +56,97 @@ class UserOverviewPage extends PageFrame
             })
             </script>'
         );
+        require_once APPPATH . 'pages/admin/ApiResetPage.php';
+        $this->addScript(
+    '<script>
+            var colorType = {
+                "info": {
+                    "class": "mdl-color--blue-400",
+                    "icon": "done",
+                    "timeout": 2000
+                },
+                "error": {
+                    "class": "mdl-color--red-400",
+                    "icon": "error",
+                    "timeout": 4000
+                },
+                "warning": {
+                    "class": "mdl-color--amber-400",
+                    "icon": "warning",
+                    "timeout": 4000
+                },
+                "notice": {
+                    "class": "mdl-color--green-400",
+                    "icon": "done",
+                    "timeout": 2000
+                }
+            };
+
+            reset = function ($button) {
+                $.ajax({
+                    url: "' . site_url($this->data['group'] . '/ApiReset') . '",
+                    data: {
+                        id: $button.data("id")
+                    },
+                    type: "POST",
+                    dataType: "json"
+                })
+                    .done(function (json) {
+                    var message, status;
+
+                    switch (json.status) {
+                        // On success
+                        case "' . ApiFrame::STATUS_SUCCESS . '":
+                            status = "notice";
+                            message = null;
+
+                            alert(json.link);
+                            break;
+                        // Error
+                        case "' . ApiFrame::STATUS_ERROR . '":
+                            status = "error";
+                            switch (json.' . ApiFrame::STATUS_ERROR . ') {
+                                case "' . ApiResetPage::DATABASE_ERROR . '":
+                                    message = "' . lang('transactions_ajax_message_database_error') . '";
+                                    break;
+                                case "' . ApiResetPage::INVALID_ARGUMENT . '":
+                                case "' . ApiResetPage::USER_NOT_FOUND . '":
+                                    message = "' . lang('transactions_ajax_message_invalid_request') . '";
+                                    break;
+                                case "' . ApiResetPage::STATUS_ACCESS_DENIED . '":
+                                    message = "' . lang('transactions_ajax_message_access_denied') . '";
+                                    break;
+                                case "' . ApiResetPage::STATUS_INTERNAL_SERVER_ERROR . '":
+                                    message = "' . lang('transactions_ajax_message_internal_server_error') . '";
+                                    break;
+                                default:
+                                    message = "' . lang('transactions_ajax_message_unknown_error') . '";
+                                    break;
+                            }
+                            break;
+                        default:
+                            status = "error";
+                            message = "' . lang('transactions_ajax_message_unknown_error') . '";
+                            break;
+                    }
+                    
+                    if (message != null) {
+                        var data = {
+                            timeout: colorType[status].timeout,
+                            message: message
+                        };
+    
+                        var snackbarContainer = document.querySelector("#snackbar > ."+status);
+                        snackbarContainer.MaterialSnackbar.showSnackbar(data); // Show the snackbar
+                    }
+                });
+            }
+            
+            $(".js_reset").on("click", function() {
+                reset($(this));
+            });
+        </script>'
+        );
     }
 
     /**

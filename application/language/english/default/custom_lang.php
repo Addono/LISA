@@ -7,6 +7,7 @@
 // Menu
 $lang['menu_transactions'] = 'My transactions';
 $lang['menu_consume'] = 'Consume';
+$lang['menu_reset_password'] = 'Change password';
 
 // Consume
 $lang['consume_title'] = 'Consume!';

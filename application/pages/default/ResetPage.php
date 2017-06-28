@@ -47,7 +47,7 @@ class ResetPage extends PageFrame
 
     public function hasAccess(): bool
     {
-        return !isLoggedIn($this->ci->session);
+        return true;
     }
 
     protected function getFormValidationRules()

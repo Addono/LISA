@@ -54,6 +54,10 @@
                                                 <i class="glyphicon glyphicon-edit"></i>
                                             </button>
                                         </a>
+                                        <!--
+                                        <a href="javascript:void(0)" data-id="<?=$u[$userDataFields['id']]?>" type="button" class="js_reset btn btn-primary btn-circle" data-toggle="tooltip" data-placement="left" title="<?=lang('application_user_overview_tooltip_edit_user')?>">
+                                            <i class="glyphicon glyphicon-edit"></i>
+                                        </a> -->
                                     </div>
                                 </td>
                             </tr>
