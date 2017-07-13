@@ -12,7 +12,7 @@ class Menu extends MenuFrame
             new MenuPage(lang('menu_consume'), ConsumePage::class, 'fa fa-glass fa-fw'),
             new MenuPage(lang('menu_transactions'), TransactionsPage::class, 'fa fa-history fa-fw'),
             new MenuPage(lang('menu_admin'), AdminPage::class, 'fa fa-dashboard fa-fw'),
-            new MenuPage(lang('menu_reset_password'), ResetPasswordPage::class, ''),
+            new MenuPage(lang('menu_reset_password'), ResetPasswordPage::class, 'fa fa-cogs fa-fw'),
             // Since only the pages which the user has access rights for will be shown, only one of these will be displayed.
             new MenuPage(lang('login_login'), LoginPage::class, 'fa fa-sign-in fa-fw'),
             new MenuPage(lang('logout_logout'), LogoutPage::class, 'fa fa-sign-out fa-fw'),
