@@ -26,13 +26,19 @@ class LoginReset extends ModelFrame
             $key = sha1(random_bytes(30));
         } while ($this->exists($key));
 
-        $this->db->replace(
+        $res = $this->db->replace(
             self::name(),
             [
                 self::FIELD_RESET_KEY => $key,
                 Login::FIELD_LOGIN_ID => $loginId,
             ]
         );
+
+        if ($res) {
+            return $key;
+        } else {
+            return null;
+        }
     }
 
     public function exists($key) {

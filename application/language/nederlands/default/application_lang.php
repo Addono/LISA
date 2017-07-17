@@ -11,9 +11,12 @@ $lang['copyright'] = '2017, Adriaan Knapen';
 
 $lang['default_page_header_title'] = 'Welkom';
 $lang['default_page_header_body'] = 'Dit is jouw nieuwe startpagina!';
-$lang['menu_admin'] = 'Beheerders paneel';
 
-// Reset
+// Menu items
+$lang['menu_admin'] = 'Beheerders paneel';
+$lang['menu_reset_password'] = 'Wachtwoord aanpassen';
+
+// Password reset
 $lang['reset_reset'] = 'Herstel wachtwoord';
 $lang['reset_success_title'] = 'Gefeliciteerd met je nieuwe wachtwoord';
 $lang['reset_success_body'] = 'Je wachtwoord is succesvol aangepast. Je kan nu met je nieuwe wachtwoord inloggen.';
