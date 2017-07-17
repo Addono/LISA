@@ -58,7 +58,8 @@ class Handler extends CI_Controller {
             'session',
             'form_validation'
         ]);
-        $language = 'nederlands';
+
+        $language = $this->config->config['language'];
         $this->lang->load('default', $language);
         $this->lang->load($group.'/application', $language);
         if (file_exists('./application/language/'.$language.'/'.$group.'/custom_lang.php')) {

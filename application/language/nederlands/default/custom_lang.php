@@ -7,7 +7,6 @@
 // Menu
 $lang['menu_transactions'] = 'Mijn transacties';
 $lang['menu_consume'] = 'Consumeer';
-$lang['menu_reset_password'] = 'Wachtwoord aanpassen';
 
 // Consume
 $lang['consume_title'] = 'Consumeer!';
