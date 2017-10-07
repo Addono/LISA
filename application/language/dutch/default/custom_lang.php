@@ -30,6 +30,9 @@ $lang['consume_form_user_failure'] = 'Er is iets mis gegaan bij het kopen van %s
 // Transactions
 $lang['transactions_title'] = 'Mijn transacties';
 
+$lang['transactions_subtitle_author'] = 'Als auteur';
+$lang['transactions_subtitle_subject'] = 'Als gebruiker';
+
 $lang['transactions_table_header_author'] = 'Auteur';
 $lang['transactions_table_header_subject'] = 'Gebruiker';
 $lang['transactions_table_header_amount'] = 'Nieuwe hoeveelheid';
