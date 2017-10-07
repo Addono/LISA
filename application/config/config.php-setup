@@ -24,8 +24,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 $config['base_url'] = 'http://localhost/lisa/';
+=======
+$config['base_url'] = '';
+>>>>>>> upstream/master
 =======
 $config['base_url'] = '';
 >>>>>>> upstream/master
@@ -229,7 +233,11 @@ $config['allow_get_array'] = TRUE;
 |
 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 $config['log_threshold'] = 1;
+=======
+$config['log_threshold'] = 0;
+>>>>>>> upstream/master
 =======
 $config['log_threshold'] = 0;
 >>>>>>> upstream/master
