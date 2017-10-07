@@ -30,6 +30,9 @@ $lang['consume_form_user_failure'] = 'Failed purchasing %s consumptions for %s. 
 // Transactions
 $lang['transactions_title'] = 'My transactions';
 
+$lang['transactions_subtitle_author'] = 'As author';
+$lang['transactions_subtitle_subject'] = 'As subject';
+
 $lang['transactions_table_header_author'] = 'Author';
 $lang['transactions_table_header_subject'] = 'Subject';
 $lang['transactions_table_header_amount'] = 'New amount';

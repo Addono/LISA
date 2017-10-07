@@ -34,7 +34,8 @@ class TransactionsPage extends PageFrame
     {
         $loginId = getLoggedInLoginId($this->ci->session);
 
-        $transactions = $this->ci->User_Transaction->getAllForSubjectId($loginId);
+        $transactions['subject'] = $this->ci->User_Transaction->getAllForSubjectId($loginId);
+        $transactions['author'] = $this->ci->User_Transaction->getAllForAuthorId($loginId);
         $this->setData('transactions', $transactions);
 
         $fields = [
