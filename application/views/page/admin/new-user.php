@@ -18,7 +18,7 @@
                 <?=lang('application_new_user_form_title')?>
             </div>
             <div class="panel-body">
-                <form role="form" method="post">
+                <?=form_open()?>
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
@@ -85,7 +85,7 @@
                         </div><!-- /.col-lg-12 -->
                     </div><!-- /.row -->
                     <button type="submit" class="btn btn-outline btn-primary btn-lg btn-block"><?=lang('application_new_user_submit')?></button>
-                </form><!-- /form -->
+                <?=form_close()?><!-- /form -->
             </div><!-- /.panel-body -->
         </div><!-- /.panel -->
     </div><!-- /.col-lg-12 -->

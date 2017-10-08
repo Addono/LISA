@@ -35,7 +35,7 @@
                     <div class="footer text-center">
                         <input type="submit" value="<?=lang('login_submit')?>" class="btn btn-primary btn-lg">
                     </div>
-                </form>
+                <?=form_close()?>
             </div>
         </div>
     </div>
