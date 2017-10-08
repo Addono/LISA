@@ -18,7 +18,7 @@
                 <?=lang('application_user_change_name')?>
             </div>
             <div class="panel-body">
-                <form role="form" method="post">
+                <?=form_open()?>
                     <input type="hidden" name="type" value="name" />
                     <div class="form-group">
                     <label><?=lang('application_user_first_name')?></label>
@@ -31,7 +31,7 @@
                         <p class="help-block"><?=lang('application_user_last_name_help')?></p>
                     </div>
                     <button type="submit" class="btn btn-outline btn-primary btn-lg btn-block"><?=lang('application_user_submit')?></button>
-                </form>
+                <?=form_close()?>
             </div><!-- /.panel-body -->
         </div>
     </div>
@@ -42,7 +42,7 @@
                 <?=lang('application_user_change_password')?>
             </div>
             <div class="panel-body">
-                <form role="form" method="post">
+                <?=form_open()?>
                     <input type="hidden" name="type" value="password" />
                     <div class="form-group">
                         <label><?=lang('application_user_password')?></label>
@@ -55,7 +55,7 @@
                         <p class="help-block"><?=lang('application_user_confirm_password_help')?></p>
                     </div>
                     <button type="submit" class="btn btn-outline btn-primary btn-lg btn-block"><?=lang('application_user_submit')?></button>
-                </form>
+                <?=form_close()?>
             </div><!-- /.panel-body -->
         </div>
     </div>
@@ -66,7 +66,7 @@
                 <?=lang('application_user_change_email')?>
             </div>
             <div class="panel-body">
-                <form role="form" method="post">
+                <?=form_open()?>
                     <input type="hidden" name="type" value="email" />
                     <div class="form-group">
                         <label><?=lang('application_user_email')?></label>
@@ -77,7 +77,7 @@
                         <p class="help-block"><?=lang('application_user_email_help')?></p>
                     </div>
                     <button type="submit" class="btn btn-outline btn-primary btn-lg btn-block"><?=lang('application_user_submit')?></button>
-                </form>
+                <?=form_close()?>
             </div><!-- /.panel-body -->
         </div>
     </div>
@@ -88,7 +88,7 @@
                 <?=lang('application_user_change_roles')?>
             </div>
             <div class="panel-body">
-                <form role="form" method="post">
+                <?=form_open()?>
                     <input type="hidden" name="type" value="roles" />
                     <div class="form-group">
                         <label><?=lang('application_user_roles')?></label>
@@ -101,7 +101,7 @@
                         <?php } ?>
                     </div>
                     <button type="submit" class="btn btn-outline btn-primary btn-lg btn-block"><?=lang('application_user_submit')?></button>
-                </form>
+                <?=form_close()?>
             </div><!-- /.panel-body -->
         </div>
     </div>

@@ -32,11 +32,11 @@
                                 <input type="password" name="password" class="form-control" />
                             </div>
                         </div>
-                        <div class="footer text-center">
-                            <input type="submit" value="<?=lang('login_submit')?>" class="btn btn-primary btn-lg">
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="footer text-center">
+                        <input type="submit" value="<?=lang('login_submit')?>" class="btn btn-primary btn-lg">
+                    </div>
+                <?=form_close()?>
             </div>
         </div>
     </div>
