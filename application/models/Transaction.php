@@ -85,8 +85,8 @@ class Transaction extends ModelFrame
 
         // Check if the specified subject is within the earlier retrieved leaderboard.
         $result = $this->db
-            ->from('(' . $sumQuery . ') `t`')
-            ->where(['t.' . self::FIELD_SUBJECT_ID => $subjectId])
+            ->from('(' . $sumQuery . ') `'. $this->db->dbprefix('t') . '`')
+            ->where('t.' . self::FIELD_SUBJECT_ID . '=' . $subjectId)
             ->get();
 
         // If a row is returned, then the user is on the leaderboard.

@@ -51,7 +51,7 @@ class User_Transaction extends ModelFrame
 
         // Join the leaderboard on the user database.
         return $this->db
-            ->from('(' . $sumQuery . ') `t`')
+            ->from('(' . $sumQuery . ') `' . $this->db->dbprefix('t') . '`')
             ->where('t.' . Transaction::FIELD_SUBJECT_ID . '=' . User::name() . '.' . Login::FIELD_LOGIN_ID)
             ->get(User::name())
             ->result_array();
