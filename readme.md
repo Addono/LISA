@@ -13,7 +13,7 @@
 # Licence
 This project is released under the MIT licence, except for all other sources which are included.
 For these their own licence will still be in place. Projects included are:
- - [CodeIgniter3](https://codeigniter.com) (MIT)
+ - [CodeIgniter](https://codeigniter.com) (MIT)
  - [CodeIgniter3 Translations](https://github.com/bcit-ci/codeigniter3-translations) (MIT)
  - [Font Awsome](https://github.com/FortAwesome/Font-Awesome) (MIT and SIL OFL 1.1)
  - [Material Kit](https://github.com/creativetimofficial/material-kit/blob/master/LICENSE.md) (MIT)
@@ -21,6 +21,3 @@ For these their own licence will still be in place. Projects included are:
  
 # Language
 Currently the language used by the application is hard-coded into Handler.php, for future releases it is planned to move configurations like these into database. For now one should edit hard-coded language or substitute all language files in the 'nederlands' language folder with your language of preference. During development I tried to add translations for both English and Dutch, so the English translation files should be complete.
-
-# Example
-An example implementation is [Lisa](https://github.com/Addono/lisa). You might want to look through the code to get a feel how you can use this project.
