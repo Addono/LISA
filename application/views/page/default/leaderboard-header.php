@@ -21,13 +21,15 @@
                         <table class="table table-striped">
                             <thead>
                             <tr>
+                                <th>#</th>
                                 <th><?=lang('leaderboard_table_header_name')?></th>
                                 <th><?=lang('leaderboard_table_header_sum')?></th>
                             </tr>
                             </thead>
                             <tbody>
-                            <?php foreach ($entries as $entry) { ?>
+                            <?php $count = 0; foreach ($entries as $entry) { ?>
                                 <tr>
+                                    <td><?=++$count?></td>
                                     <td><?=$entry[$fields['first_name']] . ' ' . $entry[$fields['last_name']]?></td>
                                     <td><?=-$entry[$fields['sum']]?></td>
                                 </tr>
