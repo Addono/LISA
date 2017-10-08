@@ -18,7 +18,7 @@
                 <?=sprintf(lang('application_give_user_subtitle'), '<i>'.$name.'</i>')?>
             </div>
             <div class="panel-body">
-                <form role="form" method="post">
+                <?=form_open()?>
                     <input type="hidden" name="type" value="name" />
                     <div class="form-group">
                         <label><?=lang('application_give_user_amount')?></label>
@@ -26,7 +26,7 @@
                         <p class="help-block"><?=lang('application_give_user_amount_help')?></p>
                     </div>
                     <button type="submit" class="btn btn-outline btn-primary btn-lg btn-block"><?=lang('application_give_user_submit')?></button>
-                </form>
+                <?=form_close()?>
             </div><!-- /.panel-body -->
         </div>
     </div>
