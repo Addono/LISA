@@ -7,6 +7,7 @@
 // Menu
 $lang['menu_transactions'] = 'Mijn transacties';
 $lang['menu_consume'] = 'Consumeer';
+$lang['menu_leaderboard'] = 'Leaderboard';
 
 // Consume
 $lang['consume_title'] = 'Consumeer!';
@@ -45,6 +46,13 @@ $lang['transactions_ajax_message_internal_server_error'] = 'Ongeldige aanvraag w
 $lang['transactions_ajax_message_access_denied'] = 'Je hebt niet genoeg rechten voor deze actie, mogelijk ben je niet ingelogd.';
 $lang['transactions_ajax_message_invalid_request'] = 'Ongeldige aanvraag was verstuurd, als het probleem aanhoud neem dan contact op met de systeembeheerder.';
 $lang['transactions_ajax_message_database_error'] = 'Ongeldige aanvraag was verstuurd, als het probleem aanhoud neem dan contact op met de systeembeheerder.';
+
+// Leaderboard
+$lang['leaderboard_title'] = $lang['menu_leaderboard'];
+$lang['leaderboard_subtext'] = 'De som van alle negatieve transacties wordt hier weergeven. Deze pagina is alleen zichtbaar voor gebruikers die in deze exclusieve lijst staan.';
+
+$lang['leaderboard_table_header_name'] = $lang['consume_table_head_name'];
+$lang['leaderboard_table_header_sum'] = 'Totaal';
 
 // Not user
 $lang['not_user_page_header_title'] = 'Eeuhm... sorry :(';
