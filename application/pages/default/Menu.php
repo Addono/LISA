@@ -11,6 +11,7 @@ class Menu extends MenuFrame
         return [
             new MenuPage(lang('menu_consume'), ConsumePage::class, 'fa fa-glass fa-fw'),
             new MenuPage(lang('menu_transactions'), TransactionsPage::class, 'fa fa-history fa-fw'),
+            new MenuPage(lang('menu_leaderboard'), LeaderboardPage::class, 'fa fa-trophy fa-fw'),
             new MenuPage(lang('menu_admin'), AdminPage::class, 'fa fa-dashboard fa-fw'),
             new MenuPage(lang('menu_reset_password'), ResetPasswordPage::class, 'fa fa-cogs fa-fw'),
             // Since only the pages which the user has access rights for will be shown, only one of these will be displayed.

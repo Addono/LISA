@@ -7,6 +7,7 @@
 // Menu
 $lang['menu_transactions'] = 'My transactions';
 $lang['menu_consume'] = 'Consume';
+$lang['menu_leaderboard'] = 'Leaderboard';
 
 // Consume
 $lang['consume_title'] = 'Consume!';
@@ -29,6 +30,7 @@ $lang['consume_form_user_failure'] = 'Failed purchasing %s consumptions for %s. 
 
 // Transactions
 $lang['transactions_title'] = 'My transactions';
+$lang['leaderboard_subtext'] = 'Depicts the sum of all negative transactions. This list is only visible to users within this list.';
 
 $lang['transactions_subtitle_author'] = 'As author';
 $lang['transactions_subtitle_subject'] = 'As subject';
@@ -45,6 +47,12 @@ $lang['transactions_ajax_message_internal_server_error'] = 'The request caused a
 $lang['transactions_ajax_message_access_denied'] = 'Not enough rights, you might be logged out.';
 $lang['transactions_ajax_message_invalid_request'] = 'Invalid request was sent, refresh the page and try again.';
 $lang['transactions_ajax_message_database_error'] = 'The request caused an internal database error, please contact the system administrator.';
+
+// Leaderboard
+$lang['leaderboard_title'] = $lang['menu_leaderboard'];
+
+$lang['leaderboard_table_header_name'] = $lang['consume_table_head_name'];
+$lang['leaderboard_table_header_sum'] = 'Sum';
 
 // Not user
 $lang['not_user_page_header_title'] = 'Eeuhm... sorry :(';
