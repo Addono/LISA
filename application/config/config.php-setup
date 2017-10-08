@@ -24,6 +24,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 <<<<<<< HEAD
+$config['base_url'] = '';
+=======
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 $config['base_url'] = 'http://localhost/lisa/';
@@ -33,6 +36,7 @@ $config['base_url'] = '';
 =======
 $config['base_url'] = '';
 >>>>>>> upstream/master
+>>>>>>> master
 
 /*
 |--------------------------------------------------------------------------
@@ -232,15 +236,7 @@ $config['allow_get_array'] = TRUE;
 | your log files will fill up very fast.
 |
 */
-<<<<<<< HEAD
-<<<<<<< HEAD
 $config['log_threshold'] = 1;
-=======
-$config['log_threshold'] = 0;
->>>>>>> upstream/master
-=======
-$config['log_threshold'] = 0;
->>>>>>> upstream/master
 
 /*
 |--------------------------------------------------------------------------
