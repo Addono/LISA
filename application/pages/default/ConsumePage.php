@@ -6,8 +6,6 @@
  */
 class ConsumePage extends PageFrame
 {
-    const MIN = 0;
-    const MAX = 5;
 
     /**
      * The views to be shown.
@@ -209,8 +207,7 @@ class ConsumePage extends PageFrame
         ];
         $this->setData('fields', $fields);
 
-        $this->setData('min', self::MIN);
-        $this->setData('max', self::MAX);
+        $this->setData('myId', getLoggedInLoginId($this->ci->session));
     }
 
     /**

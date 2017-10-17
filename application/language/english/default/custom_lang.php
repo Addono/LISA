@@ -12,6 +12,7 @@ $lang['menu_leaderboard'] = 'Leaderboard';
 // Consume
 $lang['consume_title'] = 'Consume!';
 $lang['consume_description'] = '<b>Double click</b> on the button to make a purchase.';
+$lang['consume_description_self'] = 'Consume one yourself!';
 
 $lang['consume_table_head_name'] = 'Name';
 $lang['consume_table_head_credit'] = 'Credit';

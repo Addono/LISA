@@ -12,7 +12,16 @@
             <div class="header header-primary">
                 <div class="text-center">
                     <h4><?=lang('consume_title')?></h4>
-                    <p><?=lang('consume_description')?></p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><?=lang('consume_description')?></p>
+                            </div>
+                            <div class="col-md-6" style="border-left: 1px solid white">
+                                <?=lang('consume_description_self')?>
+                                <a href="javascript:void(0)" data-id="<?= $myId ?>" style="margin: 0 0 0 2em"
+                                   class="buy btn btn-white">-1</a>
+                            </div>
+                        </div>
                 </div>
                 <div class="nav-tabs-navigation">
                     <div class="nav-tabs-wrapper">
