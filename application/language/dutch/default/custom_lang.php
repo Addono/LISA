@@ -67,7 +67,7 @@ $lang['footer_source'] = 'Broncode';
 $lang['application_name'] = 'Lisa';
 $lang['application_title'] = 'Lisa is super awesome';
 $lang['copyright'] = '2017, Adriaan Knapen';
-$lang['application_version'] = 'Core v1.4.0';
+$lang['application_version'] = 'Core v1.4.1';
 
 $lang['default_page_header_title'] = 'Hoi ik ben Lisa!';
 $lang['default_page_header_body'] = 'Log in om te beginnen';
