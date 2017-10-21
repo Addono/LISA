@@ -4,9 +4,6 @@
  * @date 1-3-2017
  */
 ?>
-
-<script src="<?=base_url('node_modules/plotly.js/dist/plotly.min.js')?>" type="text/javascript"></script>
-
 <div class="col-md-12 vmargin col-md-offset-0">
     <div class="container">
         <!-- Tabs with icons on Card -->

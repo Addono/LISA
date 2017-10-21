@@ -18,13 +18,14 @@
             <div class="content">
                 <div class="content">
                     <div class="tab-content text-center"><div class="tab-pane active" id="ordered-first-name">
+                        <div id="chart" style="width: 100%"></div>
                         <table class="table table-striped">
                             <thead>
-                            <tr>
-                                <th>#</th>
-                                <th><?=lang('leaderboard_table_header_name')?></th>
-                                <th><?=lang('leaderboard_table_header_sum')?></th>
-                            </tr>
+                                <tr>
+                                    <th>#</th>
+                                    <th><?=lang('leaderboard_table_header_name')?></th>
+                                    <th><?=lang('leaderboard_table_header_sum')?></th>
+                                </tr>
                             </thead>
                             <tbody>
                             <?php $count = 0; foreach ($entries as $entry) { ?>

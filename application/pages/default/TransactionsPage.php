@@ -72,8 +72,9 @@ class TransactionsPage extends PageFrame
             $weekNr++;
         }
 
-        $this->addScript(
-            "<script>
+        $this->addScript("
+            <script src=\"" . base_url('node_modules/plotly.js/dist/plotly.min.js') . "\" type=\"text/javascript\"></script>
+            <script>
                 var data = [
                     {
                         x: [" . implode(",", $x) . "],
