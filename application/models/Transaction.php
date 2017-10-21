@@ -93,6 +93,24 @@ class Transaction extends ModelFrame
         return $result->num_rows() > 0;
     }
 
+    /**
+     * Retrieves the sum of negative transactions grouped by week.
+     *
+     * @param int $subjectId The id of the subject user.
+     * @return array
+     */
+    public function getSumDeltaSubjectIdByWeek(int $subjectId): array {
+        return $this->db
+            ->select('YEAR(' . self::FIELD_TIME . ') as year, WEEKOFYEAR(' . self::FIELD_TIME . ') as week')
+            ->select_sum(self::FIELD_DELTA, 'sum')
+            ->where([self::FIELD_SUBJECT_ID => $subjectId])
+            ->group_by('YEAR(' . self::FIELD_TIME . '), WEEKOFYEAR(' . self::FIELD_TIME . ')')
+            ->order_by(self::FIELD_TIME, 'asc')
+            ->get(self::name())
+            ->result_array()
+        ;
+    }
+
     public function v1() {
         return [
             'requires' => [

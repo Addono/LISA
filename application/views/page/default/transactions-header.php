@@ -5,6 +5,8 @@
  */
 ?>
 
+<script src="<?=base_url('node_modules/plotly.js/dist/plotly.min.js')?>" type="text/javascript"></script>
+
 <div class="col-md-12 vmargin col-md-offset-0">
     <div class="container">
         <!-- Tabs with icons on Card -->
@@ -31,7 +33,9 @@
             <div class="content">
                 <div class="content">
                     <div class="tab-content text-center"><div class="tab-pane active" id="ordered-first-name">
-                        <table class="table table-striped">
+                            <div id="chart" style="width: 100%"></div>
+
+                            <table class="table table-striped">
                             <thead>
                             <tr>
                                 <th><?=lang('transactions_table_header_author')?></th>
