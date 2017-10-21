@@ -48,6 +48,7 @@ $lang['transactions_ajax_message_internal_server_error'] = 'The request caused a
 $lang['transactions_ajax_message_access_denied'] = 'Not enough rights, you might be logged out.';
 $lang['transactions_ajax_message_invalid_request'] = 'Invalid request was sent, refresh the page and try again.';
 $lang['transactions_ajax_message_database_error'] = 'The request caused an internal database error, please contact the system administrator.';
+$lang['transactions_ajax_message_timed_out'] = 'Because of security risks is it required to refresh the page, when you dismiss this message should the page be automatically reloaded.';
 
 // Leaderboard
 $lang['leaderboard_title'] = $lang['menu_leaderboard'];

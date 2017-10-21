@@ -56,7 +56,8 @@ class ConsumePage extends PageFrame
             $.ajax({
                 url: "<?=site_url($this->data['group'] . '/ApiBuy')?>",
                 data: {
-                    id: $button.data('id')
+                    id: $button.data('id'),
+                    <?=$this->ci->security->get_csrf_token_name()?>: "<?=$this->ci->security->get_csrf_hash()?>"
                 },
                 type: "POST",
                 dataType: "json"
@@ -112,6 +113,12 @@ class ConsumePage extends PageFrame
                     snackbarContainer.MaterialSnackbar.showSnackbar(data); // Show the snackbar
                 })
                 .fail(function (xhr, status, errorMessage) {
+                    if (xhr.status === 403) {
+                        alert("<?=lang('transactions_ajax_message_timed_out')?>");
+                        location.reload();
+                        return
+                    }
+
                     alert(errorMessage);
                 });
         };

@@ -47,6 +47,7 @@ $lang['transactions_ajax_message_internal_server_error'] = 'Ongeldige aanvraag w
 $lang['transactions_ajax_message_access_denied'] = 'Je hebt niet genoeg rechten voor deze actie, mogelijk ben je niet ingelogd.';
 $lang['transactions_ajax_message_invalid_request'] = 'Ongeldige aanvraag was verstuurd, als het probleem aanhoud neem dan contact op met de systeembeheerder.';
 $lang['transactions_ajax_message_database_error'] = 'Ongeldige aanvraag was verstuurd, als het probleem aanhoud neem dan contact op met de systeembeheerder.';
+$lang['transactions_ajax_message_timed_out'] = 'Om veiligheidsredenen is het nodig om de pagina te verversen, klik op oke en probeer opnieuw.';
 
 // Leaderboard
 $lang['leaderboard_title'] = $lang['menu_leaderboard'];
