@@ -103,7 +103,8 @@ class Transaction extends ModelFrame
         return $this->db
             ->select('YEAR(' . self::FIELD_TIME . ') as year, WEEKOFYEAR(' . self::FIELD_TIME . ') as week')
             ->select_sum(self::FIELD_DELTA, 'sum')
-            ->where([self::FIELD_SUBJECT_ID => $subjectId])
+            ->where(self::FIELD_SUBJECT_ID, $subjectId)
+            ->where(self::FIELD_DELTA . ' < 0')
             ->group_by('YEAR(' . self::FIELD_TIME . '), WEEKOFYEAR(' . self::FIELD_TIME . ')')
             ->order_by(self::FIELD_TIME, 'asc')
             ->get(self::name())
@@ -120,6 +121,7 @@ class Transaction extends ModelFrame
         return $this->db
             ->select('YEAR(' . self::FIELD_TIME . ') as year, WEEKOFYEAR(' . self::FIELD_TIME . ') as week')
             ->select_sum(self::FIELD_DELTA, 'sum')
+            ->where(self::FIELD_DELTA . ' < 0')
             ->group_by('YEAR(' . self::FIELD_TIME . '), WEEKOFYEAR(' . self::FIELD_TIME . ')')
             ->order_by(self::FIELD_TIME, 'asc')
             ->get(self::name())
