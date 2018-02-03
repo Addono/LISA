@@ -67,7 +67,7 @@ $lang['footer_source'] = 'Broncode';
 // @Overwrite
 $lang['application_name'] = 'Lisa';
 $lang['application_title'] = 'Lisa is super awesome';
-$lang['copyright'] = '2017, Adriaan Knapen';
+$lang['copyright'] = '2018, Adriaan Knapen';
 $lang['application_version'] = 'Core v1.4.3';
 
 $lang['default_page_header_title'] = 'Hoi ik ben Lisa!';
