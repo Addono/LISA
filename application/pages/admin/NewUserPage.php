@@ -91,12 +91,12 @@ class NewUserPage extends PageFrame
                 'label' => lang('application_new_user_password'),
                 'rules' => [
                     'required',
-                    'min_length[8]',
+                    'min_length[6]',
                     'matches[confirm-password]',
                 ],
                 'errors' => [
                     'required' => lang('application_new_user_error_required'),
-                    'min_length[8]' => lang('application_new_user_error_password_not_strong_enough'),
+                    'min_length[6]' => lang('application_new_user_error_password_not_strong_enough'),
                     'matches[confirm-password]' => lang('application_new_user_error_password_not_equal'),
                 ],
             ],

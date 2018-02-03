@@ -58,12 +58,12 @@ class ResetPage extends PageFrame
                 'label' => lang('form_field_password'),
                 'rules' => [
                     'required',
-                    'min_length[8]',
+                    'min_length[6]',
                     'matches[confirm-password]',
                 ],
                 'errors' => [
                     'required' => lang('form_error_required'),
-                    'min_length[8]' => lang('form_error_password_not_strong_enough'),
+                    'min_length[6]' => lang('form_error_password_not_strong_enough'),
                     'matches[confirm-password]' => lang('form_error_password_not_equal'),
                 ],
             ],
