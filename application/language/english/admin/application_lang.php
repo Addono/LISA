@@ -7,7 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $lang['application_name'] = 'Admin panel name placeholder';
 $lang['application_title'] = 'Admin panel title placeholder';
-$lang['copyright'] = '2017, Adriaan Knapen';
+$lang['copyright'] = '2018, Adriaan Knapen';
 
 // Side menu
 $lang['application_menu_dashboard'] = 'Dashboard';
