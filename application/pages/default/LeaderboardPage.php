@@ -62,8 +62,14 @@ class LeaderboardPage extends PageFrame
         foreach ($sumByWeek as $week) {
             // Reset the week number counter if a new year is started.
             if ($yearNr !== $week['year']) {
-                $yearNr = $week['year'];
+                // Fill all missing weeks until the start of the year.
+                while(++$weekNr % 52 !== 1) {
+                    $x[] = "'" . $weekNr . " - " . $week['year'] . "'";
+                    $y[] = 0;
+                }
+
                 $weekNr = 1;
+                $yearNr = $week['year'];
             }
 
             // Fill all missing weeks.
