@@ -41,7 +41,21 @@ class Transactions {
                 }
             };
 
-            updateData = function(data, $range) {
+            updateData = function(data = null) {
+                if (data==null) {
+                    $.ajax({
+                        url: "<?=site_url($group . '/TransactionApi')?>",
+                        data: {
+                            action: 'updateData',
+                        <?=$this->ci->security->get_csrf_token_name()?>: "<?=$this->ci->security->get_csrf_hash()?>"
+                    },
+                        type: "POST",
+                        dataType: "json",
+                    }).done(function (json) {
+                        updateData(json.updated_data);
+                    });
+                    return;
+                }
                 for (row of data) {
                     var $ajaxLoginIdClass = $('.ajax-login-id-'+row['login_id']);
                     var $children = $ajaxLoginIdClass.children('.amount');
@@ -54,17 +68,7 @@ class Transactions {
             };
 
             Visibility.every(10 * 60 * 1000, function() {
-                $.ajax({
-                    url: "<?=site_url($group . '/TransactionApi')?>",
-                    data: {
-                        action: 'updateData',
-                <?=$this->ci->security->get_csrf_token_name()?>: "<?=$this->ci->security->get_csrf_hash()?>"
-            },
-                type: "POST",
-                    dataType: "json"
-            }).done(function (json) {
-                    updateData(json.updated_data);
-                });
+                updateData();
             });
 
             purchase = function ($button) {
@@ -165,5 +169,20 @@ class Transactions {
     public function getBuyButtonHtml(int $loginId): string
     {
         return  '<a href="javascript:void(0)" data-id="' . $loginId . '" class="buy btn btn-primary btn-no-margin">-1</a>"';
+    }
+
+    public function getSnackbarFooterHtml(): string
+    {
+        return
+        '<div id="snackbar">
+            <div class="error mdl-color--red-400 mdl-js-snackbar mdl-snackbar">
+                <div class="mdl-snackbar__text"></div>
+                <button class="mdl-snackbar__action" type="button"></button>
+            </div>
+            <div class="notice mdl-color--green-400 mdl-js-snackbar mdl-snackbar">
+                <div class="mdl-snackbar__text"></div>
+                <button class="mdl-snackbar__action" type="button"></button>
+            </div>
+        </div>';
     }
 }

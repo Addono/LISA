@@ -25,6 +25,7 @@ class ConsumePage extends PageFrame
      */
     public function beforeView()
     {
+        // Load the transactions Javascript
         $this->ci->load->library('Transactions');
         $this->addScript($this->ci->transactions->getJavascript($this->data['group']));
 

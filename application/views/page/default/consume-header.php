@@ -48,13 +48,13 @@
                     <div class="tab-content text-center"><?php
                     $count = 0;
                     foreach ($tabs as $id => $tab) { ?>
-                        <div class="tab-pane<?= ++$count == 1 ? ' active' : '' ?>" id="<?=$id?>">
+                        <div class="tab-pane<?=++$count===1?' active':''?>" id="<?=$id?>">
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
-                                    <th><?= lang('consume_table_head_name') ?></th>
-                                    <th><?= lang('consume_table_head_credit') ?></th>
-                                    <th><?= lang('consume_table_head_consumptions') ?></th>
+                                    <th><?=lang('consume_table_head_name')?></th>
+                                    <th><?=lang('consume_table_head_credit')?></th>
+                                    <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -78,14 +78,5 @@
             </div>
         </div>
     </div>
-    <div id="snackbar">
-        <div class="error mdl-color--red-400 mdl-js-snackbar mdl-snackbar">
-            <div class="mdl-snackbar__text"></div>
-            <button class="mdl-snackbar__action" type="button"></button>
-        </div>
-        <div class="notice mdl-color--green-400 mdl-js-snackbar mdl-snackbar">
-            <div class="mdl-snackbar__text"></div>
-            <button class="mdl-snackbar__action" type="button"></button>
-        </div>
-    </div>
+    <?=$this->transactions->getSnackbarFooterHtml();?>
 </div>

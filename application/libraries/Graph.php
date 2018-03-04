@@ -15,7 +15,7 @@ class Graph {
 
         $keyedTransactionData = [];
         foreach ($transactionData as $row) {
-            ['year' => $year, 'week' => $week, 'sum' => $sum] = $row;
+            ['year' => $year, 'week' => $week] = $row;
             $keyedTransactionData[$year * 52 + $week - 1] = $row;
         }
 

@@ -7,7 +7,7 @@
  1. Navigate to __YOUR_HOSTNAME__/index.php/Install to initialise the database.
 
 # Requirements
- * PHP 7.1, although it might also work on PHP7 (untested). The mysqli extension of PHP should be enabled.
+ * PHP 7.1 with the mysqli extension enabled.
  * MySQL database, although it might also work on other database types supported by CodeIgniter, but non of them are tested nor are focus during development.
 
 # Licence

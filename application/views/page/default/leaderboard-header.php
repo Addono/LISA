@@ -3,6 +3,7 @@
  * @author Adriaan Knapen <a.d.knapen@protonmail.com>
  * @date 1-3-2017
  */
+
 ?>
 
 <div class="col-md-12 vmargin col-md-offset-0">
@@ -25,14 +26,18 @@
                                     <th>#</th>
                                     <th><?=lang('leaderboard_table_header_name')?></th>
                                     <th><?=lang('leaderboard_table_header_sum')?></th>
+                                    <th><?=lang('consume_table_head_credit')?></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                             <?php $count = 0; foreach ($entries as $entry) { ?>
-                                <tr>
+                                <tr class="ajax-login-id-<?=$entry[$fields['login_id']]?>">
                                     <td><?=++$count?></td>
                                     <td><?=$entry[$fields['first_name']] . ' ' . $entry[$fields['last_name']]?></td>
                                     <td><?=-$entry[$fields['sum']]?></td>
+                                    <td class="amount"></td>
+                                    <td><?=$this->transactions->getBuyButtonHtml($entry[$fields['login_id']])?></td>
                                 </tr>
                             <?php } ?>
                             </tbody>
@@ -42,4 +47,5 @@
             </div>
         </div>
     </div>
+    <?=$this->transactions->getSnackbarFooterHtml();?>
 </div>

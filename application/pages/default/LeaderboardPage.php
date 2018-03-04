@@ -41,25 +41,38 @@ class LeaderboardPage extends PageFrame
      */
     public function beforeView()
     {
-        $leaderboard = $this->ci->User_Transaction->getSumDeltaForAllSubjectId(false, self::LEADERBOARD_SIZE);
+        // Define all models
+        /** @var Transaction $transactionModel */
+        $transactionModel = $this->ci->Transaction;
+        /** @var User_Transaction $userTransactionModel */
+        $userTransactionModel = $this->ci->User_Transaction;
 
+        // Load the transactions Javascript
+        /** @var Transactions $transactionsLibrary */
+        $transactionsLibrary = $this->ci->transactions;
+        $this->addScript($transactionsLibrary->getJavascript($this->data['group']));
+        $this->setData('transactionsLibrary', $transactionsLibrary);
+
+        // Retrieve the data of all users on the leaderboard
+        $leaderboard = $userTransactionModel->getSumDeltaForAllSubjectId(false, self::LEADERBOARD_SIZE);
         $this->setData('entries', $leaderboard);
 
         $fields = [
             'first_name' => User::FIELD_FIRST_NAME,
             'last_name' => User::FIELD_LAST_NAME,
             'sum' => 'sum',
+            'login_id' => Login::FIELD_LOGIN_ID,
         ];
         $this->setData('fields', $fields);
 
-        $sumByWeek = $this->ci->Transaction->getSumDeltaByWeek();
+        $sumByWeek = $transactionModel->getSumDeltaByWeek();
 
-        $this->ci->load->library('Graph');
+        // Load the transactions graph Javascript
         /** @var Graph $graphLibrary */
         $graphLibrary = $this->ci->graph;
         $this->addScript($graphLibrary->includeJsLibrary());
         $this->addScript($graphLibrary->getGraphForTransactions($sumByWeek));
-
+        $this->addScript('<script>updateData();</script>');
     }
 
     /**
@@ -82,7 +95,10 @@ class LeaderboardPage extends PageFrame
      */
     protected function getLibraries(): array
     {
-        return [];
+        return [
+            'Transactions',
+            'Graph',
+        ];
     }
 
     /**
