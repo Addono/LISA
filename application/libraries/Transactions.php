@@ -69,7 +69,7 @@ class Transactions {
                 }
             };
 
-            Visibility.every(10 * 60 * 1000, function() {
+            Visibility.every(30*1000, 10*60*1000, function() {
                 updateData();
             });
 
