@@ -51,6 +51,13 @@ class Consumption extends ModelFrame
         }
     }
 
+    public function getAll() {
+        return $this->db
+            ->get(self::name())
+            ->result_array()
+        ;
+    }
+
     public function change($loginId, $authorId, $delta) {
         $this->db->trans_start();
             $oldAmount = $this->get($loginId);

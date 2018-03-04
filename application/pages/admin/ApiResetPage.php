@@ -6,7 +6,7 @@
  */
 
 /**
- * Class ApiBuyPage
+ * Class TransactionApiPage
  */
 class ApiResetPage extends ApiFrame
 {

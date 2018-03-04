@@ -17,7 +17,7 @@ abstract class ApiFrame extends RequestFrame implements RequestInterface
 
     abstract function call();
 
-    final function setResult(string $key, $value) {
+    final function setResult(string $key, $value){
         $this->result[$key] = $value;
     }
 

@@ -13,35 +13,6 @@ class Graph {
         $x = [];
         $y = [];
 
-//        var_dump($transactionData);
-//
-//        $weekNr = $transactionData[0]['week'];
-//        $yearNr = $transactionData[0]['year'];
-//        foreach ($transactionData as $week) {
-//            // Reset the week number counter if a new year is started.
-//            if ($yearNr !== $week['year']) {
-//                // Fill all missing weeks until the start of the year.
-//                while(++$weekNr % 52 !== 1) {
-//                    $x[] = "'" . $weekNr . " - " . $week['year'] . "'";
-//                    $y[] = 0;
-//                }
-//
-//                $weekNr = 1;
-//                $yearNr = $week['year'];
-//            }
-//
-//            // Fill all missing weeks.
-//            for (; $weekNr < $week['week']; $weekNr++) {
-//                $x[] = "'" . $weekNr . " - " . $week['year'] . "'";
-//                $y[] = 0;
-//            }
-//
-//            $x[] = "'" . $week['week'] . " - " . $week['year'] . "'";
-//            $y[] = -$week['sum'];
-//
-//            $weekNr++;
-//        }
-
         $keyedTransactionData = [];
         foreach ($transactionData as $row) {
             ['year' => $year, 'week' => $week, 'sum' => $sum] = $row;

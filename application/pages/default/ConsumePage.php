@@ -25,10 +25,12 @@ class ConsumePage extends PageFrame
      */
     public function beforeView()
     {
-        require_once APPPATH . '/pages/default/ApiBuyPage.php';
+        require_once APPPATH . '/pages/default/TransactionApiPage.php';
 
-        ob_start();
-        ?><script>
+        ob_start(); ?>
+        <script src="<?=base_url('node_modules/visibilityjs/lib/visibility.core.js')?>" type="text/javascript"></script>
+        <script src="<?=base_url('node_modules/visibilityjs/lib/visibility.timers.js')?>" type="text/javascript"></script>
+        <script>
         var colorType = {
             "info": {
                 "class": "mdl-color--blue-400",
@@ -52,17 +54,43 @@ class ConsumePage extends PageFrame
             }
         };
 
-        purchase = function ($button) {
+        updateData = function(data, $range) {
+            for (row of data) {
+                var $ajaxLoginIdClass = $('.ajax-login-id-'+row['login_id']);
+                var $children = $ajaxLoginIdClass.children('.amount');
+
+                $children.text(row['amount']); // Update the amount for all users
+                if (row['amount'] < 0) { // Mark the user if their balance becomes negative
+                    $ajaxLoginIdClass.addClass('text-danger');
+                }
+            }
+        };
+
+        Visibility.every(10 * 60 * 1000, function() {
             $.ajax({
-                url: "<?=site_url($this->data['group'] . '/ApiBuy')?>",
+                url: "<?=site_url($this->data['group'] . '/TransactionApi')?>",
                 data: {
-                    id: $button.data('id'),
+                    action: 'updateData',
                     <?=$this->ci->security->get_csrf_token_name()?>: "<?=$this->ci->security->get_csrf_hash()?>"
                 },
                 type: "POST",
                 dataType: "json"
-            })
-                .done(function (json) {
+            }).done(function (json) {
+                updateData(json.updated_data);
+            });
+        });
+
+        purchase = function ($button) {
+            $.ajax({
+                url: "<?=site_url($this->data['group'] . '/TransactionApi')?>",
+                data: {
+                    id: $button.data('id'),
+                    action: 'buy',
+                    <?=$this->ci->security->get_csrf_token_name()?>: "<?=$this->ci->security->get_csrf_hash()?>"
+                },
+                type: "POST",
+                dataType: "json"
+            }).done(function (json) {
                     var message, status;
 
                     switch (json.status) {
@@ -71,26 +99,26 @@ class ConsumePage extends PageFrame
                             status = 'notice';
                             message = '<?=lang('transactions_ajax_message_success')?>'
                                 .replace('[name]', json.name)
-                                .replace('[newAmount]', json.newAmount)
+                                .replace('[newAmount]', json.new_amount)
                                 .replace('[amount]', json.amount);
 
-                            $button.closest('tr').children('.amount').text(json.newAmount); // update the amount
+                            updateData(json.updated_data); // Update the amount of all users.
                             break;
                         // Error
                         case '<?=ApiFrame::STATUS_ERROR?>':
                             status = 'error';
                             switch (json.<?=ApiFrame::STATUS_ERROR?>) {
-                                case '<?=ApiBuyPage::DATABASE_ERROR?>':
+                                case '<?=TransactionApiPage::DATABASE_ERROR?>':
                                     message = '<?=lang('transactions_ajax_message_database_error')?>';
                                     break;
-                                case '<?=ApiBuyPage::INVALID_ARGUMENT?>':
-                                case '<?=ApiBuyPage::USER_NOT_FOUND?>':
+                                case '<?=TransactionApiPage::INVALID_ARGUMENT?>':
+                                case '<?=TransactionApiPage::USER_NOT_FOUND?>':
                                     message = '<?=lang('transactions_ajax_message_invalid_request')?>';
                                     break;
-                                case '<?=ApiBuyPage::STATUS_ACCESS_DENIED?>':
+                                case '<?=TransactionApiPage::STATUS_ACCESS_DENIED?>':
                                     message = '<?=lang('transactions_ajax_message_access_denied')?>';
                                     break;
-                                case '<?=ApiBuyPage::STATUS_INTERNAL_SERVER_ERROR?>':
+                                case '<?=TransactionApiPage::STATUS_INTERNAL_SERVER_ERROR?>':
                                     message = '<?=lang('transactions_ajax_message_internal_server_error')?>';
                                     break;
                                 default:
@@ -111,12 +139,11 @@ class ConsumePage extends PageFrame
 
                     var snackbarContainer = document.querySelector('#snackbar > .'+status);
                     snackbarContainer.MaterialSnackbar.showSnackbar(data); // Show the snackbar
-                })
-                .fail(function (xhr, status, errorMessage) {
+                }).fail(function (xhr, status, errorMessage) {
                     if (xhr.status === 403) {
                         alert("<?=lang('transactions_ajax_message_timed_out')?>");
                         location.reload();
-                        return
+                        return;
                     }
 
                     alert(errorMessage);
