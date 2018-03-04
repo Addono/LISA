@@ -63,6 +63,8 @@ class Transactions {
                     $children.text(row['amount']); // Update the amount for all users
                     if (row['amount'] < 0) { // Mark the user if their balance becomes negative
                         $ajaxLoginIdClass.addClass('text-danger');
+                    } else {
+                        $ajaxLoginIdClass.removeClass('text-danger');
                     }
                 }
             };
