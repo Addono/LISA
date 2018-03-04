@@ -170,7 +170,7 @@ class Transactions {
 
     public function getBuyButtonHtml(int $loginId): string
     {
-        return  '<a href="javascript:void(0)" data-id="' . $loginId . '" class="buy btn btn-primary btn-no-margin">-1</a>"';
+        return  '<a href="javascript:void(0)" data-id="' . $loginId . '" class="buy btn btn-primary btn-no-margin">-1</a>';
     }
 
     public function getSnackbarFooterHtml(): string
