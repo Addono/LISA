@@ -15,7 +15,6 @@ class LeaderboardPage extends PageFrame
     {
         return [
             'leaderboard-header',
-            'intersection',
         ];
     }
 

@@ -13,7 +13,6 @@ class PageNotFoundPage extends PageFrame
     {
         return [
             '404-header',
-            'intersection',
         ];
     }
 

@@ -16,7 +16,6 @@ class ConsumePage extends PageFrame
     {
         return [
             'consume-header',
-            'intersection'
         ];
     }
 

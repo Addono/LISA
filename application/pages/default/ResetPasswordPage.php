@@ -15,7 +15,6 @@ class ResetPasswordPage extends PageFrame
     public function getViews(): array
     {
         return [
-            'intersection',
         ];
     }
 

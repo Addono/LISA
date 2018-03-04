@@ -29,18 +29,15 @@ class ResetPage extends PageFrame
                 $this->addSuccessMessage(lang('reset_success'));
                 return [
                     'reset-success-header',
-                    'intersection',
                 ];
             case self::SHOW_KEY_NOT_FOUND:
                 $this->addWarningMessage(lang('reset_error_key_not_found'));
                 return [
                     '404-header',
-                    'intersection',
                 ];
             case self::SHOW_FORM:
                 return [
                     'reset-header',
-                    'intersection',
                 ];
         }
     }

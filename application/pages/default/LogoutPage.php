@@ -17,7 +17,6 @@ class LogoutPage extends PageFrame
     {
         return [
             'logout-header',
-            'intersection',
         ];
     }
 

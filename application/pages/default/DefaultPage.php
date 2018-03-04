@@ -14,12 +14,10 @@ class DefaultPage extends PageFrame
         if (isLoggedIn($this->ci->session)) {
             return [
                 'not-user-header',
-                'intersection',
             ];
         } else {
             return [
                 'default-header',
-                'intersection',
             ];
         }
     }

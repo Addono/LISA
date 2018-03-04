@@ -13,7 +13,6 @@ class InsufficientRightsPage extends PageFrame
     {
         return [
             '../../error/insufficientRights',
-            'intersection',
         ];
     }
 

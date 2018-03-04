@@ -80,7 +80,7 @@ class Transactions {
                 <?=$this->ci->security->get_csrf_token_name()?>: "<?=$this->ci->security->get_csrf_hash()?>"
             },
                 type: "POST",
-                    dataType: "json"
+                dataType: "json"
             }).done(function (json) {
                     var message, status;
 

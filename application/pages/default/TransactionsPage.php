@@ -13,7 +13,6 @@ class TransactionsPage extends PageFrame
     {
         return [
             'transactions-header',
-            'intersection',
         ];
     }
 

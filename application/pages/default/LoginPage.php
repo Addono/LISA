@@ -18,7 +18,6 @@ class LoginPage extends PageFrame
     {
         return [
             'login-header',
-            'intersection',
         ];
     }
 
