@@ -60,6 +60,13 @@ $lang['leaderboard_table_header_sum'] = 'Totaal';
 $lang['not_user_page_header_title'] = 'Eeuhm... sorry :(';
 $lang['not_user_page_header_body'] = 'Je hebt niet de rechten om deze applicatie te mogen gebruiker, als je denkt dat je dit wel zou mogen neem dan contact op met de systeem beheerder.';
 
+// Email
+$lang['email_low_credits_subject'] = 'Oww nee, je credits zijn op!';
+$lang['email_low_credits_preview'] = 'Hoi, ik wil je er even aan herinneren dat je door je tegoed heen bent!';
+$lang['email_low_credits_greeting'] = 'Hoi [name],';
+$lang['email_low_credits_message'] = 'Je tegoed staat op het moment op [credits] credits, dat is "iets" aan de lage kant, dus zou je daar alsjeblieft iets aan willen doen?';
+$lang['email_low_credits_signature'] = 'Groetjes [name]!';
+
 // Footer
 $lang['footer_hosted_by'] = 'Gehost door';
 $lang['footer_source'] = 'Broncode';

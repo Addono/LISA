@@ -23,6 +23,16 @@ class User extends ModelFrame
         ];
     }
 
+    public function get(int $loginId): array
+    {
+        return $this->db
+            ->where([Login::FIELD_LOGIN_ID => $loginId])
+            ->limit(1)
+            ->get(self::name())
+            ->row_array()
+        ;
+    }
+
     /**
      * Adds a new user.
      *
