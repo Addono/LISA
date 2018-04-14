@@ -119,14 +119,14 @@ class TransactionApiPage extends ApiFrame
             $this->setResult('updated_data', $this->ci->Consumption->getAll());
 
             if ($newAmount < 0) {
-                $this->sendEmail($id);
+                $this->sendEmail($id, $newAmount);
             }
         } else {
             $this->setError(self::DATABASE_ERROR);
         }
     }
 
-    private function sendEmail(int $id)
+    private function sendEmail(int $id, int $credits)
     {
         $this->ci->config->load('email');
 
@@ -137,17 +137,27 @@ class TransactionApiPage extends ApiFrame
         $this->ci->load->library('email');
         /** @var CI_Email $emailLibrary */
         $emailLibrary =& $this->ci->email;
-        $emailLibrary
-            ->from($this->ci->config->item('from_email'), $this->ci->config->item('from_name'))
-            ->to($userData[User::FIELD_EMAIL])
-            ->set_mailtype('html')
-            ->subject(lang('email_low_credits_subject'))
-            ->message($this->getEmailBody($userData[User::FIELD_FIRST_NAME], $userData[User::FIELD_EMAIL]))
-            ->send()
-        ;
+        $emailSuccess = false;
+        try {
+            $emailLibrary
+                ->from($this->ci->config->item('from_email'), $this->ci->config->item('from_name'))
+                ->to($userData[User::FIELD_EMAIL])
+                ->set_mailtype('html')
+                ->subject(lang('email_low_credits_subject'))
+                ->message($this->getEmailBody($userData[User::FIELD_FIRST_NAME], $credits))
+                ->send()
+            ;
+            $emailSuccess = true;
+        } catch (Exception $e) { }
+
+        if ($emailSuccess) {
+            log_message('info', 'Email send to '.$userData[User::FIELD_EMAIL].' to notify about a lack of credits '.$credits.'.');
+        } else {
+            log_message('error', 'Failed sending email message for '.$id.'.');
+        }
     }
 
-    private function getEmailBody(string $name, string $credits)
+    private function getEmailBody(string $name, int $credits)
     {
         ob_start(); ?>
         <!doctype html>
