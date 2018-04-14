@@ -28,6 +28,26 @@ class Role extends ModelFrame
         }
     }
 
+    public function get($roleId) {
+        $res = $this->db
+            ->where([self::FIELD_ROLE_ID => $roleId])
+            ->get($this->name())
+            ->row_array()
+        ;
+
+        return $res;
+    }
+
+    public function getByName($roleName) {
+        $res = $this->db
+            ->where([self::FIELD_ROLE_NAME=> $roleName])
+            ->get($this->name())
+            ->row_array()
+        ;
+
+        return $res;
+    }
+
     /**
      * Checks whether a role already exists.
      *

@@ -13,6 +13,6 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <p><?=lang('application_dashboard_body')?></p>
+        <p><b><?=lang('application_dashboard_total_amount')?>: </b><?=$totalAmount?></p>
     </div>
 </div>

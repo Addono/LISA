@@ -31,6 +31,20 @@ class DefaultPage extends PageFrame
      */
     public function beforeView()
     {
+        /** @var User_Consumption_LoginRole $user_Consumption_LoginRole */
+        $user_Consumption_LoginRole = $this->ci->User_Consumption_LoginRole;
+        /** @var Role $role */
+        $role = $this->ci->Role;
+
+        $roleId = $role->getByName(Role::ROLE_USER)[Role::FIELD_ROLE_ID];
+        $result = $user_Consumption_LoginRole->get($roleId);
+
+        $totalAmount = 0;
+        array_walk($result, function($item, $key) use (&$totalAmount) {
+            $totalAmount += $item[Consumption::FIELD_AMOUNT];
+        });
+
+        $this->setData('totalAmount', $totalAmount);
     }
 
     /**
@@ -49,6 +63,8 @@ class DefaultPage extends PageFrame
     {
         return [
             Role::class,
+            User_Consumption_LoginRole::class,
+            Consumption::class,
         ];
     }
 

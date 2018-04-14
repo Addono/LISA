@@ -25,8 +25,8 @@ class User_Consumption_LoginRole extends ModelFrame
         ];
     }
 
-    public function get($role) {
-        $users = $this->User_LoginRole->getUsersWithRole($role);
+    public function get($roleId) {
+        $users = $this->User_LoginRole->getUsersWithRole($roleId);
 
         foreach ($users as $key => $user) {
             $users[$key][Consumption::FIELD_AMOUNT] = $this->Consumption->get($user[Login::FIELD_LOGIN_ID]);
