@@ -40,3 +40,4 @@ $lang['application_name'] = 'Lisa Backend';
 $lang['application_title'] = 'Lisa Backend';
 
 $lang['application_dashboard_total_amount'] = 'Totale hoeveelheid consumpties';
+$lang['application_dashboard_negative_users'] = 'Negative users';

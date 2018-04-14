@@ -12,7 +12,7 @@ class DefaultPage extends PageFrame
     public function getViews(): array
     {
         return [
-            'dashboard'
+            'dashboard',
         ];
     }
 
@@ -39,12 +39,17 @@ class DefaultPage extends PageFrame
         $roleId = $role->getByName(Role::ROLE_USER)[Role::FIELD_ROLE_ID];
         $result = $user_Consumption_LoginRole->get($roleId);
 
-        $totalAmount = 0;
-        array_walk($result, function($item, $key) use (&$totalAmount) {
-            $totalAmount += $item[Consumption::FIELD_AMOUNT];
+        $totalScore = 0;
+        $negativeUsers = [];
+        array_walk($result, function($item, $key) use (&$totalScore, &$negativeUsers) {
+            $totalScore += $item[Consumption::FIELD_AMOUNT];
+            if ($item[Consumption::FIELD_AMOUNT] < 0) {
+                $negativeUsers[] = $item[User::FIELD_FIRST_NAME]." ".$item[User::FIELD_LAST_NAME];
+            }
         });
 
-        $this->setData('totalAmount', $totalAmount);
+        $this->setData('totalScore', $totalScore);
+        $this->setData('negativeUsers', $negativeUsers);
     }
 
     /**
