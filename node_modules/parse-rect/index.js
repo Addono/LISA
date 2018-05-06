@@ -16,17 +16,29 @@ function parseRect (arg) {
   if (typeof arg === 'string') {
     arg = arg.split(/\s/).map(parseFloat)
   }
+  else if (typeof arg === 'number') {
+    arg = [arg]
+  }
 
   // 0, 0, 100, 100 - array-like
   if (arg.length && typeof arg[0] === 'number') {
-    if (arg.length === 2) {
+    // [w, w]
+    if (arg.length === 1) {
+      rect = {
+        width: arg[0],
+        height: arg[0],
+        x: 0, y: 0
+      }
+    }
+    // [w, h]
+    else if (arg.length === 2) {
       rect = {
         width: arg[0],
         height: arg[1],
-        x: 0,
-        y: 0
+        x: 0, y: 0
       }
     }
+    // [l, t, r, b]
     else {
       rect = {
         x: arg[0],
@@ -36,14 +48,15 @@ function parseRect (arg) {
       }
     }
   }
+  // {x, y, w, h} or {l, t, b, r}
   else if (arg) {
     arg = pick(arg, {
       left: 'x l left Left',
       top: 'y t top Top',
-      width: 'w width',
-      height: 'h height',
-      bottom: 'b bottom',
-      right: 'r right'
+      width: 'w width W Width',
+      height: 'h height W Width',
+      bottom: 'b bottom Bottom',
+      right: 'r right Right'
     })
 
     rect = {

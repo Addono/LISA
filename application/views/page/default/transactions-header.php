@@ -43,13 +43,13 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <?php foreach ($transactions['subject'] as $t) { ?>
+                            <?php foreach ($transactions['subject'] as $t) {?>
                                 <tr>
                                     <td><?=$t[$fields['author']]?></td>
                                     <td><?=$t[$fields['subject']]?></td>
                                     <td><?=$t[$fields['amount']]?></td>
                                     <td><?=($d=$t[$fields['delta']])>0?'+'.$d:$d?></td>
-                                    <td><?=$t[$fields['time']]?></td>
+                                    <td class="moment_relative_time" data-time="<?=$t[$fields['time_unix']]?>"><?=$t[$fields['time']]?></td>
                                 </tr>
                             <?php } ?>
                             </tbody>
@@ -73,7 +73,7 @@
                                     <td><?=$t[$fields['subject']]?></td>
                                     <td><?=$t[$fields['amount']]?></td>
                                     <td><?=($d=$t[$fields['delta']])>0?'+'.$d:$d?></td>
-                                    <td><?=$t[$fields['time']]?></td>
+                                    <td class="moment_relative_time" data-time="<?=$t[$fields['time_unix']]?>"><?=$t[$fields['time']]?></td>
                                 </tr>
                             <?php } ?>
                             </tbody>

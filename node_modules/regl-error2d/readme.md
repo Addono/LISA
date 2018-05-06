@@ -2,7 +2,7 @@
 
 Draw error bars for a set of points with regl.
 
-![regl-error2d](https://github.com/dfcreative/regl-error2d/blob/master/preview.png?raw=true)
+![regl-error2d](https://github.com/dy/regl-error2d/blob/master/preview.png?raw=true)
 
 Remake on [gl-error2d](https://github.com/gl-vis/gl-error2d):
 
@@ -11,7 +11,7 @@ Remake on [gl-error2d](https://github.com/gl-vis/gl-error2d):
 * `lineWidth` and `capSize` are adjusted to actual pixels.
 * enhanced performance via vertex shader.
 
-[Demo](https://dfcreative.github.io/regl-error2d).
+[Demo](https://dy.github.io/regl-error2d).
 
 ## Usage
 

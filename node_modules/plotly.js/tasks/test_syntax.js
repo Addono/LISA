@@ -73,6 +73,9 @@ function assertSrcContents() {
     // Forbidden in IE in any context
     var IE_BLACK_LIST = ['classList'];
 
+    // not implemented in FF, or inconsistent with others
+    var FF_BLACK_LIST = ['offsetX', 'offsetY'];
+
     // require'd built-in modules
     var BUILTINS = ['events'];
 
@@ -102,6 +105,9 @@ function assertSrcContents() {
                     }
                     else if(IE_SVG_BLACK_LIST.indexOf(lastPart) !== -1) {
                         logs.push(file + ' : contains .' + lastPart + ' (IE failure in SVG)');
+                    }
+                    else if(FF_BLACK_LIST.indexOf(lastPart) !== -1) {
+                        logs.push(file + ' : contains .' + lastPart + ' (FF failure)');
                     }
                 }
                 else if(node.type === 'Identifier' && node.source() === 'getComputedStyle') {
@@ -260,12 +266,9 @@ function assertCircularDeps() {
         var circularDeps = res.circular();
         var logs = [];
 
-        // see https://github.com/plotly/plotly.js/milestone/9
-        var MAX_ALLOWED_CIRCULAR_DEPS = 16;
-
-        if(circularDeps.length > MAX_ALLOWED_CIRCULAR_DEPS) {
+        if(circularDeps.length) {
             console.log(circularDeps.join('\n'));
-            logs.push('some new circular dependencies were added to src/');
+            logs.push('some circular dependencies were found in src/');
         }
 
         log('circular dependencies: ' + circularDeps.length, logs);
@@ -285,7 +288,7 @@ function assertES5() {
     });
 
     var files = constants.partialBundlePaths.map(function(f) { return f.dist; });
-    files.unshift(constants.pathToPlotlyDist);
+    files.unshift(constants.pathToPlotlyBuild, constants.pathToPlotlyDist);
 
     var report = cli.executeOnFiles(files);
     var formatter = cli.getFormatter();
