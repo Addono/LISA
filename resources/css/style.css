@@ -63,6 +63,10 @@ body {
     margin: 0 !important;
 }
 
+.table-striped>tbody>tr:nth-of-type(even) {
+    background-color: #ffffff
+}
+
 /* Possible iOS bugfix */
 button, .btn, .buy {
     cursor: pointer;
