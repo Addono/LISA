@@ -49,6 +49,41 @@
     <!--  Google Material Design -->
     <script src="<?=base_url('resources/js/mdl/material.min.js')?>" type="text/javascript"></script>
 
+    <script src="<?=base_url('node_modules/moment/moment.js')?>" type="text/javascript"></script>
+<?php
+$localeCode = $ci->config->config['locale_code'];
+if ($localeCode!=='en') {
+    ?><script src="<?= base_url('node_modules/moment/locale/' . $localeCode . '.js') ?>" charset="UTF-8"></script>
+    <script>
+        moment.locale('<?=html_escape($localeCode)?>');
+    </script><?php
+}
+?>
+    <script>
+        $(function() {
+            function setTimeText(element, relative) {
+                var time = moment.unix(element.data('time'));
+                var timeString;
+                if (relative) {
+                    timeString = time.fromNow();
+                } else {
+                    timeString = time.format('llll');
+                }
+                element.html(timeString);
+                element.data('relative', relative);
+            }
+
+            $('.moment_relative_time').each(function (i) {
+                setTimeText($(this), true);
+            }).on('click', function (i) {
+                $('.moment_relative_time').each(function (i) {
+                    relative = $(this).data('relative');
+                    setTimeText($(this), !relative);
+                });
+            });
+        });
+    </script>
+
     <?php foreach ($scripts as $script) {
         echo $script;
     } ?>

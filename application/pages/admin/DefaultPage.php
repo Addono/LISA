@@ -12,7 +12,7 @@ class DefaultPage extends PageFrame
     public function getViews(): array
     {
         return [
-            'dashboard'
+            'dashboard',
         ];
     }
 
@@ -31,6 +31,25 @@ class DefaultPage extends PageFrame
      */
     public function beforeView()
     {
+        /** @var User_Consumption_LoginRole $user_Consumption_LoginRole */
+        $user_Consumption_LoginRole = $this->ci->User_Consumption_LoginRole;
+        /** @var Role $role */
+        $role = $this->ci->Role;
+
+        $roleId = $role->getByName(Role::ROLE_USER)[Role::FIELD_ROLE_ID];
+        $result = $user_Consumption_LoginRole->get($roleId);
+
+        $totalScore = 0;
+        $negativeUsers = [];
+        array_walk($result, function($item, $key) use (&$totalScore, &$negativeUsers) {
+            $totalScore += $item[Consumption::FIELD_AMOUNT];
+            if ($item[Consumption::FIELD_AMOUNT] < 0) {
+                $negativeUsers[] = $item[User::FIELD_FIRST_NAME]." ".$item[User::FIELD_LAST_NAME];
+            }
+        });
+
+        $this->setData('totalScore', $totalScore);
+        $this->setData('negativeUsers', $negativeUsers);
     }
 
     /**
@@ -49,6 +68,8 @@ class DefaultPage extends PageFrame
     {
         return [
             Role::class,
+            User_Consumption_LoginRole::class,
+            Consumption::class,
         ];
     }
 

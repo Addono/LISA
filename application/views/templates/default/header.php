@@ -37,6 +37,8 @@
     <link href="<?=base_url('resources/css/material-kit.css')?>" rel="stylesheet"/>
     <link href="<?=base_url('resources/css/style.css')?>" rel="stylesheet" />
 
+    <link rel="manifest" href="<?=base_url('manifest.webmanifest')?>">
+
 </head>
 
 <body style="background-image: url('<?=base_url('resources/img/bg.jpeg')?>')">

@@ -12,7 +12,12 @@
 </div><!-- /.row -->
 
 <div class="row">
-    <div class="col-lg-12">
-        <p><?=lang('application_dashboard_body')?></p>
+    <div class="col-lg-6">
+        <h2><?=lang('application_dashboard_total_amount')?></h2>
+        <p><?=$totalScore?></p>
+    </div>
+    <div class="col-lg-6">
+        <h2><?=lang('application_dashboard_negative_users')?></h2>
+        <p><?=implode('<p>', $negativeUsers)?></p>
     </div>
 </div>

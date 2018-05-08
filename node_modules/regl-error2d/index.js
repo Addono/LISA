@@ -104,25 +104,25 @@ function Error2D (regl, options) {
 	colorBuffer = regl.buffer({
 		usage: 'dynamic',
 		type: 'uint8',
-		data: null
+		data: new Uint8Array(0)
 	})
 	//xy-position per-point
 	positionBuffer = regl.buffer({
 		usage: 'dynamic',
 		type: 'float',
-		data: null
+		data: new Uint8Array(0)
 	})
 	//xy-position float32-fraction
 	positionFractBuffer = regl.buffer({
 		usage: 'dynamic',
 		type: 'float',
-		data: null
+		data: new Uint8Array(0)
 	})
 	//4 errors per-point
 	errorBuffer = regl.buffer({
 		usage: 'dynamic',
 		type: 'float',
-		data: null
+		data: new Uint8Array(0)
 	})
 	//error bar mesh
 	meshBuffer = regl.buffer({
@@ -356,7 +356,7 @@ function Error2D (regl, options) {
 		//global count of points
 		let pointCount = 0, errorCount = 0
 
-		groups = options.map((options, i) => {
+		error2d.groups = groups = options.map((options, i) => {
 			let group = groups[i]
 
 			if (!options) return group

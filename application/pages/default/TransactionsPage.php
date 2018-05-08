@@ -43,6 +43,7 @@ class TransactionsPage extends PageFrame
             'amount' => Consumption::FIELD_AMOUNT,
             'delta' => Transaction::FIELD_DELTA,
             'time' => Transaction::FIELD_TIME,
+            'time_unix' => Transaction::FIELD_TIME.'_unix',
         ];
         $this->setData('fields', $fields);
 

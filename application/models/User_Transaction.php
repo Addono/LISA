@@ -23,6 +23,7 @@ class User_Transaction extends ModelFrame
     public function getAll($where = []) {
         // Retrieve all transactions
         $transactions = $this->db
+            ->select('*, UNIX_TIMESTAMP('.Transaction::FIELD_TIME.') as '.Transaction::FIELD_TIME.'_unix')
             ->order_by(Transaction::FIELD_TIME, 'DESC')
             ->where($where)
             ->get(Transaction::name())

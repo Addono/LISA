@@ -39,4 +39,5 @@ $lang['application_transactions_table_header_time'] = 'Tijd';
 $lang['application_name'] = 'Lisa Backend';
 $lang['application_title'] = 'Lisa Backend';
 
-$lang['application_dashboard_body'] = 'Eens zal er hier misschien widgets staan, maar voor nu staat hier alleen een korte introductie. Je kan nieuwe gebruikers toevoegen onder Beheer Gebruikers > Gebruiker toevoegen.<p> Om de gegevens van alle gebruikers te zien en aan te passen ga naar Beheer Gebruikers > Overzicht, hier kan je ook nieuwe consumpties aan gebruikers toekennen.<p><b>N.B.:</b> Alleen gebruikers met de <i>User</i>-rol kunnen consumpties uitgeven.';
+$lang['application_dashboard_total_amount'] = 'Totale hoeveelheid consumpties';
+$lang['application_dashboard_negative_users'] = 'Negatieve gebruikers';
