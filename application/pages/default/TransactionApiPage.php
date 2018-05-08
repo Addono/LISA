@@ -154,6 +154,7 @@ class TransactionApiPage extends ApiFrame
             log_message('info', 'Email send to '.$userData[User::FIELD_EMAIL].' to notify about a lack of credits '.$credits.'.');
         } else {
             log_message('error', 'Failed sending email message for '.$id.'.');
+            log_message('debug', 'Email debug info:'.PHP_EOL.$emailLibrary->print_debugger());
         }
     }
 
@@ -267,6 +268,7 @@ class TransactionApiPage extends ApiFrame
                                                 <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;"><?=str_replace('[name]', $name, lang('email_low_credits_greeting'))?></p>
                                                 <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;"><?=str_replace('[credits]', $credits, lang('email_low_credits_message'))?></p>
                                                 <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;"><?=str_replace('[name]', lang('application_name'), lang('email_low_credits_signature'))?></p>
+                                                <img style="width: 100%; height: 100%; max-width: 100%; max-height: 5em" src="<?=base_url('resources/img/email-signature.png')?>">
                                             </td>
                                         </tr>
                                     </table>

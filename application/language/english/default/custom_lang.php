@@ -64,7 +64,7 @@ $lang['not_user_page_header_body'] = 'You currently do not have the rights to us
 $lang['email_low_credits_subject'] = 'O no, your credits are depleted!';
 $lang['email_low_credits_preview'] = 'Hi, just a friendly reminder that your credits are depleted!';
 $lang['email_low_credits_greeting'] = 'Hi [name],';
-$lang['email_low_credits_message'] = 'You currently have [credits] credits, that\'s a bit to little, so would you mind fixing that?';
+$lang['email_low_credits_message'] = 'You currently have <b>[credits] credits</b>, that\'s a <i>tiny bit</i> to little, so would you mind fixing that?';
 $lang['email_low_credits_signature'] = '[name]';
 
 // Footer

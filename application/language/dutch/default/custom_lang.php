@@ -64,7 +64,7 @@ $lang['not_user_page_header_body'] = 'Je hebt niet de rechten om deze applicatie
 $lang['email_low_credits_subject'] = 'Oww nee, je credits zijn op!';
 $lang['email_low_credits_preview'] = 'Hoi, ik wil je er even aan herinneren dat je door je tegoed heen bent!';
 $lang['email_low_credits_greeting'] = 'Hoi [name],';
-$lang['email_low_credits_message'] = 'Je tegoed staat op het moment op [credits] credits, dat is "iets" aan de lage kant, dus zou je daar alsjeblieft iets aan willen doen?';
+$lang['email_low_credits_message'] = 'Je tegoed staat op het moment op <b>[credits] credits</b>, dat is <i>"iets"</i> aan de lage kant, zou je daar alsjeblieft iets aan willen doen?';
 $lang['email_low_credits_signature'] = 'Groetjes [name]!';
 
 // Footer
