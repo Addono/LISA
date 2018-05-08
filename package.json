@@ -1,6 +1,6 @@
 {
   "name": "lisa",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "1. Download a copy/make a clone/make a fork of the project and move it to a folder in your web server.\r  1. Rename/duplicate config.php-setup and database.php-setup to config.php and database.php respectively.\r  1. Edit these config files to match your system. Most important is:\r     * Add your hostname.\r     * Enter the settings of your database.\r  1. Navigate to __YOUR_HOSTNAME__/index.php/Install to initialise the database.",
   "main": "index.php",
   "scripts": {
