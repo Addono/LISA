@@ -1,0 +1,14 @@
+{
+  "name": "Lisa Is Super Awsome",
+  "short_name": "Lisa",
+  "start_url": "index.php/default/",
+  "display": "standalone",
+  "background_color": "#fff",
+  "theme_color": "#220000",
+  "description": "Lisa, the super awsome till manager!",
+  "icons": [{
+    "src": "resources/img/favicon.png",
+    "sizes": "512x512",
+    "type": "image/png"
+  }]
+}
