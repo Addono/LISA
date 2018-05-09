@@ -1,6 +1,6 @@
-# Getting started
-
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/609d0cc095eb48b18305a6cc3e178f4d)](https://app.codacy.com/app/Addono/lisa?utm_source=github.com&utm_medium=referral&utm_content=Addono/lisa&utm_campaign=badger)
+
+# Getting started
 
  1. Download a copy/make a clone/make a fork of the project and move it to a folder in your web server.
  1. Rename/duplicate config.php-setup and database.php-setup to config.php and database.php respectively.
