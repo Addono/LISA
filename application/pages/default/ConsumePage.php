@@ -10,7 +10,7 @@ class ConsumePage extends PageFrame
     /**
      * The views to be shown.
      *
-     * @return array|null Array with the names of the views inbetween the header and footer, null if no views should be shown.
+     * @return array Array with the names of the views inbetween the header and footer, null if no views should be shown.
      */
     public function getViews(): array
     {

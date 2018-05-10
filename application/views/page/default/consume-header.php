@@ -18,7 +18,7 @@
                             </div>
                             <div class="col-md-6" style="border-left: 1px solid white">
                                 <?=lang('consume_description_self')?>
-                                <a href="javascript:void(0)" data-id="<?= $myId ?>" style="margin: 0 0 0 2em"
+                                <a href="javascript:void(0)" data-id="<?=$myId?>" style="margin: 0 0 0 2em"
                                    class="buy btn btn-white">-1</a>
                             </div>
                         </div>
