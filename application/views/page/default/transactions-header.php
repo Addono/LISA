@@ -48,7 +48,7 @@
                                     <td><?=$t[$fields['author']]?></td>
                                     <td><?=$t[$fields['subject']]?></td>
                                     <td><?=$t[$fields['amount']]?></td>
-                                    <td><?=($d=$t[$fields['delta']])>0?'+'.$d:$d?></td>
+                                    <td><?=($d=$t[$fields['delta']])>0?'<i class="text-success fa fa-caret-up"></i>'.$d:'<i class="text-danger fa fa-caret-down"></i>'.abs($d)?></td>
                                     <td class="moment_relative_time" data-time="<?=$t[$fields['time_unix']]?>"><?=$t[$fields['time']]?></td>
                                 </tr>
                             <?php } ?>
