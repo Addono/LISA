@@ -12,6 +12,7 @@ var Lib = require('../../lib');
 var counterRegex = require('../../lib/regex').counter;
 var domainAttrs = require('../../plots/domain').attributes;
 var cartesianIdRegex = require('../../plots/cartesian/constants').idRegex;
+var Template = require('../../plot_api/plot_template');
 
 var gridAttrs = {
     rows: {
@@ -201,7 +202,7 @@ function sizeDefaults(layoutIn, layoutOut) {
         if(hasXaxes) dfltColumns = xAxes.length;
     }
 
-    var gridOut = layoutOut.grid = {};
+    var gridOut = Template.newContainer(layoutOut, 'grid');
 
     function coerce(attr, dflt) {
         return Lib.coerce(gridIn, gridOut, gridAttrs, attr, dflt);
@@ -210,7 +211,10 @@ function sizeDefaults(layoutIn, layoutOut) {
     var rows = coerce('rows', dfltRows);
     var columns = coerce('columns', dfltColumns);
 
-    if(!(rows * columns > 1)) return;
+    if(!(rows * columns > 1)) {
+        delete layoutOut.grid;
+        return;
+    }
 
     if(!hasSubplotGrid && !hasXaxes && !hasYaxes) {
         var useDefaultSubplots = coerce('pattern') === 'independent';
@@ -225,9 +229,9 @@ function sizeDefaults(layoutIn, layoutOut) {
     var dfltGapY = hasSubplotGrid ? 0.3 : 0.1;
 
     var dfltSideX, dfltSideY;
-    if(isSplomGenerated) {
-        dfltSideX = 'bottom';
-        dfltSideY = 'left';
+    if(isSplomGenerated && layoutOut._splomGridDflt) {
+        dfltSideX = layoutOut._splomGridDflt.xside;
+        dfltSideY = layoutOut._splomGridDflt.yside;
     }
 
     gridOut._domains = {

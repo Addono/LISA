@@ -12,15 +12,14 @@ var annAttrs = require('../annotations/attributes');
 var scatterLineAttrs = require('../../traces/scatter/attributes').line;
 var dash = require('../drawing/attributes').dash;
 var extendFlat = require('../../lib/extend').extendFlat;
+var templatedArray = require('../../plot_api/plot_template').templatedArray;
 
-module.exports = {
-    _isLinkedToArray: 'shape',
-
+module.exports = templatedArray('shape', {
     visible: {
         valType: 'boolean',
         role: 'info',
         dflt: true,
-        editType: 'calcIfAutorange+arraydraw',
+        editType: 'calc+arraydraw',
         description: [
             'Determines whether or not this shape is visible.'
         ].join(' ')
@@ -30,7 +29,7 @@ module.exports = {
         valType: 'enumerated',
         values: ['circle', 'rect', 'path', 'line'],
         role: 'info',
-        editType: 'calcIfAutorange+arraydraw',
+        editType: 'calc+arraydraw',
         description: [
             'Specifies the shape type to be drawn.',
 
@@ -80,7 +79,7 @@ module.exports = {
         values: ['scaled', 'pixel'],
         dflt: 'scaled',
         role: 'info',
-        editType: 'calcIfAutorange+arraydraw',
+        editType: 'calc+arraydraw',
         description: [
             'Sets the shapes\'s sizing mode along the x axis.',
             'If set to *scaled*, `x0`, `x1` and x coordinates within `path` refer to',
@@ -96,7 +95,7 @@ module.exports = {
     xanchor: {
         valType: 'any',
         role: 'info',
-        editType: 'calcIfAutorange+arraydraw',
+        editType: 'calc+arraydraw',
         description: [
             'Only relevant in conjunction with `xsizemode` set to *pixel*.',
             'Specifies the anchor point on the x axis to which `x0`, `x1`',
@@ -108,7 +107,7 @@ module.exports = {
     x0: {
         valType: 'any',
         role: 'info',
-        editType: 'calcIfAutorange+arraydraw',
+        editType: 'calc+arraydraw',
         description: [
             'Sets the shape\'s starting x position.',
             'See `type` and `xsizemode` for more info.'
@@ -117,7 +116,7 @@ module.exports = {
     x1: {
         valType: 'any',
         role: 'info',
-        editType: 'calcIfAutorange+arraydraw',
+        editType: 'calc+arraydraw',
         description: [
             'Sets the shape\'s end x position.',
             'See `type` and `xsizemode` for more info.'
@@ -139,7 +138,7 @@ module.exports = {
         values: ['scaled', 'pixel'],
         dflt: 'scaled',
         role: 'info',
-        editType: 'calcIfAutorange+arraydraw',
+        editType: 'calc+arraydraw',
         description: [
             'Sets the shapes\'s sizing mode along the y axis.',
             'If set to *scaled*, `y0`, `y1` and y coordinates within `path` refer to',
@@ -155,7 +154,7 @@ module.exports = {
     yanchor: {
         valType: 'any',
         role: 'info',
-        editType: 'calcIfAutorange+arraydraw',
+        editType: 'calc+arraydraw',
         description: [
             'Only relevant in conjunction with `ysizemode` set to *pixel*.',
             'Specifies the anchor point on the y axis to which `y0`, `y1`',
@@ -167,7 +166,7 @@ module.exports = {
     y0: {
         valType: 'any',
         role: 'info',
-        editType: 'calcIfAutorange+arraydraw',
+        editType: 'calc+arraydraw',
         description: [
             'Sets the shape\'s starting y position.',
             'See `type` and `ysizemode` for more info.'
@@ -176,7 +175,7 @@ module.exports = {
     y1: {
         valType: 'any',
         role: 'info',
-        editType: 'calcIfAutorange+arraydraw',
+        editType: 'calc+arraydraw',
         description: [
             'Sets the shape\'s end y position.',
             'See `type` and `ysizemode` for more info.'
@@ -186,7 +185,7 @@ module.exports = {
     path: {
         valType: 'string',
         role: 'info',
-        editType: 'calcIfAutorange+arraydraw',
+        editType: 'calc+arraydraw',
         description: [
             'For `type` *path* - a valid SVG path with the pixel values',
             'replaced by data values in `xsizemode`/`ysizemode` being *scaled*',
@@ -225,10 +224,10 @@ module.exports = {
     },
     line: {
         color: extendFlat({}, scatterLineAttrs.color, {editType: 'arraydraw'}),
-        width: extendFlat({}, scatterLineAttrs.width, {editType: 'calcIfAutorange+arraydraw'}),
+        width: extendFlat({}, scatterLineAttrs.width, {editType: 'calc+arraydraw'}),
         dash: extendFlat({}, dash, {editType: 'arraydraw'}),
         role: 'info',
-        editType: 'calcIfAutorange+arraydraw'
+        editType: 'calc+arraydraw'
     },
     fillcolor: {
         valType: 'color',
@@ -240,4 +239,4 @@ module.exports = {
         ].join(' ')
     },
     editType: 'arraydraw'
-};
+});

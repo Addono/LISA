@@ -1,13 +1,13 @@
 
-const ValidationError = require('../error/validation_error');
-const getType = require('../util/get_type');
-const validate = require('./validate');
-const validateObject = require('./validate_object');
-const validateArray = require('./validate_array');
-const validateNumber = require('./validate_number');
-const unbundle = require('../util/unbundle_jsonlint');
+import ValidationError from '../error/validation_error';
+import getType from '../util/get_type';
+import validate from './validate';
+import validateObject from './validate_object';
+import validateArray from './validate_array';
+import validateNumber from './validate_number';
+import { unbundle } from '../util/unbundle_jsonlint';
 
-module.exports = function validateFunction(options) {
+export default function validateFunction(options) {
     const functionValueSpec = options.valueSpec;
     const functionType = unbundle(options.value.type);
     let stopKeyType;
@@ -49,7 +49,7 @@ module.exports = function validateFunction(options) {
     if (options.styleSpec.$version >= 8) {
         if (isPropertyFunction && !options.valueSpec['property-function']) {
             errors.push(new ValidationError(options.key, options.value, 'property functions not supported'));
-        } else if (isZoomFunction && !options.valueSpec['zoom-function'] && options.objectKey !== 'heatmap-color') {
+        } else if (isZoomFunction && !options.valueSpec['zoom-function'] && options.objectKey !== 'heatmap-color' && options.objectKey !== 'line-gradient') {
             errors.push(new ValidationError(options.key, options.value, 'zoom functions not supported'));
         }
     }
@@ -194,4 +194,4 @@ module.exports = function validateFunction(options) {
             styleSpec: options.styleSpec
         });
     }
-};
+}

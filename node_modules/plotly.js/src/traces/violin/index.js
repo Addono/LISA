@@ -14,7 +14,7 @@ module.exports = {
     supplyDefaults: require('./defaults'),
     supplyLayoutDefaults: require('./layout_defaults'),
     calc: require('./calc'),
-    setPositions: require('./set_positions'),
+    crossTraceCalc: require('./cross_trace_calc'),
     plot: require('./plot'),
     style: require('./style'),
     styleOnSelect: require('../scatter/style').styleOnSelect,
@@ -24,7 +24,7 @@ module.exports = {
     moduleType: 'trace',
     name: 'violin',
     basePlotModule: require('../../plots/cartesian'),
-    categories: ['cartesian', 'svg', 'symbols', 'oriented', 'box-violin', 'showLegend', 'draggedPts', 'violinLayout'],
+    categories: ['cartesian', 'svg', 'symbols', 'oriented', 'box-violin', 'showLegend', 'violinLayout', 'zoomScale'],
     meta: {
         description: [
             'In vertical (horizontal) violin plots,',

@@ -9,9 +9,11 @@
 'use strict';
 
 var Lib = require('../../lib');
+var Template = require('../../plot_api/plot_template');
+var axisIds = require('../../plots/cartesian/axis_ids');
+
 var attributes = require('./attributes');
 var oppAxisAttrs = require('./oppaxis_attributes');
-var axisIds = require('../../plots/cartesian/axis_ids');
 
 module.exports = function handleDefaults(layoutIn, layoutOut, axName) {
     var axIn = layoutIn[axName];
@@ -25,13 +27,14 @@ module.exports = function handleDefaults(layoutIn, layoutOut, axName) {
     }
 
     var containerIn = axIn.rangeslider;
-    var containerOut = axOut.rangeslider = {};
+    var containerOut = Template.newContainer(axOut, 'rangeslider');
 
     function coerce(attr, dflt) {
         return Lib.coerce(containerIn, containerOut, attributes, attr, dflt);
     }
 
-    function coerceRange(rangeContainerIn, rangeContainerOut, attr, dflt) {
+    var rangeContainerIn, rangeContainerOut;
+    function coerceRange(attr, dflt) {
         return Lib.coerce(rangeContainerIn, rangeContainerOut, oppAxisAttrs, attr, dflt);
     }
 
@@ -43,7 +46,7 @@ module.exports = function handleDefaults(layoutIn, layoutOut, axName) {
     coerce('borderwidth');
     coerce('thickness');
 
-    axOut._rangesliderAutorange = coerce('autorange', !axOut.isValidRange(containerIn.range));
+    coerce('autorange', !axOut.isValidRange(containerIn.range));
     coerce('range');
 
     var subplots = layoutOut._subplots;
@@ -59,8 +62,8 @@ module.exports = function handleDefaults(layoutIn, layoutOut, axName) {
         for(var i = 0; i < yNames.length; i++) {
             var yName = yNames[i];
 
-            var rangeContainerIn = containerIn[yName] || {};
-            var rangeContainerOut = containerOut[yName] = {};
+            rangeContainerIn = containerIn[yName] || {};
+            rangeContainerOut = Template.newContainer(containerOut, yName, 'yaxis');
 
             var yAxOut = layoutOut[yName];
 
@@ -69,11 +72,10 @@ module.exports = function handleDefaults(layoutIn, layoutOut, axName) {
                 rangemodeDflt = 'fixed';
             }
 
-            var rangeMode = coerceRange(rangeContainerIn, rangeContainerOut, 'rangemode', rangemodeDflt);
+            var rangeMode = coerceRange('rangemode', rangemodeDflt);
             if(rangeMode !== 'match') {
-                coerceRange(rangeContainerIn, rangeContainerOut, 'range', yAxOut.range.slice());
+                coerceRange('range', yAxOut.range.slice());
             }
-            yAxOut._rangesliderAutorange = (rangeMode === 'auto');
         }
     }
 

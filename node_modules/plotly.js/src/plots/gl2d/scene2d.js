@@ -45,6 +45,7 @@ function Scene2D(options, fullLayout) {
     this.updateRefs(fullLayout);
 
     this.makeFramework();
+    if(this.stopped) return;
 
     // update options
     this.glplotOptions = createOptions(this);
@@ -121,7 +122,11 @@ proto.makeFramework = function() {
             premultipliedAlpha: true
         });
 
-        if(!gl) showNoWebGlMsg(this);
+        if(!gl) {
+            showNoWebGlMsg(this);
+            this.stopped = true;
+            return;
+        }
 
         this.canvas = liveCanvas;
         this.gl = gl;
@@ -436,7 +441,7 @@ proto.plot = function(fullData, calcData, fullLayout) {
         ax = this[AXES[i]];
         ax._length = options.viewBox[i + 2] - options.viewBox[i];
 
-        doAutoRange(ax);
+        doAutoRange(this.graphDiv, ax);
         ax.setScale();
     }
 
