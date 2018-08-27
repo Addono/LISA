@@ -27,7 +27,7 @@ class Graph {
         $date = new DateTime('now');
         $largestKey = $date->format('W') + $date->format('Y') * 52;
 
-        for ($i = $lowestKey - $lowestKey % 52, $max = $largestKey; $i < $max; $i++) {
+        for ($i = $lowestKey - $lowestKey % 52; $i < $largestKey; $i++) {
             $week = ($i % 52) + 1;
             $year = (int) floor($i / 52);
             $x[$year][] = $week;
