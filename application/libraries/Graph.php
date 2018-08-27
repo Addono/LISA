@@ -39,7 +39,7 @@ class Graph {
         }
 
         $data = '[';
-        foreach ($y as $year => $_) {
+        foreach (array_keys($y) as $year) {
             $data .=
                 '{
                     x: [' . implode(',', $x[$year]) . '],
