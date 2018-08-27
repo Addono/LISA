@@ -3,7 +3,7 @@
 # Getting started
 
  1. Download a copy/make a clone/make a fork of the project and move it to a folder in your web server.
- 1. Rename/duplicate config.php-setup and database.php-setup to config.php and database.php respectively.
+ 1. Rename/duplicate config.php-setup, database.php-setup and email.php-config to config.php, database.php and email.php respectively.
  1. Edit these config files to match your system. Most important is:
     * Add your hostname.
     * Enter the settings of your database.
