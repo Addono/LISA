@@ -59,6 +59,10 @@ $lang['leaderboard_subtext'] = 'De som van alle negatieve transacties wordt hier
 $lang['leaderboard_table_header_name'] = $lang['consume_table_head_name'];
 $lang['leaderboard_table_header_sum'] = 'Totaal';
 
+// Graph
+$lang['graph_week_number'] = 'Week nummer';
+$lang['graph_amount_of_consumptions'] = 'Aantal consumpties';
+
 // Not user
 $lang['not_user_page_header_title'] = 'Eeuhm... sorry :(';
 $lang['not_user_page_header_body'] = 'Je hebt niet de rechten om deze applicatie te mogen gebruiker, als je denkt dat je dit wel zou mogen neem dan contact op met de systeem beheerder.';

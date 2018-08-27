@@ -57,11 +57,11 @@ class Graph {
                     xaxis: {
                         min: 1,
                         max: 52,
-                        title: "Week numer",
+                        title: "' . lang('graph_week_number') . '",
                     },
                     yaxis: {
                         min: 0,
-                        title: "# Consumptions",
+                        title: "' . lang('graph_amount_of_consumptions') . '",
                     },
                 };
                 

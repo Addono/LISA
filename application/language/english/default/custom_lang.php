@@ -59,6 +59,10 @@ $lang['leaderboard_title'] = $lang['menu_leaderboard'];
 $lang['leaderboard_table_header_name'] = $lang['consume_table_head_name'];
 $lang['leaderboard_table_header_sum'] = 'Sum';
 
+// Graph
+$lang['graph_week_number'] = 'Week number';
+$lang['graph_amount_of_consumptions'] = 'Amount of consumptions';
+
 // Not user
 $lang['not_user_page_header_title'] = 'Eeuhm... sorry :(';
 $lang['not_user_page_header_body'] = 'You currently do not have the rights to use this application, if you think you should please contact the administrator.';
