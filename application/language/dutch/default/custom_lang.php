@@ -35,6 +35,9 @@ $lang['transactions_title'] = 'Mijn transacties';
 $lang['transactions_subtitle_author'] = 'Als auteur';
 $lang['transactions_subtitle_subject'] = 'Als gebruiker';
 
+$lang['transactions_table_limit_description'] = 'Er worden maximaal [limit] transacties getoond.';
+$lang['transactions_table_limit_show_all'] = 'Toon alles';
+
 $lang['transactions_table_header_author'] = 'Auteur';
 $lang['transactions_table_header_subject'] = 'Gebruiker';
 $lang['transactions_table_header_amount'] = 'Nieuwe hoeveelheid';

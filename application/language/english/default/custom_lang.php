@@ -36,6 +36,9 @@ $lang['leaderboard_subtext'] = 'Depicts the sum of all negative transactions. Th
 $lang['transactions_subtitle_author'] = 'As author';
 $lang['transactions_subtitle_subject'] = 'As subject';
 
+$lang['transactions_table_limit_description'] = 'At most [limit] transactions will be shown.';
+$lang['transactions_table_limit_show_all'] = 'Show all';
+
 $lang['transactions_table_header_author'] = 'Author';
 $lang['transactions_table_header_subject'] = 'Subject';
 $lang['transactions_table_header_amount'] = 'New amount';
