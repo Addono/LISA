@@ -35,6 +35,9 @@ $lang['transactions_title'] = 'Mijn transacties';
 $lang['transactions_subtitle_author'] = 'Als auteur';
 $lang['transactions_subtitle_subject'] = 'Als gebruiker';
 
+$lang['transactions_table_limit_description'] = 'Er worden maximaal [limit] transacties getoond.';
+$lang['transactions_table_limit_show_all'] = 'Toon alles';
+
 $lang['transactions_table_header_author'] = 'Auteur';
 $lang['transactions_table_header_subject'] = 'Gebruiker';
 $lang['transactions_table_header_amount'] = 'Nieuwe hoeveelheid';
@@ -56,6 +59,10 @@ $lang['leaderboard_subtext'] = 'De som van alle negatieve transacties wordt hier
 $lang['leaderboard_table_header_name'] = $lang['consume_table_head_name'];
 $lang['leaderboard_table_header_sum'] = 'Totaal';
 
+// Graph
+$lang['graph_week_number'] = 'Week nummer';
+$lang['graph_amount_of_consumptions'] = 'Aantal consumpties';
+
 // Not user
 $lang['not_user_page_header_title'] = 'Eeuhm... sorry :(';
 $lang['not_user_page_header_body'] = 'Je hebt niet de rechten om deze applicatie te mogen gebruiker, als je denkt dat je dit wel zou mogen neem dan contact op met de systeem beheerder.';
@@ -74,8 +81,7 @@ $lang['footer_source'] = 'Broncode';
 // @Overwrite
 $lang['application_name'] = 'Lisa';
 $lang['application_title'] = 'Lisa is super awesome';
-$lang['copyright'] = '2018, Adriaan Knapen';
-$lang['application_version'] = 'Core v1.7.0';
+$lang['application_version'] = 'v1.8.0';
 
 $lang['default_page_header_title'] = 'Hoi ik ben Lisa!';
 $lang['default_page_header_body'] = 'Log in om te beginnen';

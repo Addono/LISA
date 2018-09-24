@@ -36,6 +36,9 @@ $lang['leaderboard_subtext'] = 'Depicts the sum of all negative transactions. Th
 $lang['transactions_subtitle_author'] = 'As author';
 $lang['transactions_subtitle_subject'] = 'As subject';
 
+$lang['transactions_table_limit_description'] = 'At most [limit] transactions will be shown.';
+$lang['transactions_table_limit_show_all'] = 'Show all';
+
 $lang['transactions_table_header_author'] = 'Author';
 $lang['transactions_table_header_subject'] = 'Subject';
 $lang['transactions_table_header_amount'] = 'New amount';
@@ -56,6 +59,10 @@ $lang['leaderboard_title'] = $lang['menu_leaderboard'];
 $lang['leaderboard_table_header_name'] = $lang['consume_table_head_name'];
 $lang['leaderboard_table_header_sum'] = 'Sum';
 
+// Graph
+$lang['graph_week_number'] = 'Week number';
+$lang['graph_amount_of_consumptions'] = 'Amount of consumptions';
+
 // Not user
 $lang['not_user_page_header_title'] = 'Eeuhm... sorry :(';
 $lang['not_user_page_header_body'] = 'You currently do not have the rights to use this application, if you think you should please contact the administrator.';
@@ -74,8 +81,7 @@ $lang['footer_source'] = 'Source';
 // @Overwrite
 $lang['application_name'] = 'Lisa';
 $lang['application_title'] = 'Lisa is super awesome';
-$lang['copyright'] = '2018, Adriaan Knapen';
-$lang['application_version'] = 'Core v1.7.0';
+$lang['application_version'] = 'v1.8.0';
 
 $lang['default_page_header_title'] = 'Hello, I am Lisa!';
 $lang['default_page_header_body'] = 'Login to get started';

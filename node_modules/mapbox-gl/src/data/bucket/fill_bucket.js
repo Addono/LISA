@@ -1,16 +1,18 @@
 // @flow
 
-const {FillLayoutArray} = require('../array_types');
-const layoutAttributes = require('./fill_attributes').members;
-const {SegmentVector} = require('../segment');
-const {ProgramConfigurationSet} = require('../program_configuration');
-const {LineIndexArray, TriangleIndexArray} = require('../index_array_type');
-const loadGeometry = require('../load_geometry');
-const earcut = require('earcut');
-const classifyRings = require('../../util/classify_rings');
-const assert = require('assert');
+import { FillLayoutArray } from '../array_types';
+
+import { members as layoutAttributes } from './fill_attributes';
+import SegmentVector from '../segment';
+import { ProgramConfigurationSet } from '../program_configuration';
+import { LineIndexArray, TriangleIndexArray } from '../index_array_type';
+import loadGeometry from '../load_geometry';
+import earcut from 'earcut';
+import classifyRings from '../../util/classify_rings';
+import assert from 'assert';
 const EARCUT_MAX_RINGS = 500;
-const {register} = require('../../util/web_worker_transfer');
+import { register } from '../../util/web_worker_transfer';
+import EvaluationParameters from '../../style/evaluation_parameters';
 
 import type {
     Bucket,
@@ -62,7 +64,7 @@ class FillBucket implements Bucket {
 
     populate(features: Array<IndexedFeature>, options: PopulateParameters) {
         for (const {feature, index, sourceLayerIndex} of features) {
-            if (this.layers[0]._featureFilter({zoom: this.zoom}, feature)) {
+            if (this.layers[0]._featureFilter(new EvaluationParameters(this.zoom), feature)) {
                 const geometry = loadGeometry(feature);
                 this.addFeature(feature, geometry);
                 options.featureIndex.insert(feature, geometry, index, sourceLayerIndex, this.index);
@@ -152,4 +154,4 @@ class FillBucket implements Bucket {
 
 register('FillBucket', FillBucket, {omit: ['layers']});
 
-module.exports = FillBucket;
+export default FillBucket;

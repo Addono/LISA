@@ -1,40 +1,66 @@
 // @flow
 
-const DOM = require('../util/dom');
-const LngLat = require('../geo/lng_lat');
-const Point = require('@mapbox/point-geometry');
-const smartWrap = require('../util/smart_wrap');
-const {bindAll} = require('../util/util');
+import DOM from '../util/dom';
+import window from '../util/window';
+import LngLat from '../geo/lng_lat';
+import Point from '@mapbox/point-geometry';
+import smartWrap from '../util/smart_wrap';
+import { bindAll, extend } from '../util/util';
+import { type Anchor, anchorTranslate, applyAnchorClass } from './anchor';
 
 import type Map from './map';
 import type Popup from './popup';
 import type {LngLatLike} from "../geo/lng_lat";
 import type {MapMouseEvent} from './events';
 
+type Options = {
+    element?: HTMLElement,
+    offset?: PointLike,
+    anchor?: Anchor,
+    color?: string
+};
+
 /**
  * Creates a marker component
- * @param element DOM element to use as a marker. If left unspecified a default SVG will be created as the DOM element to use.
  * @param options
+ * @param options.element DOM element to use as a marker. The default is a light blue, droplet-shaped SVG marker.
+ * @param options.anchor A string indicating the part of the Marker that should be positioned closest to the coordinate set via {@link Marker#setLngLat}.
+ *   Options are `'center'`, `'top'`, `'bottom'`, `'left'`, `'right'`, `'top-left'`, `'top-right'`, `'bottom-left'`, and `'bottom-right'`.
+ *   The default is `'center'`.
  * @param options.offset The offset in pixels as a {@link PointLike} object to apply relative to the element's center. Negatives indicate left and up.
+ * @param options.color The color to use for the default marker if options.element is not provided. The default is light blue.
  * @example
  * var marker = new mapboxgl.Marker()
  *   .setLngLat([30.5, 50.5])
  *   .addTo(map);
  * @see [Add custom icons with Markers](https://www.mapbox.com/mapbox-gl-js/example/custom-marker-icons/)
  */
-class Marker {
+export default class Marker {
     _map: Map;
+    _anchor: Anchor;
     _offset: Point;
     _element: HTMLElement;
     _popup: ?Popup;
     _lngLat: LngLat;
     _pos: ?Point;
+    _color: ?string;
+    _defaultMarker: boolean;
 
-    constructor(element: ?HTMLElement, options?: {offset: PointLike}) {
+    constructor(options?: Options) {
+        // For backward compatibility -- the constructor used to accept the element as a
+        // required first argument, before it was made optional.
+        if (arguments[0] instanceof window.HTMLElement || arguments.length === 2) {
+            options = extend({element: options}, arguments[1]);
+        }
+
         bindAll(['_update', '_onMapClick'], this);
 
-        if (!element) {
-            element = DOM.create('div');
+        this._anchor = options && options.anchor || 'center';
+        this._color = options && options.color || '#3FB1CE';
+
+        if (!options || !options.element) {
+            this._defaultMarker = true;
+            this._element = DOM.create('div');
 
             // create default map marker SVG
             const svg = DOM.createNS('http://www.w3.org/2000/svg', 'svg');
@@ -77,7 +103,7 @@ class Marker {
             }
 
             const background = DOM.createNS('http://www.w3.org/2000/svg', 'g');
-            background.setAttributeNS(null, 'fill', '#3FB1CE');
+            background.setAttributeNS(null, 'fill', this._color);
 
             const bgPath = DOM.createNS('http://www.w3.org/2000/svg', 'path');
             bgPath.setAttributeNS(null, 'd', 'M27,13.5 C27,19.074644 20.250001,27.000002 14.75,34.500002 C14.016665,35.500004 12.983335,35.500004 12.25,34.500002 C6.7499993,27.000002 0,19.222562 0,13.5 C0,6.0441559 6.0441559,0 13.5,0 C20.955844,0 27,6.0441559 27,13.5 Z');
@@ -124,7 +150,7 @@ class Marker {
 
             svg.appendChild(page1);
 
-            element.appendChild(svg);
+            this._element.appendChild(svg);
 
             // if no element and no offset option given apply an offset for the default marker
             // the -14 as the y value of the default marker offset was determined as follows
@@ -133,22 +159,13 @@ class Marker {
             // the y value of the center of the shadow ellipse relative to the svg top left is "shadow transform translate-y (29.0) + ellipse cy (5.80029008)"
             // offset to the svg center "height (41 / 2)" gives (29.0 + 5.80029008) - (41 / 2) and rounded for an integer pixel offset gives 14
             // negative is used to move the marker up from the center so the tip is at the Marker lngLat
-            const defaultMarkerOffset = [0, -14];
-            if (!(options && options.offset)) {
-                if (!options) {
-                    options = {
-                        offset: defaultMarkerOffset
-                    };
-                } else {
-                    options.offset = defaultMarkerOffset;
-                }
-            }
+            this._offset = Point.convert(options && options.offset || [0, -14]);
+        } else {
+            this._element = options.element;
+            this._offset = Point.convert(options && options.offset || [0, 0]);
         }
 
-        this._offset = Point.convert(options && options.offset || [0, 0]);
-
-        element.classList.add('mapboxgl-marker');
-        this._element = element;
+        this._element.classList.add('mapboxgl-marker');
 
         this._popup = null;
     }
@@ -240,7 +257,19 @@ class Marker {
 
         if (popup) {
             if (!('offset' in popup.options)) {
-                popup.options.offset = this._offset;
+                const markerHeight = 41 - (5.8 / 2);
+                const markerRadius = 13.5;
+                const linearOffset = Math.sqrt(Math.pow(markerRadius, 2) / 2);
+                popup.options.offset = this._defaultMarker ? {
+                    'top': [0, 0],
+                    'top-left': [0, 0],
+                    'top-right': [0, 0],
+                    'bottom': [0, -markerHeight],
+                    'bottom-left': [linearOffset, (markerHeight - markerRadius + linearOffset) * -1],
+                    'bottom-right': [-linearOffset, (markerHeight - markerRadius + linearOffset) * -1],
+                    'left': [markerRadius, (markerHeight - markerRadius) * -1],
+                    'right': [-markerRadius, (markerHeight - markerRadius) * -1]
+                } : this._offset;
             }
             this._popup = popup;
             if (this._lngLat) this._popup.setLngLat(this._lngLat);
@@ -295,7 +324,8 @@ class Marker {
             this._pos = this._pos.round();
         }
 
-        DOM.setTransform(this._element, `translate(-50%, -50%) translate(${this._pos.x}px, ${this._pos.y}px)`);
+        DOM.setTransform(this._element, `${anchorTranslate[this._anchor]} translate(${this._pos.x}px, ${this._pos.y}px)`);
+        applyAnchorClass(this._element, this._anchor, 'marker');
     }
 
     /**
@@ -317,5 +347,3 @@ class Marker {
         return this;
     }
 }
-
-module.exports = Marker;

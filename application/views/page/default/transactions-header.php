@@ -30,17 +30,24 @@
             <div class="content">
                 <div class="content">
                     <div class="tab-content text-center"><div class="tab-pane active" id="ordered-first-name">
-                            <div id="chart" style="width: 100%"></div>
+                        <div id="chart" style="width: 100%"></div>
 
-                            <table class="table table-striped">
+                        <?php if ($limit) { ?>
+                            <p>
+                                <?=str_replace('[limit]', $limit, lang('transactions_table_limit_description'))?>
+                                <a class="btn btn-primary btn-sm" href="<?=site_url($group.'/'.$page.'/'.($limit+100))?>">+100</a>
+                                <a class="btn btn-primary btn-sm" href="<?=site_url($group.'/'.$page.'/all')?>"><?=lang('transactions_table_limit_show_all')?></a>
+                            </p>
+                        <?php } ?>
+                        <table class="table table-striped">
                             <thead>
-                            <tr>
-                                <th><?=lang('transactions_table_header_author')?></th>
-                                <th><?=lang('transactions_table_header_subject')?></th>
-                                <th><?=lang('transactions_table_header_amount')?></th>
-                                <th><?=lang('transactions_table_header_delta')?></th>
-                                <th><?=lang('transactions_table_header_time')?></th>
-                            </tr>
+                                <tr>
+                                    <th><?=lang('transactions_table_header_author')?></th>
+                                    <th><?=lang('transactions_table_header_subject')?></th>
+                                    <th><?=lang('transactions_table_header_amount')?></th>
+                                    <th><?=lang('transactions_table_header_delta')?></th>
+                                    <th><?=lang('transactions_table_header_time')?></th>
+                                </tr>
                             </thead>
                             <tbody>
                             <?php foreach ($transactions['subject'] as $t) {?>
@@ -56,6 +63,13 @@
                         </table>
                     </div>
                     <div class="tab-pane" id="ordered-last-name">
+                        <?php if ($limit) { ?>
+                            <p>
+                                <?=str_replace('[limit]', $limit, lang('transactions_table_limit_description'))?>
+                                <a class="btn btn-primary btn-sm" href="<?=site_url($group.'/'.$page.'/'.($limit+100))?>">+100</a>
+                                <a class="btn btn-primary btn-sm" href="<?=site_url($group.'/'.$page.'/all')?>"><?=lang('transactions_table_limit_show_all')?></a>
+                            </p>
+                        <?php } ?>
                         <table class="table table-striped">
                             <thead>
                             <tr>

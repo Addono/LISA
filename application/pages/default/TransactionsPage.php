@@ -33,8 +33,14 @@ class TransactionsPage extends PageFrame
     {
         $loginId = getLoggedInLoginId($this->ci->session);
 
-        $transactions['subject'] = $this->ci->User_Transaction->getAllForSubjectId($loginId);
-        $transactions['author'] = $this->ci->User_Transaction->getAllForAuthorId($loginId);
+        $limit = $this->getDataKey('subpage') ?? 100;
+        if (!(int) $limit  || $limit <= 0) {
+            $limit = null;
+        }
+        $this->setData('limit', $limit);
+
+        $transactions['subject'] = $this->ci->User_Transaction->getAllForSubjectId($loginId, $limit);
+        $transactions['author'] = $this->ci->User_Transaction->getAllForAuthorId($loginId, $limit);
         $this->setData('transactions', $transactions);
 
         $fields = [

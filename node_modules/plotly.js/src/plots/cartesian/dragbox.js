@@ -26,7 +26,7 @@ var FROM_TL = require('../../constants/alignment').FROM_TL;
 
 var Plots = require('../plots');
 
-var doTicks = require('./axes').doTicks;
+var doTicksSingle = require('./axes').doTicksSingle;
 var getFromId = require('./axis_ids').getFromId;
 var prepSelect = require('./select').prepSelect;
 var clearSelect = require('./select').clearSelect;
@@ -82,6 +82,8 @@ function makeDragBox(gd, plotinfo, x, y, w, h, ns, ew) {
     var isSubplotConstrained;
     // do we need to edit x/y ranges?
     var editX, editY;
+    // graph-wide optimization flags
+    var hasScatterGl, hasOnlyLargeSploms, hasSplom, hasSVG;
 
     function recomputeAxisLists() {
         xa0 = plotinfo.xaxis;
@@ -117,6 +119,12 @@ function makeDragBox(gd, plotinfo, x, y, w, h, ns, ew) {
         isSubplotConstrained = links.isSubplotConstrained;
         editX = ew || isSubplotConstrained;
         editY = ns || isSubplotConstrained;
+
+        var fullLayout = gd._fullLayout;
+        hasScatterGl = fullLayout._has('scattergl');
+        hasOnlyLargeSploms = fullLayout._hasOnlyLargeSploms;
+        hasSplom = hasOnlyLargeSploms || fullLayout._has('splom');
+        hasSVG = fullLayout._has('svg');
     }
 
     recomputeAxisLists();
@@ -136,101 +144,112 @@ function makeDragBox(gd, plotinfo, x, y, w, h, ns, ew) {
     var dragOptions = {
         element: dragger,
         gd: gd,
-        plotinfo: plotinfo,
-        prepFn: function(e, startX, startY) {
-            var dragModeNow = gd._fullLayout.dragmode;
+        plotinfo: plotinfo
+    };
 
-            recomputeAxisLists();
+    dragOptions.prepFn = function(e, startX, startY) {
+        var dragModeNow = gd._fullLayout.dragmode;
+
+        recomputeAxisLists();
+
+        if(!allFixedRanges) {
+            if(isMainDrag) {
+                // main dragger handles all drag modes, and changes
+                // to pan (or to zoom if it already is pan) on shift
+                if(e.shiftKey) {
+                    if(dragModeNow === 'pan') dragModeNow = 'zoom';
+                    else if(!isSelectOrLasso(dragModeNow)) dragModeNow = 'pan';
+                }
+                else if(e.ctrlKey) {
+                    dragModeNow = 'pan';
+                }
+            }
+            // all other draggers just pan
+            else dragModeNow = 'pan';
+        }
+
+        if(dragModeNow === 'lasso') dragOptions.minDrag = 1;
+        else dragOptions.minDrag = undefined;
+
+        if(isSelectOrLasso(dragModeNow)) {
+            dragOptions.xaxes = xaxes;
+            dragOptions.yaxes = yaxes;
+            // this attaches moveFn, clickFn, doneFn on dragOptions
+            prepSelect(e, startX, startY, dragOptions, dragModeNow);
+        } else {
+            dragOptions.clickFn = clickFn;
+            clearAndResetSelect();
 
             if(!allFixedRanges) {
-                if(isMainDrag) {
-                    // main dragger handles all drag modes, and changes
-                    // to pan (or to zoom if it already is pan) on shift
-                    if(e.shiftKey) {
-                        if(dragModeNow === 'pan') dragModeNow = 'zoom';
-                        else if(!isSelectOrLasso(dragModeNow)) dragModeNow = 'pan';
-                    }
-                    else if(e.ctrlKey) {
-                        dragModeNow = 'pan';
-                    }
-                }
-                // all other draggers just pan
-                else dragModeNow = 'pan';
-            }
+                if(dragModeNow === 'zoom') {
+                    dragOptions.moveFn = zoomMove;
+                    dragOptions.doneFn = zoomDone;
 
-            if(dragModeNow === 'lasso') dragOptions.minDrag = 1;
-            else dragOptions.minDrag = undefined;
+                    // zoomMove takes care of the threshold, but we need to
+                    // minimize this so that constrained zoom boxes will flip
+                    // orientation at the right place
+                    dragOptions.minDrag = 1;
 
-            if(isSelectOrLasso(dragModeNow)) {
-                dragOptions.xaxes = xaxes;
-                dragOptions.yaxes = yaxes;
-                prepSelect(e, startX, startY, dragOptions, dragModeNow);
-            }
-            else if(allFixedRanges) {
-                clearSelect(zoomlayer);
-            }
-            else if(dragModeNow === 'zoom') {
-                dragOptions.moveFn = zoomMove;
-                dragOptions.doneFn = zoomDone;
-
-                // zoomMove takes care of the threshold, but we need to
-                // minimize this so that constrained zoom boxes will flip
-                // orientation at the right place
-                dragOptions.minDrag = 1;
-
-                zoomPrep(e, startX, startY);
-            }
-            else if(dragModeNow === 'pan') {
-                dragOptions.moveFn = plotDrag;
-                dragOptions.doneFn = dragTail;
-                clearSelect(zoomlayer);
-            }
-        },
-        clickFn: function(numClicks, evt) {
-            removeZoombox(gd);
-
-            if(numClicks === 2 && !singleEnd) doubleClick();
-
-            if(isMainDrag) {
-                Fx.click(gd, evt, plotinfo.id);
-            }
-            else if(numClicks === 1 && singleEnd) {
-                var ax = ns ? ya0 : xa0,
-                    end = (ns === 's' || ew === 'w') ? 0 : 1,
-                    attrStr = ax._name + '.range[' + end + ']',
-                    initialText = getEndText(ax, end),
-                    hAlign = 'left',
-                    vAlign = 'middle';
-
-                if(ax.fixedrange) return;
-
-                if(ns) {
-                    vAlign = (ns === 'n') ? 'top' : 'bottom';
-                    if(ax.side === 'right') hAlign = 'right';
-                }
-                else if(ew === 'e') hAlign = 'right';
-
-                if(gd._context.showAxisRangeEntryBoxes) {
-                    d3.select(dragger)
-                        .call(svgTextUtils.makeEditable, {
-                            gd: gd,
-                            immediate: true,
-                            background: gd._fullLayout.paper_bgcolor,
-                            text: String(initialText),
-                            fill: ax.tickfont ? ax.tickfont.color : '#444',
-                            horizontalAlign: hAlign,
-                            verticalAlign: vAlign
-                        })
-                        .on('edit', function(text) {
-                            var v = ax.d2r(text);
-                            if(v !== undefined) {
-                                Registry.call('relayout', gd, attrStr, v);
-                            }
-                        });
+                    zoomPrep(e, startX, startY);
+                } else if(dragModeNow === 'pan') {
+                    dragOptions.moveFn = plotDrag;
+                    dragOptions.doneFn = dragTail;
                 }
             }
         }
     };
+
+    function clearAndResetSelect() {
+        // clear selection polygon cache (if any)
+        dragOptions.plotinfo.selection = false;
+        // clear selection outlines
+        clearSelect(zoomlayer);
+    }
+
+    function clickFn(numClicks, evt) {
+        removeZoombox(gd);
+
+        if(numClicks === 2 && !singleEnd) doubleClick();
+
+        if(isMainDrag) {
+            Fx.click(gd, evt, plotinfo.id);
+        }
+        else if(numClicks === 1 && singleEnd) {
+            var ax = ns ? ya0 : xa0,
+                end = (ns === 's' || ew === 'w') ? 0 : 1,
+                attrStr = ax._name + '.range[' + end + ']',
+                initialText = getEndText(ax, end),
+                hAlign = 'left',
+                vAlign = 'middle';
+
+            if(ax.fixedrange) return;
+
+            if(ns) {
+                vAlign = (ns === 'n') ? 'top' : 'bottom';
+                if(ax.side === 'right') hAlign = 'right';
+            }
+            else if(ew === 'e') hAlign = 'right';
+
+            if(gd._context.showAxisRangeEntryBoxes) {
+                d3.select(dragger)
+                    .call(svgTextUtils.makeEditable, {
+                        gd: gd,
+                        immediate: true,
+                        background: gd._fullLayout.paper_bgcolor,
+                        text: String(initialText),
+                        fill: ax.tickfont ? ax.tickfont.color : '#444',
+                        horizontalAlign: hAlign,
+                        verticalAlign: vAlign
+                    })
+                    .on('edit', function(text) {
+                        var v = ax.d2r(text);
+                        if(v !== undefined) {
+                            Registry.call('relayout', gd, attrStr, v);
+                        }
+                    });
+            }
+        }
+    }
 
     dragElement.init(dragOptions);
 
@@ -243,6 +262,9 @@ function makeDragBox(gd, plotinfo, x, y, w, h, ns, ew) {
         zoomMode,
         zb,
         corners;
+
+    // zoom takes over minDrag, so it also has to take over gd._dragged
+    var zoomDragged;
 
     // collected changes to be made to the plot by relayout at the end
     var updates = {};
@@ -258,12 +280,11 @@ function makeDragBox(gd, plotinfo, x, y, w, h, ns, ew) {
         path0 = 'M0,0H' + pw + 'V' + ph + 'H0V0';
         dimmed = false;
         zoomMode = 'xy';
+        zoomDragged = false;
 
         zb = makeZoombox(zoomlayer, lum, xs, ys, path0);
 
         corners = makeCorners(zoomlayer, xs, ys);
-
-        clearSelect(zoomlayer);
     }
 
     function zoomMove(dx0, dy0) {
@@ -310,10 +331,9 @@ function makeDragBox(gd, plotinfo, x, y, w, h, ns, ew) {
         // look for small drags in one direction or the other,
         // and only drag the other axis
         else if(!yActive || dy < Math.min(Math.max(dx * 0.6, MINDRAG), MINZOOM)) {
-            if(dx < MINDRAG) {
+            if(dx < MINDRAG || !xActive) {
                 noZoom();
-            }
-            else {
+            } else {
                 box.t = 0;
                 box.b = ph;
                 zoomMode = 'x';
@@ -332,6 +352,9 @@ function makeDragBox(gd, plotinfo, x, y, w, h, ns, ew) {
         }
         box.w = box.r - box.l;
         box.h = box.b - box.t;
+
+        if(zoomMode) zoomDragged = true;
+        gd._dragged = zoomDragged;
 
         updateZoombox(zb, corners, box, path0, dimmed, lum);
         dimmed = true;
@@ -372,9 +395,7 @@ function makeDragBox(gd, plotinfo, x, y, w, h, ns, ew) {
             return;
         }
 
-        if(redrawTimer === null) {
-            clearSelect(zoomlayer);
-        }
+        clearAndResetSelect();
 
         // If a transition is in progress, then disable any behavior:
         if(gd._transitioningWithDuration) {
@@ -450,12 +471,7 @@ function makeDragBox(gd, plotinfo, x, y, w, h, ns, ew) {
         // no more scrolling is coming
         redrawTimer = setTimeout(function() {
             scrollViewBox = [0, 0, pw, ph];
-
-            var zoomMode;
-            if(isSubplotConstrained) zoomMode = 'xy';
-            else zoomMode = (ew ? 'x' : '') + (ns ? 'y' : '');
-
-            dragTail(zoomMode);
+            dragTail();
         }, REDRAWDELAY);
 
         e.preventDefault();
@@ -577,7 +593,7 @@ function makeDragBox(gd, plotinfo, x, y, w, h, ns, ew) {
         updates = {};
         for(i = 0; i < activeAxIds.length; i++) {
             var axId = activeAxIds[i];
-            doTicks(gd, axId, true);
+            doTicksSingle(gd, axId, true);
             var ax = getFromId(gd, axId);
             updates[ax._name + '.range[0]'] = ax.range[0];
             updates[ax._name + '.range[1]'] = ax.range[1];
@@ -688,6 +704,10 @@ function makeDragBox(gd, plotinfo, x, y, w, h, ns, ew) {
         ], gd);
     }
 
+    // x/y scaleFactor stash,
+    // minimizes number of per-point DOM updates in updateSubplots below
+    var xScaleFactorOld, yScaleFactorOld;
+
     // updateSubplots - find all plot viewboxes that should be
     // affected by this drag, and update them. look for all plots
     // sharing an affected axis (including the one being dragged),
@@ -696,14 +716,6 @@ function makeDragBox(gd, plotinfo, x, y, w, h, ns, ew) {
         var fullLayout = gd._fullLayout;
         var plotinfos = fullLayout._plots;
         var subplots = fullLayout._subplots.cartesian;
-
-        // TODO can we move these to outer scope?
-        var hasScatterGl = fullLayout._has('scattergl');
-        var hasOnlyLargeSploms = fullLayout._hasOnlyLargeSploms;
-        var hasSplom = hasOnlyLargeSploms || fullLayout._has('splom');
-        var hasSVG = fullLayout._has('svg');
-        var hasDraggedPts = fullLayout._has('draggedPts');
-
         var i, sp, xa, ya;
 
         if(hasSplom || hasScatterGl) {
@@ -788,26 +800,20 @@ function makeDragBox(gd, plotinfo, x, y, w, h, ns, ew) {
                     .call(Drawing.setTranslate, plotDx, plotDy)
                     .call(Drawing.setScale, 1 / xScaleFactor2, 1 / yScaleFactor2);
 
-                // TODO move these selectAll calls out of here
-                // and stash them somewhere nice, see:
-                // https://github.com/plotly/plotly.js/issues/2548
-                if(hasDraggedPts) {
-                    var traceGroups = sp.plot
-                        .selectAll('.scatterlayer .trace, .boxlayer .trace, .violinlayer .trace');
-
-                    // This is specifically directed at marker points in scatter, box and violin traces,
-                    // applying an inverse scale to individual points to counteract
-                    // the scale of the trace as a whole:
-                    traceGroups.selectAll('.point')
-                        .call(Drawing.setPointGroupScale, xScaleFactor2, yScaleFactor2);
-                    traceGroups.selectAll('.textpoint')
-                        .call(Drawing.setTextPointsScale, xScaleFactor2, yScaleFactor2);
-                    traceGroups
-                        .call(Drawing.hideOutsideRangePoints, sp);
-
-                    sp.plot.selectAll('.barlayer .trace')
-                        .call(Drawing.hideOutsideRangePoints, sp, '.bartext');
+                // apply an inverse scale to individual points to counteract
+                // the scale of the trace group.
+                // apply only when scale changes, as adjusting the scale of
+                // all the points can be expansive.
+                if(xScaleFactor2 !== xScaleFactorOld || yScaleFactor2 !== yScaleFactorOld) {
+                    Drawing.setPointGroupScale(sp.zoomScalePts, xScaleFactor2, yScaleFactor2);
+                    Drawing.setTextPointsScale(sp.zoomScaleTxt, xScaleFactor2, yScaleFactor2);
                 }
+
+                Drawing.hideOutsideRangePoints(sp.clipOnAxisFalseTraces, sp);
+
+                // update x/y scaleFactor stash
+                xScaleFactorOld = xScaleFactor2;
+                yScaleFactorOld = yScaleFactor2;
             }
         }
     }

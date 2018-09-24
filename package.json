@@ -20,8 +20,8 @@
   },
   "homepage": "https://github.com/Addono/lisa#readme",
   "dependencies": {
-    "moment": "^2.22.1",
-    "plotly.js": "^1.37.1",
-    "visibilityjs": "^1.2.7"
+    "moment": "^2.22.2",
+    "plotly.js": "^1.40.1",
+    "visibilityjs": "^2.0.1"
   }
 }

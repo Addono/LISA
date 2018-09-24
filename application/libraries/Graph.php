@@ -27,31 +27,42 @@ class Graph {
         $date = new DateTime('now');
         $largestKey = $date->format('W') + $date->format('Y') * 52;
 
-        for ($i = $lowestKey; $i < $largestKey; $i++) {
+        for ($i = $lowestKey - $lowestKey % 52; $i < $largestKey; $i++) {
             $week = ($i % 52) + 1;
-            $year = floor($i / 52);
-            $x[] = "'" . $year . " - " . $week . "'";
+            $year = (int) floor($i / 52);
+            $x[$year][] = $week;
             if (array_key_exists($i, $keyedTransactionData)) {
-                $y[] = -$keyedTransactionData[$i]['sum'];
+                $y[$year][] = -$keyedTransactionData[$i]['sum'];
             } else {
-                $y[] = 0;
+                $y[$year][] = 0;
             }
         }
 
+        $data = '[';
+        foreach (array_keys($y) as $year) {
+            $data .=
+                '{
+                    x: [' . implode(',', $x[$year]) . '],
+                    y: [' . implode(',', $y[$year]) . '],
+                    mode: \'lines\',
+                    name: \'' . $year . '\',
+                },';
+        }
+        $data .= ']';
+
         return '<script>
-                var data = [
-                    {
-                        x: [' . implode(",", $x) . '],
-                        y: [' . implode(",", $y) . '],
-                        type: \'shatter\',
-                        line: {shape: \'hvh\'}
-                    }
-                ];
+                var data = ' . $data . ';
                 
                 var layout = {
-                    xAxis: {
-                        min: 0
-                    }
+                    xaxis: {
+                        min: 1,
+                        max: 52,
+                        title: "' . lang('graph_week_number') . '",
+                    },
+                    yaxis: {
+                        min: 0,
+                        title: "' . lang('graph_amount_of_consumptions') . '",
+                    },
                 };
                 
                 var d3 = Plotly.d3;

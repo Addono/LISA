@@ -1,13 +1,15 @@
 // @flow
 
-const {CircleLayoutArray} = require('../array_types');
-const layoutAttributes = require('./circle_attributes').members;
-const {SegmentVector} = require('../segment');
-const {ProgramConfigurationSet} = require('../program_configuration');
-const {TriangleIndexArray} = require('../index_array_type');
-const loadGeometry = require('../load_geometry');
-const EXTENT = require('../extent');
-const {register} = require('../../util/web_worker_transfer');
+import { CircleLayoutArray } from '../array_types';
+
+import { members as layoutAttributes } from './circle_attributes';
+import SegmentVector from '../segment';
+import { ProgramConfigurationSet } from '../program_configuration';
+import { TriangleIndexArray } from '../index_array_type';
+import loadGeometry from '../load_geometry';
+import EXTENT from '../extent';
+import { register } from '../../util/web_worker_transfer';
+import EvaluationParameters from '../../style/evaluation_parameters';
 
 import type {
     Bucket,
@@ -68,7 +70,7 @@ class CircleBucket<Layer: CircleStyleLayer | HeatmapStyleLayer> implements Bucke
 
     populate(features: Array<IndexedFeature>, options: PopulateParameters) {
         for (const {feature, index, sourceLayerIndex} of features) {
-            if (this.layers[0]._featureFilter({zoom: this.zoom}, feature)) {
+            if (this.layers[0]._featureFilter(new EvaluationParameters(this.zoom), feature)) {
                 const geometry = loadGeometry(feature);
                 this.addFeature(feature, geometry);
                 options.featureIndex.insert(feature, geometry, index, sourceLayerIndex, this.index);
@@ -134,4 +136,4 @@ class CircleBucket<Layer: CircleStyleLayer | HeatmapStyleLayer> implements Bucke
 
 register('CircleBucket', CircleBucket, {omit: ['layers']});
 
-module.exports = CircleBucket;
+export default CircleBucket;
