@@ -6,7 +6,8 @@
 
 $lang['application_name'] = 'Jouw naam hier';
 $lang['application_title'] = 'Jouw titel hier';
-$lang['copyright'] = '2017, Adriaan Knapen';
+$lang['copyright'] = '2018, <a href="https://aknapen.nl">Adriaan Knapen</a>';
+
 
 $lang['default_page_header_title'] = 'Welkom';
 $lang['default_page_header_body'] = 'Dit is jouw nieuwe startpagina!';

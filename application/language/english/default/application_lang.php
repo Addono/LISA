@@ -7,7 +7,7 @@
 $lang['application_name'] = 'Name placeholder';
 $lang['application_version'] = 'v1.0-beta';
 $lang['application_title'] = 'Title placeholder';
-$lang['copyright'] = '2017, Adriaan Knapen';
+$lang['copyright'] = '2018, <a href="https://aknapen.nl">Adriaan Knapen</a>';
 
 $lang['default_page_header_title'] = 'Welcome';
 $lang['default_page_header_body'] = 'This is your new homepage!';
