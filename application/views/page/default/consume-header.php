@@ -5,7 +5,7 @@
  */
 ?>
 
-<div class="col-md-12 col-md-offset-0">
+<div class="col-md-12 col-md-offset-0 vmargin">
     <div class="container">
         <!-- Tabs with icons on Card -->
         <div class="card card-nav-tabs">
