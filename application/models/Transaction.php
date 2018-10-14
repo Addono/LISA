@@ -227,6 +227,7 @@ class Transaction extends ModelFrame
 
     public function v3()
     {
+        $this->db->query('ALTER TABLE '.self::name().' CHANGE `'.self::FIELD_TIME.'` `'.self::FIELD_TIME.'` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;');
         $this->db->query('UPDATE '.self::name().' SET '.self::FIELD_TYPE.' = IF(delta = -1, \''.self::TYPE_CONSUME.'\', \''.self::TYPE_UPGRADE.'\')');
         return [];
     }
