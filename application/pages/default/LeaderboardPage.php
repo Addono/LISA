@@ -59,6 +59,39 @@ class LeaderboardPage extends PageFrame
         $leaderboard = $userTransactionModel->getSumDeltaForAllSubjectId(false, self::LEADERBOARD_SIZE);
         $this->setData('entries', $leaderboard);
 
+        // Retrieve the streak data
+        $consumedWeeks = $transactionModel->getConsumedWeeksForLeaderboard(self::LEADERBOARD_SIZE);
+
+        // Group the consumed week by user
+        $consumedWeeksByUser = [];
+        foreach ($consumedWeeks as $week) {
+            if (!key_exists(Transaction::FIELD_SUBJECT_ID, $week)) {
+                $consumedWeeksByUser[Transaction::FIELD_SUBJECT_ID] = [];
+            }
+            $consumedWeeksByUser[$week[Transaction::FIELD_SUBJECT_ID]][] = $week["weekyear"];
+        }
+
+        // Count the amount of consecutive weeks since this week
+        $now = new DateTime();
+        $currentWeek = (int)$now->format('Y')*52+(int)$now->format('W');
+
+        $streakLength = [];
+        foreach ($consumedWeeksByUser as $userId => $weeks) {
+            var_dump($weeks);
+            if (end($weeks) == $currentWeek) {
+                $streakLength[$userId] = 1;
+                array_pop($weeks); // Remove the last week, since we already counted it.
+            } else {
+                $streakLength[$userId] = 0;
+            }
+
+
+            for ($i = count($weeks) - 1, $weekCounter = $currentWeek - 1; key_exists($i, $weeks) && $weeks[$i--] == $weekCounter--;) {
+                $streakLength[$userId]++;
+            }
+        }
+        $this->setData('streakLength', $streakLength);
+
         $fields = [
             'first_name' => User::FIELD_FIRST_NAME,
             'last_name' => User::FIELD_LAST_NAME,
@@ -76,6 +109,7 @@ class LeaderboardPage extends PageFrame
         $this->addScript($graphLibrary->getGraphForTransactions($sumByWeek));
         $this->addScript('<script>updateData();</script>');
     }
+
 
     /**
      * Defines which models should be loaded.
