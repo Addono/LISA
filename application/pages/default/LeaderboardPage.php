@@ -10,6 +10,7 @@ class LeaderboardPage extends PageFrame
 {
 
     const LEADERBOARD_SIZE = 10;
+    private static $hasAccess = null;
 
     public function getViews(): array
     {
@@ -20,14 +21,16 @@ class LeaderboardPage extends PageFrame
 
     public function hasAccess(): bool
     {
-        if (! isLoggedInAndHasRole($this->ci, Role::ROLE_USER)) {
-            return false;
+        if (static::$hasAccess == null) {
+            if (! isLoggedInAndHasRole($this->ci, Role::ROLE_USER)) {
+                static::$hasAccess = false;
+            } else {
+                $loginId = getLoggedInLoginId($this->ci->session);
+                static::$hasAccess = $this->ci->Transaction->getSumDeltaSubjectIdWithinTop($loginId, self::LEADERBOARD_SIZE);
+            }
         }
 
-        $loginId = getLoggedInLoginId($this->ci->session);
-        $isOnTheLeaderboard = $this->ci->Transaction->getSumDeltaSubjectIdWithinTop($loginId, self::LEADERBOARD_SIZE);
-
-        return  $isOnTheLeaderboard;
+        return  static::$hasAccess;
     }
 
     protected function getFormValidationRules()
