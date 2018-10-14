@@ -39,7 +39,7 @@ class GiveUserPage extends PageFrame
         $name = $this->ci->User->getName($loginId);
         $amount = set_value('amount');
 
-        $success = $this->ci->Consumption->change($loginId, $authorId, $amount);
+        $success = $this->ci->Consumption->change($loginId, $authorId, $amount, Transaction::TYPE_UPGRADE);
         if ($success) {
             $this->addSuccessMessage(sprintf(lang('application_give_user_success'), '<i>' . $name . '</i>', $amount));
         } else {

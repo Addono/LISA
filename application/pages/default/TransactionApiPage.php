@@ -108,7 +108,7 @@ class TransactionApiPage extends ApiFrame
         $authorId = getLoggedInLoginId($this->ci->session);
 
         $amount = 1;
-        $result = $this->ci->Consumption->change($id, $authorId, -$amount);
+        $result = $this->ci->Consumption->change($id, $authorId, -$amount, Transaction::TYPE_CONSUME);
 
         if ($result) {
             $newAmount = $this->ci->Consumption->get($id);
