@@ -87,7 +87,7 @@ class Transaction extends ModelFrame
      */
     public function getSumDeltaSubjectIdWithinTop(int $subjectId, int $position): bool
     {
-        // Retrieve the sum of the delta of all negative or positive transactions, ordered and limited to retrieve only highest values.
+        // Retrieve the sum of the delta of consumption transactions, ordered and limited to retrieve only highest values.
         $sumQuery = $this->db
             ->select(self::FIELD_SUBJECT_ID)
             ->select_sum(self::FIELD_DELTA, 'sum')
@@ -141,6 +141,39 @@ class Transaction extends ModelFrame
             ->order_by(self::FIELD_TIME, 'asc')
             ->get(self::name())
             ->result_array();
+    }
+
+
+    public function getConsumedWeeksForLeaderboard(int $position): array
+    {
+        $sumQuery = $this->db
+            ->select(self::FIELD_SUBJECT_ID)
+            ->select_sum(self::FIELD_DELTA, 'sum')
+            ->where([self::FIELD_TYPE => self::TYPE_CONSUME])
+            ->group_by(self::FIELD_SUBJECT_ID)
+            ->limit($position)
+            ->order_by('sum ' . 'ASC')
+            ->get_compiled_select(self::name())
+        ;
+
+        $result = $this->db
+            ->select([
+                self::FIELD_SUBJECT_ID,
+                'YEAR('.self::FIELD_TIME.') * 52 + WEEKOFYEAR('.self::FIELD_TIME.') as weekyear',
+            ])
+            ->from(self::name())
+            ->where(self::FIELD_TYPE, self::TYPE_CONSUME)
+            ->where_in(self::FIELD_SUBJECT_ID, 'SELECT `subject_id` FROM ('
+                . $sumQuery . ') `' . $this->db->dbprefix('t') . '`',
+                false
+            )
+            ->group_by(['weekyear', self::FIELD_SUBJECT_ID])
+            ->order_by('time', 'ASC')
+            ->get()
+            ->result_array()
+        ;
+
+        return $result;
     }
 
     public function v1()

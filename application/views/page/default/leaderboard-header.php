@@ -34,7 +34,13 @@
                             <?php $count = 0; foreach ($entries as $entry) { ?>
                                 <tr class="ajax-login-id-<?=$entry[$fields['login_id']]?>">
                                     <td><?=++$count?></td>
-                                    <td><?=$entry[$fields['first_name']] . ' ' . $entry[$fields['last_name']]?></td>
+                                    <td><?=$entry[$fields['first_name']] . ' ' . $entry[$fields['last_name']]?>
+                                        <?php
+                                        $key = (int) $entry[$fields['login_id']];
+                                        $length = key_exists($key, $streakLength)?$streakLength[$key]:0;
+                                        echo $length >= 2 ? ' ('. $length .'🔥)' : ''
+                                        ?>
+                                    </td>
                                     <td><?=-$entry[$fields['sum']]?></td>
                                     <td class="amount"></td>
                                     <td><?=$this->transactions->getBuyButtonHtml($entry[$fields['login_id']])?></td>
