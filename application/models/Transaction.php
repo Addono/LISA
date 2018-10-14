@@ -16,6 +16,15 @@ class Transaction extends ModelFrame
     const FIELD_SUBJECT_ID = 'subject_id';
     const FIELD_TIME = 'time';
     const FIELD_DELTA = 'delta';
+    const FIELD_TYPE = 'type';
+
+    const TYPES = [
+        self::TYPE_CONSUME,
+        self::TYPE_UPGRADE,
+    ];
+
+    const TYPE_CONSUME = 'c';
+    const TYPE_UPGRADE = 'u';
 
     protected function dependencies()
     {
@@ -25,7 +34,8 @@ class Transaction extends ModelFrame
         ];
     }
 
-    public function add($subjectId, $authorId, $amount, $delta) {
+    public function add($subjectId, $authorId, $amount, $delta, $type = self::TYPE_CONSUME)
+    {
         $this->db->insert(
             self::name(),
             [
@@ -33,59 +43,63 @@ class Transaction extends ModelFrame
                 self::FIELD_AUTHOR_ID => $authorId,
                 Consumption::FIELD_AMOUNT => $amount,
                 self::FIELD_DELTA => $delta,
+                self::FIELD_TYPE => $type,
             ]
         );
     }
 
-    public function getAllFromSubject($subjectId) {
+    public function getAllFromSubject($subjectId)
+    {
         return $this->db
             ->where([self::FIELD_SUBJECT_ID => $subjectId])
             ->get(self::name())
             ->result_array();
     }
 
-    public function getAllFromAuthor($authorId) {
+    public function getAllFromAuthor($authorId)
+    {
         return $this->db
             ->where([self::FIELD_AUTHOR_ID => $authorId])
             ->get(self::name())
             ->result_array();
     }
 
-    public function getAll() {
+    public function getAll()
+    {
         return $this->db
             ->get(self::name())
             ->result_array();
     }
 
-    public function getCountForSubject($subjectId) {
+    public function getCountForSubject($subjectId)
+    {
         return $this->db
             ->where([self::FIELD_SUBJECT_ID => $subjectId])
             ->count_all(self::name());
     }
 
     /**
-     * Checks if a subject user is on the leaderboard of the sum of most positive or negative transactions.
+     * Checks if a subject user is on the leaderboard
      *
      * @param int $subjectId The login ID of the subject.
-     * @param bool $positive True if transactions with only positive deltas should regarded, false for only negative
-     *      deltas.
      * @param int $position The amount of spots on the leaderboard.
      * @return bool True if the user is on the leaderboard, false otherwise.
      */
-    public function getSumDeltaSubjectIdWithinTop(int $subjectId, bool $positive, int $position): bool {
+    public function getSumDeltaSubjectIdWithinTop(int $subjectId, int $position): bool
+    {
         // Retrieve the sum of the delta of all negative or positive transactions, ordered and limited to retrieve only highest values.
         $sumQuery = $this->db
             ->select(self::FIELD_SUBJECT_ID)
             ->select_sum(self::FIELD_DELTA, 'sum')
-            ->where(self::FIELD_DELTA . ($positive?'>':'<') . ' 0')
+            ->where([self::FIELD_TYPE => self::TYPE_CONSUME])
             ->group_by(self::FIELD_SUBJECT_ID)
             ->limit($position)
-            ->order_by('sum ' . ($positive?'DESC':'ASC'))
+            ->order_by('sum ' . 'ASC')
             ->get_compiled_select(self::name());
 
         // Check if the specified subject is within the earlier retrieved leaderboard.
         $result = $this->db
-            ->from('(' . $sumQuery . ') `'. $this->db->dbprefix('t') . '`')
+            ->from('(' . $sumQuery . ') `' . $this->db->dbprefix('t') . '`')
             ->where('t.' . self::FIELD_SUBJECT_ID . '=' . $subjectId)
             ->get();
 
@@ -99,17 +113,17 @@ class Transaction extends ModelFrame
      * @param int $subjectId The id of the subject user.
      * @return array
      */
-    public function getSumDeltaSubjectIdByWeek(int $subjectId): array {
+    public function getSumDeltaSubjectIdByWeek(int $subjectId): array
+    {
         return $this->db
             ->select('YEAR(' . self::FIELD_TIME . ') as year, WEEKOFYEAR(' . self::FIELD_TIME . ') as week')
             ->select_sum(self::FIELD_DELTA, 'sum')
             ->where(self::FIELD_SUBJECT_ID, $subjectId)
-            ->where(self::FIELD_DELTA . ' < 0')
+            ->where([self::FIELD_TYPE => self::TYPE_CONSUME])
             ->group_by('YEAR(' . self::FIELD_TIME . '), WEEKOFYEAR(' . self::FIELD_TIME . ')')
             ->order_by(self::FIELD_TIME, 'asc')
             ->get(self::name())
-            ->result_array()
-        ;
+            ->result_array();
     }
 
     /**
@@ -117,19 +131,20 @@ class Transaction extends ModelFrame
      *
      * @return array
      */
-    public function getSumDeltaByWeek(): array {
+    public function getSumDeltaByWeek(): array
+    {
         return $this->db
             ->select('YEAR(' . self::FIELD_TIME . ') as year, WEEKOFYEAR(' . self::FIELD_TIME . ') as week')
             ->select_sum(self::FIELD_DELTA, 'sum')
-            ->where(self::FIELD_DELTA . ' < 0')
+            ->where([self::FIELD_TYPE => self::TYPE_CONSUME])
             ->group_by('YEAR(' . self::FIELD_TIME . '), WEEKOFYEAR(' . self::FIELD_TIME . ')')
             ->order_by(self::FIELD_TIME, 'asc')
             ->get(self::name())
-            ->result_array()
-            ;
+            ->result_array();
     }
 
-    public function v1() {
+    public function v1()
+    {
         return [
             'requires' => [
                 Login::class => 1,
@@ -159,6 +174,23 @@ class Transaction extends ModelFrame
                 self::FIELD_TIME => [
                     'type' => 'TIMESTAMP'
                 ],
+            ],
+        ];
+    }
+
+    public function v2()
+    {
+        return [
+            'add' => [
+                self::FIELD_TYPE => [
+                    'type' => 'VARCHAR',
+                    'constraint' => 100,
+                    'default' => self::TYPE_CONSUME,
+                    'null' => false,
+                ],
+            ],
+            'query' => [
+                'UPDATE '.self::name().' SET type = IF(delta = -1, \'c\', \'u\')',
             ],
         ];
     }

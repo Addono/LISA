@@ -304,7 +304,9 @@ class Install extends CI_Controller {
         foreach ($actions as $type => $action) {
             switch ($type) {
                 case 'add':
-                    if(!$this->db->table_exists($tableName)) {
+                    if($this->db->table_exists($tableName)) {
+                        $this->dbforge->add_column($tableName, $action);
+                    } else {
                         $keyType = [
                             'type' => self::ID_TYPE,
                             'constraint' => self::ID_CONSTRAINT,
@@ -313,7 +315,7 @@ class Install extends CI_Controller {
                         ];
 
                         // Check if there are any keys which should be primary key.
-                        foreach($action as $name => $properties) {
+                        foreach ($action as $name => $properties) {
 
                             switch ($properties['type']) {
                                 case 'primary':
@@ -324,14 +326,14 @@ class Install extends CI_Controller {
                                 case 'foreign':
                                     // Add a new key as foreign key.
                                     $this->dbforge->add_field([$name => $keyType]);
-                                    $this->dbforge->add_field('CONSTRAINT FOREIGN KEY ('.$name.') REFERENCES '.$properties['table'].'('.$properties['field'].')');
+                                    $this->dbforge->add_field('CONSTRAINT FOREIGN KEY (' . $name . ') REFERENCES ' . $properties['table'] . '(' . $properties['field'] . ')');
                                     $keyType['auto_increment'] = false; // Ensure that only the first field will auto increment.
                                     break;
                                 case 'foreign|primary':
                                 case 'primary|foreign':
                                     $this->dbforge->add_key($name, true);
                                     $this->dbforge->add_field([$name => $keyType]);
-                                    $this->dbforge->add_field('CONSTRAINT FOREIGN KEY ('.$name.') REFERENCES '.$properties['table'].'('.$properties['field'].')');
+                                    $this->dbforge->add_field('CONSTRAINT FOREIGN KEY (' . $name . ') REFERENCES ' . $properties['table'] . '(' . $properties['field'] . ')');
                                     $keyType['auto_increment'] = false; // Ensure that only the first field will auto increment.
                                     break;
                                 default:
@@ -349,8 +351,11 @@ class Install extends CI_Controller {
                             echo "<b> - Failed adding table '$tableName'</b><br>";
                             exit;
                         }
-                    } else {
-                        $this->dbforge->add_column($tableName, $action);
+                    }
+                    break;
+                case 'query':
+                    foreach ($action as $query) {
+                        $this->db->query($query);
                     }
                     break;
                 case 'delete':

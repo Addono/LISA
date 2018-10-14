@@ -25,7 +25,7 @@ class LeaderboardPage extends PageFrame
         }
 
         $loginId = getLoggedInLoginId($this->ci->session);
-        $isOnTheLeaderboard = $this->ci->Transaction->getSumDeltaSubjectIdWithinTop($loginId, false, self::LEADERBOARD_SIZE);
+        $isOnTheLeaderboard = $this->ci->Transaction->getSumDeltaSubjectIdWithinTop($loginId, self::LEADERBOARD_SIZE);
 
         return  $isOnTheLeaderboard;
     }

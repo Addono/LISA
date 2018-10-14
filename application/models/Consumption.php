@@ -58,7 +58,7 @@ class Consumption extends ModelFrame
         ;
     }
 
-    public function change($loginId, $authorId, $delta) {
+    public function change($loginId, $authorId, $delta, $type) {
         $this->db->trans_start();
             $oldAmount = $this->get($loginId);
 
@@ -69,7 +69,7 @@ class Consumption extends ModelFrame
                 $newAmount = $oldAmount + $delta;
             }
 
-            $success = $this->set($loginId, $authorId, $newAmount, $delta);
+            $success = $this->set($loginId, $authorId, $newAmount, $delta, $type);
         $this->db->trans_complete();
 
         return $this->db->trans_status() && $success;
@@ -84,7 +84,7 @@ class Consumption extends ModelFrame
      * @param $delta
      * @return bool
      */
-    private function set($loginId, $authorId, $amount, $delta) {
+    private function set($loginId, $authorId, $amount, $delta, $type) {
         $this->db->trans_start();
             $result = $this->db
                 ->replace(
@@ -96,7 +96,7 @@ class Consumption extends ModelFrame
                 );
 
             // Log this action as a new transaction.
-            $this->Transaction->add($loginId, $authorId, $amount, $delta);
+            $this->Transaction->add($loginId, $authorId, $amount, $delta, $type);
         $this->db->trans_complete();
 
         return $result;
