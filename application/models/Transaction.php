@@ -222,9 +222,12 @@ class Transaction extends ModelFrame
                     'null' => false,
                 ],
             ],
-            'query' => [
-                'UPDATE '.self::name().' SET type = IF(delta = -1, \'c\', \'u\')',
-            ],
         ];
+    }
+
+    public function v3()
+    {
+        $this->db->query('UPDATE '.self::name().' SET '.self::FIELD_TYPE.' = IF(delta = -1, \''.self::TYPE_CONSUME.'\', \''.self::TYPE_UPGRADE.'\')');
+        return [];
     }
 }

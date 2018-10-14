@@ -305,7 +305,8 @@ class Install extends CI_Controller {
             switch ($type) {
                 case 'add':
                     if($this->db->table_exists($tableName)) {
-                        $this->dbforge->add_column($tableName, $action);
+                        $tableNameWithoutPrefix = substr($tableName, strlen($this->db->dbprefix(null)));
+                        $this->dbforge->add_column($tableNameWithoutPrefix, $action);
                     } else {
                         $keyType = [
                             'type' => self::ID_TYPE,
@@ -351,11 +352,6 @@ class Install extends CI_Controller {
                             echo "<b> - Failed adding table '$tableName'</b><br>";
                             exit;
                         }
-                    }
-                    break;
-                case 'query':
-                    foreach ($action as $query) {
-                        $this->db->query($query);
                     }
                     break;
                 case 'delete':
