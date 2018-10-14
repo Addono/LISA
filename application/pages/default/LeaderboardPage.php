@@ -77,7 +77,6 @@ class LeaderboardPage extends PageFrame
 
         $streakLength = [];
         foreach ($consumedWeeksByUser as $userId => $weeks) {
-            var_dump($weeks);
             if (end($weeks) == $currentWeek) {
                 $streakLength[$userId] = 1;
                 array_pop($weeks); // Remove the last week, since we already counted it.
