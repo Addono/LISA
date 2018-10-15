@@ -72,8 +72,7 @@ class LeaderboardPage extends PageFrame
         }
 
         // Count the amount of consecutive weeks since this week
-        $now = new DateTime();
-        $currentWeek = (int)$now->format('Y')*52+(int)$now->format('W');
+        $currentWeek = (int)$this->ci->db->query('SELECT YEAR(NOW()) * 52 + WEEKOFYEAR(NOW()) as `currentWeek`')->row()->currentWeek;
 
         $streakLength = [];
         foreach ($consumedWeeksByUser as $userId => $weeks) {
