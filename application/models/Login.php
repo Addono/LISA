@@ -112,6 +112,7 @@ class Login extends ModelFrame {
     }
 
     public function getLoginIdFromUsername($username) {
+        $username = strtolower($username);
         $row = $this->db
             ->where([self::FIELD_USERNAME => $username])
             ->get($this->name())
