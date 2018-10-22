@@ -54,7 +54,7 @@ $lang['transactions_ajax_message_timed_out'] = 'Om veiligheidsredenen is het nod
 
 // Leaderboard
 $lang['leaderboard_title'] = $lang['menu_leaderboard'];
-$lang['leaderboard_subtext'] = 'De som van alle negatieve transacties wordt hier weergeven. Deze pagina is alleen zichtbaar voor gebruikers die in deze exclusieve lijst staan.';
+$lang['leaderboard_subtext'] = 'Deze pagina is alleen zichtbaar voor gebruikers die in deze exclusieve lijst staan.';
 
 $lang['leaderboard_table_header_name'] = $lang['consume_table_head_name'];
 $lang['leaderboard_table_header_sum'] = 'Totaal';

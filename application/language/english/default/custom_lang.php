@@ -31,7 +31,7 @@ $lang['consume_form_user_failure'] = 'Failed purchasing %s consumptions for %s. 
 
 // Transactions
 $lang['transactions_title'] = 'My transactions';
-$lang['leaderboard_subtext'] = 'Depicts the sum of all negative transactions. This list is only visible to users within this list.';
+$lang['leaderboard_subtext'] = 'This list is only visible to users within this list.';
 
 $lang['transactions_subtitle_author'] = 'As author';
 $lang['transactions_subtitle_subject'] = 'As subject';
