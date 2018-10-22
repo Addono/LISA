@@ -30,7 +30,7 @@ class LeaderboardPage extends PageFrame
             }
         }
 
-        return  static::$hasAccess;
+        return static::$hasAccess;
     }
 
     protected function getFormValidationRules()
@@ -60,35 +60,7 @@ class LeaderboardPage extends PageFrame
         $this->setData('entries', $leaderboard);
 
         // Retrieve the streak data
-        $consumedWeeks = $transactionModel->getConsumedWeeksForLeaderboard(self::LEADERBOARD_SIZE);
-
-        // Group the consumed week by user
-        $consumedWeeksByUser = [];
-        foreach ($consumedWeeks as $week) {
-            if (!key_exists(Transaction::FIELD_SUBJECT_ID, $week)) {
-                $consumedWeeksByUser[Transaction::FIELD_SUBJECT_ID] = [];
-            }
-            $consumedWeeksByUser[$week[Transaction::FIELD_SUBJECT_ID]][] = $week["weekyear"];
-        }
-
-        // Count the amount of consecutive weeks since this week
-        $currentWeek = (int)$this->ci->db->query('SELECT YEAR(NOW()) * 52 + WEEKOFYEAR(NOW()) as `currentWeek`')->row()->currentWeek;
-
-        $streakLength = [];
-        foreach ($consumedWeeksByUser as $userId => $weeks) {
-            if (end($weeks) == $currentWeek) {
-                $streakLength[$userId] = 1;
-                array_pop($weeks); // Remove the last week, since we already counted it.
-            } else {
-                $streakLength[$userId] = 0;
-            }
-
-
-            for ($i = count($weeks) - 1, $weekCounter = $currentWeek - 1; key_exists($i, $weeks) && $weeks[$i--] == $weekCounter--;) {
-                $streakLength[$userId]++;
-            }
-        }
-        $this->setData('streakLength', $streakLength);
+        $this->setData('streakLength', $this->queryStreakLength());
 
         $fields = [
             'first_name' => User::FIELD_FIRST_NAME,
@@ -143,5 +115,51 @@ class LeaderboardPage extends PageFrame
     protected function getHelpers(): array
     {
         return [];
+    }
+
+    /**
+     * Retrieve the streak length for all users.
+     * @return array int => int Key value pair where the keys are all user ids on the leader board and the values are the amount
+     *      of consecutive weeks since this week where each user has been consuming.
+     */
+    private function queryStreakLength(): array
+    {
+        /** @var Transaction $transactionModel */
+        $transactionModel = $this->ci->Transaction;
+
+        // Retrieve all week user pairs for which there has been consumptions by leader board members.
+        $consumedWeeks = $transactionModel->getConsumedWeeksForLeaderboard(self::LEADERBOARD_SIZE);
+
+        // Group the consumed week data by user
+        $consumedWeeksByUser = [];
+        foreach ($consumedWeeks as $week) {
+            if (!key_exists(Transaction::FIELD_SUBJECT_ID, $week)) {
+                $consumedWeeksByUser[Transaction::FIELD_SUBJECT_ID] = [];
+            }
+            $consumedWeeksByUser[$week[Transaction::FIELD_SUBJECT_ID]][] = $week["weekyear"];
+        }
+
+        // Query the database for the current week, the DB is used instead of PHP since their interpretation of time might differ.
+        $currentWeek = (int)$this->ci->db->query('SELECT YEAR(NOW()) * 52 + WEEKOFYEAR(NOW()) as `currentWeek`')->row()->currentWeek;
+
+        // Count the amount of consecutive weeks since this week
+        $streakLength = [];
+        foreach ($consumedWeeksByUser as $userId => $weeks) {
+            // Check if the user has consumed during the current week. If so then this increases the streak length
+            // already counts towards the streak length.
+            if (end($weeks) === $currentWeek) {
+                $streakLength[$userId] = 1;
+                array_pop($weeks); // Remove the last week, since we already counted it.
+            } else {
+                $streakLength[$userId] = 0;
+            }
+
+
+            for ($i = count($weeks) - 1, $weekCounter = $currentWeek - 1; key_exists($i, $weeks) && $weeks[$i--] == $weekCounter--;) {
+                $streakLength[$userId]++;
+            }
+        }
+
+        return $streakLength;
     }
 }
