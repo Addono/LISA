@@ -65,7 +65,7 @@ $lang['graph_amount_of_consumptions'] = 'Aantal consumpties';
 
 // Not user
 $lang['not_user_page_header_title'] = 'Eeuhm... sorry :(';
-$lang['not_user_page_header_body'] = 'Je hebt niet de rechten om deze applicatie te mogen gebruiker, als je denkt dat je dit wel zou mogen neem dan contact op met de systeem beheerder.';
+$lang['not_user_page_header_body'] = 'Je hebt niet de rechten om deze applicatie te mogen gebruiken, als je denkt dat je dit wel zou mogen neem dan contact op met de systeem beheerder.';
 
 // Email
 $lang['email_low_credits_subject'] = 'Oww nee, je credits zijn op!';
