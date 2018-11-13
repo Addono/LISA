@@ -11,8 +11,8 @@
 
 # Requirements
  * PHP 7.1 with the mysqli extension enabled.
- * MySQL database, although it might also work on other database types supported by CodeIgniter, but non of them are tested nor are focus during development.
-
+ * MySQL database
+	
 # Licence
 This project is released under the MIT licence, except for all other sources which are included.
 For these their own licence will still be in place. Projects included are:
