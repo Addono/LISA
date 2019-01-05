@@ -95,6 +95,15 @@ class Transactions {
                                 .replace('[newAmount]', json.new_amount)
                                 .replace('[amount]', json.amount);
 
+
+                            // Show a party popper for each 50th consumption.
+                            let partyInterval = 50;
+                            if (json.consume_count % partyInterval === 0) {
+                                message += ' <?=lang('transactions_ajax_message_celebrate')?>'
+                                    .replace('[count]', json.consume_count)
+                                    .replace('[next_amount]', partyInterval);
+                            }
+
                             updateData(json.updated_data); // Update the amount of all users.
                             break;
                         // Error

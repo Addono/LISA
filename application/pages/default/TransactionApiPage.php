@@ -45,6 +45,7 @@ class TransactionApiPage extends ApiFrame
     protected function getModels(): array
     {
         return [
+            Transaction::class,
             Login::class,
             Consumption::class,
             User::class,
@@ -117,6 +118,7 @@ class TransactionApiPage extends ApiFrame
             $this->setResult('new_amount', $newAmount);
             $this->setResult('amount', $amount);
             $this->setResult('updated_data', $this->ci->Consumption->getAll());
+            $this->setResult('consume_count', $this->ci->Transaction->getConsumeCountForSubject($id));
 
             if ($newAmount < 0) {
                 $this->sendEmail($id, $newAmount);
