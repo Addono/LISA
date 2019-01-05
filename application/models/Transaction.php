@@ -71,11 +71,16 @@ class Transaction extends ModelFrame
             ->result_array();
     }
 
-    public function getCountForSubject($subjectId)
+    public function getConsumeCountForSubject(int $subjectId)
     {
-        return $this->db
-            ->where([self::FIELD_SUBJECT_ID => $subjectId])
+        $amount = $this->db
+            ->where([
+                self::FIELD_SUBJECT_ID => $subjectId,
+                self::FIELD_TYPE => self::TYPE_CONSUME,
+                ])
             ->count_all(self::name());
+
+        return abs($amount);
     }
 
     /**

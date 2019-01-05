@@ -96,7 +96,6 @@ class ConsumePage extends PageFrame
         $this->setData('fields', $fields);
         $this->setData('myId', getLoggedInLoginId($this->ci->session));
         $this->setData('tabs', $tabs);
-        $this->setData('transcations', $this->ci->transactions);
     }
 
     /**
