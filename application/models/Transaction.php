@@ -74,11 +74,14 @@ class Transaction extends ModelFrame
     public function getConsumeCountForSubject(int $subjectId)
     {
         $amount = $this->db
+            ->select_sum(self::FIELD_DELTA, 'sum')
             ->where([
                 self::FIELD_SUBJECT_ID => $subjectId,
                 self::FIELD_TYPE => self::TYPE_CONSUME,
                 ])
-            ->count_all(self::name());
+            ->get(self::name())
+            ->first_row()
+            ->sum;
 
         return abs($amount);
     }
