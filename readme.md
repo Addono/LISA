@@ -3,9 +3,9 @@
 
 ![Screenshot of the application](https://i.imgur.com/Yc03EAW.png)
 
-Lisa Is Super Awsome (LISA) is an application made to track "things" between friends/a group of people whom trust eachother. It offers a simple, informal and trust based system to let users tally on eachother. Although the system is designed with a non-exploitative user base in mind are all actions related to a user still completely transparent, as each user can see on whom they tallied and whom tallied on their tap.
+Lisa Is Super Awesome (LISA) is an application made to track "things" between friends/a group of people who trust each other. It offers a simple, informal and trust-based system to let users tally on each other. Although the system is designed with a non-exploitative user base in mind are all actions related to a user still completely transparent, as each user can see on whom they tallied and who tallied on their tap.
 
-Many use-cases can be imagined, in general LISA gives each user an integer sized balance which each user can subtract from in a one-by-one basis. Imagined use cases include collectively buying goods and keeping track of whom used what.
+Many use-cases can be imagined, in general LISA gives each user an integer sized balance which each user can subtract from on a one-by-one basis. Imagined use cases include collectively buying goods and keeping track of whom used what.
 
 ## Getting started
 
@@ -14,14 +14,14 @@ Many use-cases can be imagined, in general LISA gives each user an integer sized
  1. Edit these config files to match your system. Most important is:
     * Add your hostname.
     * Enter the settings of your database.
- 1. Navigate to __YOUR_HOSTNAME__/index.php/Install to initialise the database.
+ 1. Navigate to __YOUR_HOSTNAME__/index.php/Install to initialize the database.
 
 ## Requirements
  * PHP 7.1 with the mysqli extension enabled.
  * MySQL database
-	
+    
 ## Licence
-This project is released under the MIT licence, except for all other sources which are included.
+This project is released under the MIT license, except for all other sources which are included.
 For these their own licence will still be in place. Projects included are:
  - [CodeIgniter](https://codeigniter.com) (MIT)
  - [CodeIgniter3 Translations](https://github.com/bcit-ci/codeigniter3-translations) (MIT)
@@ -31,4 +31,4 @@ For these their own licence will still be in place. Projects included are:
  
 ## Customisation
 ### Language
-Currently the language used by the application is hard-coded into Handler.php, for future releases it is planned to move configurations like these into database. For now one should edit hard-coded language or substitute all language files in the 'nederlands' language folder with your language of preference. During development I tried to add translations for both English and Dutch, so the English translation files should be complete.
+Currently, the language used by the application is hard-coded into `Handler.php`, for future releases it is planned to move configurations like these into the database. For now, one should edit hard-coded language or substitute all language files in the `nederlands` language folder with your language of preference. During development I tried to add translations for both English and Dutch, so the English translation files should be complete.
