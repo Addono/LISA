@@ -68,7 +68,7 @@ class UserPage extends PageFrame
                 }
                 break;
             case 'roles';
-                $roles = array_keys(set_value('roles'));
+                $roles = array_keys(set_value('roles', []));
 
                 $success = $this->ci->LoginRole->setRolesForLoginId($loginId, $roles);
                 if ($success) {
