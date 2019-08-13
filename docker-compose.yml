@@ -1,0 +1,35 @@
+version: "3.1"
+services:
+
+    mariadb:
+      image: mariadb:10.4
+      container_name: lisa-mariadb
+      working_dir: /application
+      volumes:
+        - ${PWD}/:/application/
+      environment:
+        - MYSQL_ROOT_PASSWORD=root
+        - MYSQL_DATABASE=lisa
+        - MYSQL_USER=lisa
+        - MYSQL_PASSWORD=lisa
+      ports:
+        - "8083:3306"
+
+    webserver:
+      image: nginx:alpine
+      container_name: lisa-webserver
+      working_dir: /application
+      volumes:
+          - ${PWD}/:/application/
+          - ${PWD}/docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      ports:
+       - "8080:80"
+
+    php-fpm:
+      build: docker/php-fpm
+      container_name: lisa-php-fpm
+      working_dir: /application
+      volumes:
+        - ${PWD}:/application
+        - ${PWD}/docker/php-fpm/php-ini-overrides.ini:/etc/php/7.3/fpm/conf.d/99-overrides.ini
+
