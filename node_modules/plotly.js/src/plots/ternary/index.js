@@ -1,5 +1,5 @@
 /**
-* Copyright 2012-2018, Plotly, Inc.
+* Copyright 2012-2019, Plotly, Inc.
 * All rights reserved.
 *
 * This source code is licensed under the MIT license found in the
@@ -41,15 +41,15 @@ exports.layoutAttributes = require('./layout_attributes');
 
 exports.supplyLayoutDefaults = require('./layout_defaults');
 
-exports.plot = function plotTernary(gd) {
+exports.plot = function plot(gd) {
     var fullLayout = gd._fullLayout;
     var calcData = gd.calcdata;
     var ternaryIds = fullLayout._subplots[TERNARY];
 
     for(var i = 0; i < ternaryIds.length; i++) {
-        var ternaryId = ternaryIds[i],
-            ternaryCalcData = getSubplotCalcData(calcData, TERNARY, ternaryId),
-            ternary = fullLayout[ternaryId]._subplot;
+        var ternaryId = ternaryIds[i];
+        var ternaryCalcData = getSubplotCalcData(calcData, TERNARY, ternaryId);
+        var ternary = fullLayout[ternaryId]._subplot;
 
         // If ternary is not instantiated, create one!
         if(!ternary) {

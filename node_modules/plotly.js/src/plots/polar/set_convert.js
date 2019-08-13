@@ -1,5 +1,5 @@
 /**
-* Copyright 2012-2018, Plotly, Inc.
+* Copyright 2012-2019, Plotly, Inc.
 * All rights reserved.
 *
 * This source code is licensed under the MIT license found in the
@@ -173,6 +173,9 @@ function setConvertAngular(ax, polarLayout) {
             case 'category':
                 var catLen = ax._categories.length;
                 var _period = ax.period ? Math.max(ax.period, catLen) : catLen;
+
+                // fallback in case all categories have been filtered out
+                if(_period === 0) _period = 1;
 
                 c2rad = t2rad = function(v) { return v * 2 * Math.PI / _period; };
                 rad2c = rad2t = function(v) { return v * _period / Math.PI / 2; };

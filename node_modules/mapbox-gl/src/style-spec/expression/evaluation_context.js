@@ -2,17 +2,21 @@
 
 import { Color } from './values';
 
-import type { Feature, GlobalProperties } from './index';
+import type { GlobalProperties, Feature, FeatureState } from './index';
 
 const geometryTypes = ['Unknown', 'Point', 'LineString', 'Polygon'];
 
 class EvaluationContext {
     globals: GlobalProperties;
     feature: ?Feature;
+    featureState: ?FeatureState;
 
     _parseColorCache: {[string]: ?Color};
 
     constructor() {
+        this.globals = (null: any);
+        this.feature = null;
+        this.featureState = null;
         this._parseColorCache = {};
     }
 

@@ -9,6 +9,10 @@ export default createFilter;
 export { isExpressionFilter };
 
 function isExpressionFilter(filter: any) {
+    if (filter === true || filter === false) {
+        return true;
+    }
+
     if (!Array.isArray(filter) || filter.length === 0) {
         return false;
     }
@@ -28,7 +32,7 @@ function isExpressionFilter(filter: any) {
     case '>=':
     case '<':
     case '<=':
-        return filter.length === 3 && (Array.isArray(filter[1]) || Array.isArray(filter[2]));
+        return filter.length !== 3 || (Array.isArray(filter[1]) || Array.isArray(filter[2]));
 
     case 'any':
     case 'all':
@@ -47,9 +51,12 @@ function isExpressionFilter(filter: any) {
 const filterSpec = {
     'type': 'boolean',
     'default': false,
-    'function': true,
-    'property-function': true,
-    'zoom-function': true
+    'transition': false,
+    'property-type': 'data-driven',
+    'expression': {
+        'interpolated': false,
+        'parameters': ['zoom', 'feature']
+    }
 };
 
 /**
@@ -62,7 +69,7 @@ const filterSpec = {
  * @returns {Function} filter-evaluating function
  */
 function createFilter(filter: any): FeatureFilter {
-    if (!filter) {
+    if (filter === null || filter === undefined) {
         return () => true;
     }
 
@@ -150,4 +157,3 @@ function convertHasOp(property: string) {
 function convertNegation(filter: mixed) {
     return ['!', filter];
 }
-

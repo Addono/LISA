@@ -1,5 +1,5 @@
 /**
-* Copyright 2012-2018, Plotly, Inc.
+* Copyright 2012-2019, Plotly, Inc.
 * All rights reserved.
 *
 * This source code is licensed under the MIT license found in the
@@ -24,8 +24,7 @@ module.exports = function handleStackDefaults(traceIn, traceOut, layout, coerce)
         var firstTrace = false;
         if(groupOpts) {
             groupOpts.traces.push(traceOut);
-        }
-        else {
+        } else {
             groupOpts = subplotStackOpts[stackGroup] = {
                 // keep track of trace indices for use during stacking calculations
                 // this will be filled in during `calc` and used during `crossTraceCalc`

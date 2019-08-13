@@ -1,5 +1,5 @@
 /**
-* Copyright 2012-2018, Plotly, Inc.
+* Copyright 2012-2019, Plotly, Inc.
 * All rights reserved.
 *
 * This source code is licensed under the MIT license found in the
@@ -12,15 +12,15 @@
 var subtypes = require('./subtypes');
 
 module.exports = function selectPoints(searchInfo, selectionTester) {
-    var cd = searchInfo.cd,
-        xa = searchInfo.xaxis,
-        ya = searchInfo.yaxis,
-        selection = [],
-        trace = cd[0].trace,
-        i,
-        di,
-        x,
-        y;
+    var cd = searchInfo.cd;
+    var xa = searchInfo.xaxis;
+    var ya = searchInfo.yaxis;
+    var selection = [];
+    var trace = cd[0].trace;
+    var i;
+    var di;
+    var x;
+    var y;
 
     var hasOnlyLines = (!subtypes.hasMarkers(trace) && !subtypes.hasText(trace));
     if(hasOnlyLines) return [];
@@ -29,8 +29,7 @@ module.exports = function selectPoints(searchInfo, selectionTester) {
         for(i = 0; i < cd.length; i++) {
             cd[i].selected = 0;
         }
-    }
-    else {
+    } else {
         for(i = 0; i < cd.length; i++) {
             di = cd[i];
             x = xa.c2p(di.x);

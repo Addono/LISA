@@ -1,5 +1,5 @@
 /**
-* Copyright 2012-2018, Plotly, Inc.
+* Copyright 2012-2019, Plotly, Inc.
 * All rights reserved.
 *
 * This source code is licensed under the MIT license found in the
@@ -44,7 +44,7 @@ module.exports = {
     dragmode: {
         valType: 'enumerated',
         role: 'info',
-        values: ['zoom', 'pan', 'select', 'lasso', 'orbit', 'turntable'],
+        values: ['zoom', 'pan', 'select', 'lasso', 'orbit', 'turntable', false],
         dflt: 'zoom',
         editType: 'modebar',
         description: [
@@ -117,6 +117,17 @@ module.exports = {
             ].join(' ')
         },
         font: fontAttrs,
+        align: {
+            valType: 'enumerated',
+            values: ['left', 'right', 'auto'],
+            dflt: 'auto',
+            role: 'style',
+            editType: 'none',
+            description: [
+                'Sets the horizontal alignment of the text content within hover label box.',
+                'Has an effect only if the hover label text spans more two or more lines'
+            ].join(' ')
+        },
         namelength: {
             valType: 'integer',
             min: -1,

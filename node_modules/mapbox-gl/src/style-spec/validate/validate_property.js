@@ -4,6 +4,7 @@ import ValidationError from '../error/validation_error';
 import getType from '../util/get_type';
 import { isFunction } from '../function';
 import { unbundle, deepUnbundle } from '../util/unbundle_jsonlint';
+import { supportsPropertyExpression } from '../util/properties';
 
 export default function validateProperty(options, propertyType) {
     const key = options.key;
@@ -18,11 +19,11 @@ export default function validateProperty(options, propertyType) {
     const transitionMatch = propertyKey.match(/^(.*)-transition$/);
     if (propertyType === 'paint' && transitionMatch && layerSpec[transitionMatch[1]] && layerSpec[transitionMatch[1]].transition) {
         return validate({
-            key: key,
-            value: value,
+            key,
+            value,
             valueSpec: styleSpec.transition,
-            style: style,
-            styleSpec: styleSpec
+            style,
+            styleSpec
         });
     }
 
@@ -32,7 +33,7 @@ export default function validateProperty(options, propertyType) {
     }
 
     let tokenMatch;
-    if (getType(value) === 'string' && valueSpec['property-function'] && !valueSpec.tokens && (tokenMatch = /^{([^}]+)}$/.exec(value))) {
+    if (getType(value) === 'string' && supportsPropertyExpression(valueSpec) && !valueSpec.tokens && (tokenMatch = /^{([^}]+)}$/.exec(value))) {
         return [new ValidationError(
             key, value,
             `"${propertyKey}" does not support interpolation syntax\n` +
@@ -52,11 +53,12 @@ export default function validateProperty(options, propertyType) {
 
     return errors.concat(validate({
         key: options.key,
-        value: value,
-        valueSpec: valueSpec,
-        style: style,
-        styleSpec: styleSpec,
+        value,
+        valueSpec,
+        style,
+        styleSpec,
         expressionContext: 'property',
+        propertyType,
         propertyKey
     }));
 }

@@ -1,5 +1,5 @@
 /**
-* Copyright 2012-2018, Plotly, Inc.
+* Copyright 2012-2019, Plotly, Inc.
 * All rights reserved.
 *
 * This source code is licensed under the MIT license found in the
@@ -28,11 +28,10 @@ module.exports = function supplyLayoutDefaults(layoutIn, layoutOut, fullData) {
         } else {
             // flag for 'horizontal' plots:
             // determines the state of the mode bar 'compare' hovermode button
-            layoutOut._isHoriz = isHoriz(fullData);
+            layoutOut._isHoriz = isHoriz(fullData, layoutOut);
             hovermodeDflt = layoutOut._isHoriz ? 'y' : 'x';
         }
-    }
-    else hovermodeDflt = 'closest';
+    } else hovermodeDflt = 'closest';
 
     var hoverMode = coerce('hovermode', hovermodeDflt);
     if(hoverMode) {
@@ -55,17 +54,19 @@ module.exports = function supplyLayoutDefaults(layoutIn, layoutOut, fullData) {
     }
 };
 
-function isHoriz(fullData) {
-    var out = true;
+function isHoriz(fullData, fullLayout) {
+    var stackOpts = fullLayout._scatterStackOpts || {};
 
     for(var i = 0; i < fullData.length; i++) {
         var trace = fullData[i];
+        var subplot = trace.xaxis + trace.yaxis;
+        var subplotStackOpts = stackOpts[subplot] || {};
+        var groupOpts = subplotStackOpts[trace.stackgroup] || {};
 
-        if(trace.orientation !== 'h') {
-            out = false;
-            break;
+        if(trace.orientation !== 'h' && groupOpts.orientation !== 'h') {
+            return false;
         }
     }
 
-    return out;
+    return true;
 }

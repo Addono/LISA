@@ -2,7 +2,6 @@
 
 import DOM from '../../util/dom';
 
-import LngLatBounds from '../../geo/lng_lat_bounds';
 import { bindAll } from '../../util/util';
 import window from '../../util/window';
 import { Event } from '../../util/evented';
@@ -19,16 +18,21 @@ class BoxZoomHandler {
     _container: HTMLElement;
     _enabled: boolean;
     _active: boolean;
-    _startPos: any;
+    _startPos: Point;
+    _lastPos: Point;
     _box: HTMLElement;
+    _clickTolerance: number;
 
     /**
      * @private
      */
-    constructor(map: Map) {
+    constructor(map: Map, options: {
+        clickTolerance?: number
+    }) {
         this._map = map;
         this._el = map.getCanvasContainer();
         this._container = map.getContainer();
+        this._clickTolerance = options.clickTolerance || 1;
 
         bindAll([
             '_onMouseMove',
@@ -86,13 +90,19 @@ class BoxZoomHandler {
         window.document.addEventListener('mouseup', this._onMouseUp, false);
 
         DOM.disableDrag();
-        this._startPos = DOM.mousePos(this._el, e);
+        this._startPos = this._lastPos = DOM.mousePos(this._el, e);
         this._active = true;
     }
 
     _onMouseMove(e: MouseEvent) {
-        const p0 = this._startPos,
-            p1 = DOM.mousePos(this._el, e);
+        const pos = DOM.mousePos(this._el, e);
+
+        if (this._lastPos.equals(pos) || (!this._box && pos.dist(this._startPos) < this._clickTolerance)) {
+            return;
+        }
+
+        const p0 = this._startPos;
+        this._lastPos = pos;
 
         if (!this._box) {
             this._box = DOM.create('div', 'mapboxgl-boxzoom', this._container);
@@ -100,10 +110,10 @@ class BoxZoomHandler {
             this._fireEvent('boxzoomstart', e);
         }
 
-        const minX = Math.min(p0.x, p1.x),
-            maxX = Math.max(p0.x, p1.x),
-            minY = Math.min(p0.y, p1.y),
-            maxY = Math.max(p0.y, p1.y);
+        const minX = Math.min(p0.x, pos.x),
+            maxX = Math.max(p0.x, pos.x),
+            minY = Math.min(p0.y, pos.y),
+            maxY = Math.max(p0.y, pos.y);
 
         DOM.setTransform(this._box, `translate(${minX}px,${minY}px)`);
 
@@ -115,10 +125,7 @@ class BoxZoomHandler {
         if (e.button !== 0) return;
 
         const p0 = this._startPos,
-            p1 = DOM.mousePos(this._el, e),
-            bounds = new LngLatBounds()
-                .extend(this._map.unproject(p0))
-                .extend(this._map.unproject(p1));
+            p1 = DOM.mousePos(this._el, e);
 
         this._finish();
 
@@ -128,8 +135,8 @@ class BoxZoomHandler {
             this._fireEvent('boxzoomcancel', e);
         } else {
             this._map
-                .fitBounds(bounds, {linear: true})
-                .fire(new Event('boxzoomend', { originalEvent: e, boxZoomBounds: bounds }));
+                .fitScreenCoordinates(p0, p1, this._map.getBearing(), {linear: true})
+                .fire(new Event('boxzoomend', { originalEvent: e}));
         }
     }
 
@@ -155,6 +162,9 @@ class BoxZoomHandler {
         }
 
         DOM.enableDrag();
+
+        delete this._startPos;
+        delete this._lastPos;
     }
 
     _fireEvent(type: string, e: *) {

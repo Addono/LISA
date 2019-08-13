@@ -98,6 +98,7 @@ class StructArray {
     members: Array<StructArrayMember>;
     bytesPerElement: number;
     +emplaceBack: Function;
+    +emplace: Function;
 
     constructor() {
         this.isTransferred = false;
@@ -216,7 +217,7 @@ function createLayout(
         return {
             name: member.name,
             type: member.type,
-            components: components,
+            components,
             offset: memberOffset,
         };
     });

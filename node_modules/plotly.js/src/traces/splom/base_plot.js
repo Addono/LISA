@@ -1,5 +1,5 @@
 /**
-* Copyright 2012-2018, Plotly, Inc.
+* Copyright 2012-2019, Plotly, Inc.
 * All rights reserved.
 *
 * This source code is licensed under the MIT license found in the
@@ -28,7 +28,7 @@ function plot(gd) {
     if(!success) return;
 
     if(fullLayout._hasOnlyLargeSploms) {
-        drawGrid(gd);
+        updateGrid(gd);
     }
 
     _module.plot(gd, {}, splomCalcData);
@@ -39,25 +39,24 @@ function drag(gd) {
     var fullLayout = gd._fullLayout;
 
     if(fullLayout._hasOnlyLargeSploms) {
-        drawGrid(gd);
+        updateGrid(gd);
     }
 
     for(var i = 0; i < cd.length; i++) {
         var cd0 = cd[i][0];
         var trace = cd0.trace;
-        var stash = cd0.t;
-        var scene = stash._scene;
+        var scene = fullLayout._splomScenes[trace.uid];
 
         if(trace.type === 'splom' && scene && scene.matrix) {
-            dragOne(gd, trace, stash, scene);
+            dragOne(gd, trace, scene);
         }
     }
 }
 
-function dragOne(gd, trace, stash, scene) {
+function dragOne(gd, trace, scene) {
     var visibleLength = scene.matrixOptions.data.length;
-    var visibleDims = stash.visibleDims;
-    var ranges = new Array(visibleLength);
+    var visibleDims = trace._visibleDims;
+    var ranges = scene.viewOpts.ranges = new Array(visibleLength);
 
     for(var k = 0; k < visibleDims.length; k++) {
         var i = visibleDims[k];
@@ -76,16 +75,14 @@ function dragOne(gd, trace, stash, scene) {
         }
     }
 
-    if(scene.selectBatch) {
+    if(scene.selectBatch.length || scene.unselectBatch.length) {
         scene.matrix.update({ranges: ranges}, {ranges: ranges});
-        scene.matrix.draw(scene.unselectBatch, scene.selectBatch);
     } else {
         scene.matrix.update({ranges: ranges});
-        scene.matrix.draw();
     }
 }
 
-function drawGrid(gd) {
+function updateGrid(gd) {
     var fullLayout = gd._fullLayout;
     var regl = fullLayout._glcanvas.data()[0].regl;
     var splomGrid = fullLayout._splomGrid;
@@ -93,9 +90,7 @@ function drawGrid(gd) {
     if(!splomGrid) {
         splomGrid = fullLayout._splomGrid = createLine(regl);
     }
-
     splomGrid.update(makeGridData(gd));
-    splomGrid.draw();
 }
 
 function makeGridData(gd) {
@@ -168,73 +163,42 @@ function makeGridData(gd) {
     return gridBatches;
 }
 
-function clean(newFullData, newFullLayout, oldFullData, oldFullLayout, oldCalcdata) {
-    var oldModules = oldFullLayout._modules || [];
-    var newModules = newFullLayout._modules || [];
-
-    var hadSplom, hasSplom;
+function clean(newFullData, newFullLayout, oldFullData, oldFullLayout) {
+    var lookup = {};
     var i;
 
-    for(i = 0; i < oldModules.length; i++) {
-        if(oldModules[i].name === 'splom') {
-            hadSplom = true;
-            break;
-        }
-    }
-    for(i = 0; i < newModules.length; i++) {
-        if(newModules[i].name === 'splom') {
-            hasSplom = true;
-            break;
-        }
-    }
-
-    if(hadSplom && !hasSplom) {
-        for(i = 0; i < oldCalcdata.length; i++) {
-            var cd0 = oldCalcdata[i][0];
-            var trace = cd0.trace;
-            var scene = cd0.t._scene;
-
-            if(
-                trace.type === 'splom' &&
-                scene && scene.matrix && scene.matrix.destroy
-            ) {
-                scene.matrix.destroy();
-                cd0.t._scene = null;
+    if(oldFullLayout._splomScenes) {
+        for(i = 0; i < newFullData.length; i++) {
+            var newTrace = newFullData[i];
+            if(newTrace.type === 'splom') {
+                lookup[newTrace.uid] = 1;
             }
         }
+        for(i = 0; i < oldFullData.length; i++) {
+            var oldTrace = oldFullData[i];
+            if(!lookup[oldTrace.uid]) {
+                var scene = oldFullLayout._splomScenes[oldTrace.uid];
+                if(scene && scene.destroy) scene.destroy();
+                // must first set scene to null in order to get garbage collected
+                oldFullLayout._splomScenes[oldTrace.uid] = null;
+                delete oldFullLayout._splomScenes[oldTrace.uid];
+            }
+        }
+    }
+
+    if(Object.keys(oldFullLayout._splomScenes || {}).length === 0) {
+        delete oldFullLayout._splomScenes;
     }
 
     if(oldFullLayout._splomGrid &&
         (!newFullLayout._hasOnlyLargeSploms && oldFullLayout._hasOnlyLargeSploms)) {
+        // must first set scene to null in order to get garbage collected
         oldFullLayout._splomGrid.destroy();
         oldFullLayout._splomGrid = null;
+        delete oldFullLayout._splomGrid;
     }
 
     Cartesian.clean(newFullData, newFullLayout, oldFullData, oldFullLayout);
-}
-
-function updateFx(gd) {
-    Cartesian.updateFx(gd);
-
-    var fullLayout = gd._fullLayout;
-    var dragmode = fullLayout.dragmode;
-
-    // unset selection styles when coming out of a selection mode
-    if(dragmode === 'zoom' || dragmode === 'pan') {
-        var cd = gd.calcdata;
-
-        for(var i = 0; i < cd.length; i++) {
-            var cd0 = cd[i][0];
-            var trace = cd0.trace;
-
-            if(trace.type === 'splom') {
-                var scene = cd0.t._scene;
-                if(scene.selectBatch === null) {
-                    scene.matrix.update(scene.matrixOptions, null);
-                }
-            }
-        }
-    }
 }
 
 module.exports = {
@@ -246,7 +210,8 @@ module.exports = {
     drawFramework: Cartesian.drawFramework,
     plot: plot,
     drag: drag,
+    updateGrid: updateGrid,
     clean: clean,
-    updateFx: updateFx,
+    updateFx: Cartesian.updateFx,
     toSVG: Cartesian.toSVG
 };

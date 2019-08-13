@@ -1,5 +1,5 @@
 /**
-* Copyright 2012-2018, Plotly, Inc.
+* Copyright 2012-2019, Plotly, Inc.
 * All rights reserved.
 *
 * This source code is licensed under the MIT license found in the
@@ -13,7 +13,7 @@ var Fx = require('../../components/fx');
 var Registry = require('../../registry');
 var getTraceColor = require('./get_trace_color');
 var Color = require('../../components/color');
-var fillHoverText = require('./fill_hover_text');
+var fillText = Lib.fillText;
 
 module.exports = function hoverPoints(pointData, xval, yval, hovermode) {
     var cd = pointData.cd;
@@ -61,7 +61,6 @@ module.exports = function hoverPoints(pointData, xval, yval, hovermode) {
 
         // skip the rest (for this trace) if we didn't find a close point
         if(pointData.index !== false) {
-
             // the closest data point
             var di = cd[pointData.index];
             var xc = xa.c2p(di.x, true);
@@ -93,10 +92,11 @@ module.exports = function hoverPoints(pointData, xval, yval, hovermode) {
                 y1: yc + rad,
                 yLabelVal: yLabelVal,
 
-                spikeDistance: dxy(di)
+                spikeDistance: dxy(di),
+                hovertemplate: trace.hovertemplate
             });
 
-            fillHoverText(di, trace, pointData);
+            fillText(di, trace, pointData);
             Registry.getComponentMethod('errorbars', 'hoverInfo')(di, trace, pointData);
 
             return [pointData];
@@ -177,15 +177,15 @@ module.exports = function hoverPoints(pointData, xval, yval, hovermode) {
                 x1: xmax,
                 y0: yAvg,
                 y1: yAvg,
-                color: color
+                color: color,
+                hovertemplate: false
             });
 
             delete pointData.index;
 
             if(trace.text && !Array.isArray(trace.text)) {
                 pointData.text = String(trace.text);
-            }
-            else pointData.text = trace.name;
+            } else pointData.text = trace.name;
 
             return [pointData];
         }

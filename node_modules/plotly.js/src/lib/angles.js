@@ -1,5 +1,5 @@
 /**
-* Copyright 2012-2018, Plotly, Inc.
+* Copyright 2012-2019, Plotly, Inc.
 * All rights reserved.
 *
 * This source code is licensed under the MIT license found in the
@@ -29,7 +29,7 @@ function rad2deg(rad) { return rad / PI * 180; }
  * @return {boolean}
  */
 function isFullCircle(aBnds) {
-    return Math.abs(aBnds[1] - aBnds[0]) > twoPI - 1e-15;
+    return Math.abs(aBnds[1] - aBnds[0]) > twoPI - 1e-14;
 }
 
 /**

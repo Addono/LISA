@@ -21,7 +21,7 @@
   "homepage": "https://github.com/Addono/lisa#readme",
   "dependencies": {
     "moment": "^2.22.2",
-    "plotly.js": "^1.41.2",
+    "plotly.js": "^1.49.1",
     "visibilityjs": "^2.0.2"
   }
 }

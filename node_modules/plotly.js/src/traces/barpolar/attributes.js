@@ -1,5 +1,5 @@
 /**
-* Copyright 2012-2018, Plotly, Inc.
+* Copyright 2012-2019, Plotly, Inc.
 * All rights reserved.
 *
 * This source code is licensed under the MIT license found in the
@@ -8,6 +8,7 @@
 
 'use strict';
 
+var hovertemplateAttrs = require('../../components/fx/hovertemplate_attributes');
 var extendFlat = require('../../lib/extend').extendFlat;
 var scatterPolarAttrs = require('../scatterpolar/attributes');
 var barAttrs = require('../bar/attributes');
@@ -57,7 +58,9 @@ module.exports = {
             'this trace\'s coordinates.'
         ].join(' ')
     }),
-    // hovertext: barAttrs.hovertext,
+    hovertext: extendFlat({}, barAttrs.hovertext, {
+        description: 'Same as `text`.'
+    }),
 
     // textposition: {},
     // textfont: {},
@@ -69,6 +72,7 @@ module.exports = {
     marker: barAttrs.marker,
 
     hoverinfo: scatterPolarAttrs.hoverinfo,
+    hovertemplate: hovertemplateAttrs(),
 
     selected: barAttrs.selected,
     unselected: barAttrs.unselected

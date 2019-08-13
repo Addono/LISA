@@ -1,5 +1,5 @@
 /**
-* Copyright 2012-2018, Plotly, Inc.
+* Copyright 2012-2019, Plotly, Inc.
 * All rights reserved.
 *
 * This source code is licensed under the MIT license found in the
@@ -8,7 +8,7 @@
 
 'use strict';
 
-var hasColorscale = require('../../components/colorscale/has_colorscale');
+var hasColorscale = require('../../components/colorscale/helpers').hasColorscale;
 var colorscaleCalc = require('../../components/colorscale/calc');
 var arraysToCalcdata = require('../bar/arrays_to_calcdata');
 var setGroupPositions = require('../bar/cross_trace_calc').setGroupPositions;
@@ -53,10 +53,18 @@ function calc(gd, trace) {
     }
 
     if(hasColorscale(trace, 'marker')) {
-        colorscaleCalc(trace, trace.marker.color, 'marker', 'c');
+        colorscaleCalc(gd, trace, {
+            vals: trace.marker.color,
+            containerStr: 'marker',
+            cLetter: 'c'
+        });
     }
     if(hasColorscale(trace, 'marker.line')) {
-        colorscaleCalc(trace, trace.marker.line.color, 'marker.line', 'c');
+        colorscaleCalc(gd, trace, {
+            vals: trace.marker.line.color,
+            containerStr: 'marker.line',
+            cLetter: 'c'
+        });
     }
 
     arraysToCalcdata(cd, trace);
@@ -88,11 +96,12 @@ function crossTraceCalc(gd, polarLayout, subplotId) {
     var rAxis = extendFlat({}, polarLayout.radialaxis, {_id: 'x'});
     var aAxis = polarLayout.angularaxis;
 
-    // 'bargap', 'barmode' are in _fullLayout.polar
-    // TODO clean up setGroupPositions API instead
-    var mockGd = {_fullLayout: polarLayout};
-
-    setGroupPositions(mockGd, aAxis, rAxis, barPolarCd);
+    setGroupPositions(gd, aAxis, rAxis, barPolarCd, {
+        mode: polarLayout.barmode,
+        norm: polarLayout.barnorm,
+        gap: polarLayout.bargap,
+        groupgap: polarLayout.bargroupgap
+    });
 }
 
 module.exports = {

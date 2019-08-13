@@ -1,6 +1,7 @@
 // @flow
 
 import { Event, Evented } from '../util/evented';
+import browser from '../util/browser';
 
 let pluginRequested = false;
 let pluginURL = null;
@@ -17,7 +18,7 @@ export const registerForPluginAvailability = function(
     callback: (args: {pluginURL: string, completionCallback: CompletionCallback}) => void
 ) {
     if (pluginURL) {
-        callback({ pluginURL: pluginURL, completionCallback: _completionCallback});
+        callback({ pluginURL, completionCallback: _completionCallback});
     } else {
         evented.once('pluginAvailable', callback);
     }
@@ -34,7 +35,7 @@ export const setRTLTextPlugin = function(url: string, callback: ErrorCallback) {
         throw new Error('setRTLTextPlugin cannot be called multiple times.');
     }
     pluginRequested = true;
-    pluginURL = url;
+    pluginURL = browser.resolveURL(url);
     _completionCallback = (error?: Error) => {
         if (error) {
             // Clear loaded state to allow retries
@@ -47,17 +48,19 @@ export const setRTLTextPlugin = function(url: string, callback: ErrorCallback) {
             foregroundLoadComplete = true;
         }
     };
-    evented.fire(new Event('pluginAvailable', { pluginURL: pluginURL, completionCallback: _completionCallback }));
+    evented.fire(new Event('pluginAvailable', { pluginURL, completionCallback: _completionCallback }));
 };
 
 export const plugin: {
     applyArabicShaping: ?Function,
     processBidirectionalText: ?(string, Array<number>) => Array<string>,
+    processStyledBidirectionalText: ?(string, Array<number>, Array<number>) => Array<[string, Array<number>]>,
     isLoaded: () => boolean
 } = {
     applyArabicShaping: null,
     processBidirectionalText: null,
-    isLoaded: function() {
+    processStyledBidirectionalText: null,
+    isLoaded() {
         return foregroundLoadComplete ||       // Foreground: loaded if the completion callback returned successfully
             plugin.applyArabicShaping != null; // Background: loaded if the plugin functions have been compiled
     }

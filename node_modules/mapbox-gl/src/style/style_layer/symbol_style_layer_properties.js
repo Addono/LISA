@@ -8,16 +8,21 @@ import {
     Properties,
     DataConstantProperty,
     DataDrivenProperty,
+    CrossFadedDataDrivenProperty,
     CrossFadedProperty,
     ColorRampProperty
 } from '../properties';
 
 import type Color from '../../style-spec/util/color';
 
+import type Formatted from '../../style-spec/expression/types/formatted';
+
 export type LayoutProps = {|
-    "symbol-placement": DataConstantProperty<"point" | "line">,
+    "symbol-placement": DataConstantProperty<"point" | "line" | "line-center">,
     "symbol-spacing": DataConstantProperty<number>,
     "symbol-avoid-edges": DataConstantProperty<boolean>,
+    "symbol-sort-key": DataDrivenProperty<number>,
+    "symbol-z-order": DataConstantProperty<"auto" | "viewport-y" | "source">,
     "icon-allow-overlap": DataConstantProperty<boolean>,
     "icon-ignore-placement": DataConstantProperty<boolean>,
     "icon-optional": DataConstantProperty<boolean>,
@@ -34,13 +39,15 @@ export type LayoutProps = {|
     "icon-pitch-alignment": DataConstantProperty<"map" | "viewport" | "auto">,
     "text-pitch-alignment": DataConstantProperty<"map" | "viewport" | "auto">,
     "text-rotation-alignment": DataConstantProperty<"map" | "viewport" | "auto">,
-    "text-field": DataDrivenProperty<string>,
+    "text-field": DataDrivenProperty<Formatted>,
     "text-font": DataDrivenProperty<Array<string>>,
     "text-size": DataDrivenProperty<number>,
     "text-max-width": DataDrivenProperty<number>,
     "text-line-height": DataConstantProperty<number>,
     "text-letter-spacing": DataDrivenProperty<number>,
-    "text-justify": DataDrivenProperty<"left" | "center" | "right">,
+    "text-justify": DataDrivenProperty<"auto" | "left" | "center" | "right">,
+    "text-radial-offset": DataDrivenProperty<number>,
+    "text-variable-anchor": DataConstantProperty<Array<"center" | "left" | "right" | "top" | "bottom" | "top-left" | "top-right" | "bottom-left" | "bottom-right">>,
     "text-anchor": DataDrivenProperty<"center" | "left" | "right" | "top" | "bottom" | "top-left" | "top-right" | "bottom-left" | "bottom-right">,
     "text-max-angle": DataConstantProperty<number>,
     "text-rotate": DataDrivenProperty<number>,
@@ -57,6 +64,8 @@ const layout: Properties<LayoutProps> = new Properties({
     "symbol-placement": new DataConstantProperty(styleSpec["layout_symbol"]["symbol-placement"]),
     "symbol-spacing": new DataConstantProperty(styleSpec["layout_symbol"]["symbol-spacing"]),
     "symbol-avoid-edges": new DataConstantProperty(styleSpec["layout_symbol"]["symbol-avoid-edges"]),
+    "symbol-sort-key": new DataDrivenProperty(styleSpec["layout_symbol"]["symbol-sort-key"]),
+    "symbol-z-order": new DataConstantProperty(styleSpec["layout_symbol"]["symbol-z-order"]),
     "icon-allow-overlap": new DataConstantProperty(styleSpec["layout_symbol"]["icon-allow-overlap"]),
     "icon-ignore-placement": new DataConstantProperty(styleSpec["layout_symbol"]["icon-ignore-placement"]),
     "icon-optional": new DataConstantProperty(styleSpec["layout_symbol"]["icon-optional"]),
@@ -80,6 +89,8 @@ const layout: Properties<LayoutProps> = new Properties({
     "text-line-height": new DataConstantProperty(styleSpec["layout_symbol"]["text-line-height"]),
     "text-letter-spacing": new DataDrivenProperty(styleSpec["layout_symbol"]["text-letter-spacing"]),
     "text-justify": new DataDrivenProperty(styleSpec["layout_symbol"]["text-justify"]),
+    "text-radial-offset": new DataDrivenProperty(styleSpec["layout_symbol"]["text-radial-offset"]),
+    "text-variable-anchor": new DataConstantProperty(styleSpec["layout_symbol"]["text-variable-anchor"]),
     "text-anchor": new DataDrivenProperty(styleSpec["layout_symbol"]["text-anchor"]),
     "text-max-angle": new DataConstantProperty(styleSpec["layout_symbol"]["text-max-angle"]),
     "text-rotate": new DataDrivenProperty(styleSpec["layout_symbol"]["text-rotate"]),
@@ -126,4 +137,9 @@ const paint: Properties<PaintProps> = new Properties({
     "text-translate-anchor": new DataConstantProperty(styleSpec["paint_symbol"]["text-translate-anchor"]),
 });
 
-export default { paint, layout };
+// Note: without adding the explicit type annotation, Flow infers weaker types
+// for these objects from their use in the constructor to StyleLayer, as
+// {layout?: Properties<...>, paint: Properties<...>}
+export default ({ paint, layout }: $Exact<{
+  paint: Properties<PaintProps>, layout: Properties<LayoutProps>
+}>);
