@@ -11,20 +11,20 @@
     <title><?=lang('application_title')?></title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="<?=base_url('./resources/css/bootstrap.min.css')?>" rel="stylesheet">
+    <link href="<?=base_url('./public/css/bootstrap.min.css')?>" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
-    <link href="<?=base_url('./resources/css/metisMenu.min.css')?>" rel="stylesheet">
+    <link href="<?=base_url('./public/css/metisMenu.min.css')?>" rel="stylesheet">
 
     <!-- DataTables CSS -->
-    <link href="<?=base_url('./resources/css/dataTables.bootstrap.css')?>" rel="stylesheet" type="text/css">
-    <link href="<?=base_url('./resources/css/dataTables.responsive.css')?>" rel="stylesheet" type="text/css">
+    <link href="<?=base_url('./public/css/dataTables.bootstrap.css')?>" rel="stylesheet" type="text/css">
+    <link href="<?=base_url('./public/css/dataTables.responsive.css')?>" rel="stylesheet" type="text/css">
 
     <!-- Custom CSS -->
-    <link href="<?=base_url('./resources/css/sb-admin-2.css')?>" rel="stylesheet">
+    <link href="<?=base_url('./public/css/sb-admin-2.css')?>" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="<?=base_url('./resources/css/font-awesome.min.css')?>" rel="stylesheet" type="text/css">
+    <link href="<?=base_url('./public/css/font-awesome.min.css')?>" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

@@ -17,7 +17,7 @@
                     <li>
                         <a href="https://www.sdhd.nl/">
                             <?=lang('footer_hosted_by')?>
-                            <img src="<?=base_url('resources/img/sdhd/logo.png')?>" style="height:3em"/>
+                            <img src="<?=base_url('public/img/sdhd/logo.png')?>" style="height:3em"/>
                         </a>
                     </li>
                     <li>
@@ -36,18 +36,18 @@
     </body>
 
     <!--   Core JS Files   -->
-    <script src="<?=base_url('resources/js/jquery.min.js')?>" type="text/javascript"></script>
-    <script src="<?=base_url('resources/js/bootstrap.min.js" type="text/javascript')?>"></script>
-    <script src="<?=base_url('resources/js/material.min.js')?>"></script>
+    <script src="<?=base_url('public/js/jquery.min.js')?>" type="text/javascript"></script>
+    <script src="<?=base_url('public/js/bootstrap.min.js" type="text/javascript')?>"></script>
+    <script src="<?=base_url('public/js/material.min.js')?>"></script>
 
     <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-    <script src="<?=base_url('resources/js/nouislider.min.js')?>" type="text/javascript"></script>
+    <script src="<?=base_url('public/js/nouislider.min.js')?>" type="text/javascript"></script>
 
     <!-- Control Center for Material Kit: activating the ripples, parallax effects, scripts from the example pages etc -->
-    <script src="<?=base_url('resources/js/material-kit.js')?>" type="text/javascript"></script>
+    <script src="<?=base_url('public/js/material-kit.js')?>" type="text/javascript"></script>
 
     <!--  Google Material Design -->
-    <script src="<?=base_url('resources/js/mdl/material.min.js')?>" type="text/javascript"></script>
+    <script src="<?=base_url('public/js/mdl/material.min.js')?>" type="text/javascript"></script>
 
     <script src="<?=base_url('node_modules/moment/moment.js')?>" type="text/javascript"></script>
 <?php

@@ -16,8 +16,8 @@
     <!-- iOS Safari -->
     <meta name="apple-mobile-web-app-status-bar-style" content="#<?=$tc?>">
 
-    <link rel="apple-touch-icon" sizes="76x76" href="<?=base_url('resources/img/apple-icon.png')?>">
-    <link rel="icon" type="image/png" href="<?=base_url('resources/img/favicon.png')?>">
+    <link rel="apple-touch-icon" sizes="76x76" href="<?=base_url('public/img/apple-icon.png')?>">
+    <link rel="icon" type="image/png" href="<?=base_url('public/img/favicon.png')?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
     <title><?=lang('application_title')?></title>
@@ -25,23 +25,23 @@
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
 
     <!-- Google Material Design -->
-    <link href="<?=base_url('./resources/css/mdl/material.min.css')?>" rel="stylesheet" type="text/css">
+    <link href="<?=base_url('./public/css/mdl/material.min.css')?>" rel="stylesheet" type="text/css">
 
     <!--     Fonts and icons     -->
     <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" /> -->
-    <link rel="stylesheet" type="text/css" href="<?=base_url('resources/css/roboto.css')?>" />
-    <link rel="stylesheet" type="text/css" href="<?=base_url('resources/css/font-awesome.min.css')?>" />
+    <link rel="stylesheet" type="text/css" href="<?=base_url('public/css/roboto.css')?>" />
+    <link rel="stylesheet" type="text/css" href="<?=base_url('public/css/font-awesome.min.css')?>" />
 
     <!--    CSS Files   -->
-    <link href="<?=base_url('resources/css/bootstrap.min.css')?>" rel="stylesheet" />
-    <link href="<?=base_url('resources/css/material-kit.css')?>" rel="stylesheet"/>
-    <link href="<?=base_url('resources/css/style.css')?>" rel="stylesheet" />
+    <link href="<?=base_url('public/css/bootstrap.min.css')?>" rel="stylesheet" />
+    <link href="<?=base_url('public/css/material-kit.css')?>" rel="stylesheet"/>
+    <link href="<?=base_url('public/css/style.css')?>" rel="stylesheet" />
 
     <link rel="manifest" href="<?=base_url('manifest.webmanifest')?>">
 
 </head>
 
-<body style="background-image: url('<?=base_url('resources/img/bg.jpeg')?>')">
+<body style="background-image: url('<?=base_url('public/img/bg.jpeg')?>')">
     <nav class="navbar navbar-transparent navbar-absolute">
         <div class="container-fluid">
             <div class="navbar-header">
