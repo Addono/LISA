@@ -37,7 +37,7 @@ One small last thing we need to do is to run all database migrations, either poi
 
 :rocket: And we are live at [http://localhost:8080](http://localhost:8080) :rocket:
 
-Hint: The default user's credentials `admin:admin312` :wink:
+Hint: The default admin credentials are `admin:admin312` :wink:
 
 _Note: Depending on how you installed Docker it might be that Docker is not accessible at localhost, in that case replace localhost with the IP address of your Docker installation. E.g. for docker-machine users run `$(docker-machine ip)`._
 
