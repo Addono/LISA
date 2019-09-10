@@ -82,7 +82,7 @@ $lang['footer_source'] = 'Source';
 // @Overwrite
 $lang['application_name'] = 'Lisa';
 $lang['application_title'] = 'Lisa is super awesome';
-$lang['application_version'] = 'v1.9.2';
+$lang['application_version'] = 'v1.10.0';
 
 $lang['default_page_header_title'] = 'Hello, I am Lisa!';
 $lang['default_page_header_body'] = 'Login to get started';
