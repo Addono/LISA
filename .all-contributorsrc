@@ -1,0 +1,28 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "Addono",
+      "name": "Adriaan Knapen",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/15435678?v=4",
+      "profile": "https://aknapen.nl",
+      "contributions": [
+        "maintenance",
+        "design",
+        "bug",
+        "code",
+        "content",
+        "translation"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "LISA",
+  "projectOwner": "Addono",
+  "repoType": "github",
+  "repoHost": "https://github.com"
+}
