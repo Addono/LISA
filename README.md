@@ -1,4 +1,5 @@
 # LISA
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/609d0cc095eb48b18305a6cc3e178f4d)](https://app.codacy.com/app/Addono/lisa?utm_source=github.com&utm_content=Addono/lisa&utm_campaign=badger)
 [![Project Status: Inactive – The project has reached a stable, usable state but is no longer being actively developed; support/maintenance will be provided as time allows.](https://www.repostatus.org/badges/latest/inactive.svg)](https://www.repostatus.org/#inactive)
 
@@ -66,3 +67,19 @@ Afterwards, use the admin user to create new users, which can be done in the bac
 
 ### Language
 Currently, the language used by the application is hard-coded into `Handler.php`, for future releases it is planned to move configurations like these into the database. For now, one should edit hard-coded language or substitute all language files in the `nederlands` language folder with your language of preference. During development I tried to add translations for both English and Dutch, so the English translation files should be complete.
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore -->
+<table>
+  <tr>
+    <td align="center"><a href="https://aknapen.nl"><img src="https://avatars1.githubusercontent.com/u/15435678?v=4" width="100px;" alt="Adriaan Knapen"/><br /><sub><b>Adriaan Knapen</b></sub></a><br /><a href="#maintenance-Addono" title="Maintenance">🚧</a> <a href="#design-Addono" title="Design">🎨</a> <a href="https://github.com/Addono/LISA/issues?q=author%3AAddono" title="Bug reports">🐛</a> <a href="https://github.com/Addono/LISA/commits?author=Addono" title="Code">💻</a> <a href="#content-Addono" title="Content">🖋</a> <a href="#translation-Addono" title="Translation">🌍</a></td>
+  </tr>
+</table>
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
