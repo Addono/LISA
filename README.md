@@ -1,5 +1,5 @@
 # LISA
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/609d0cc095eb48b18305a6cc3e178f4d)](https://app.codacy.com/app/Addono/lisa?utm_source=github.com&utm_content=Addono/lisa&utm_campaign=badger)
 [![Project Status: Inactive – The project has reached a stable, usable state but is no longer being actively developed; support/maintenance will be provided as time allows.](https://www.repostatus.org/badges/latest/inactive.svg)](https://www.repostatus.org/#inactive)
 
@@ -78,6 +78,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://aknapen.nl"><img src="https://avatars1.githubusercontent.com/u/15435678?v=4" width="100px;" alt="Adriaan Knapen"/><br /><sub><b>Adriaan Knapen</b></sub></a><br /><a href="#maintenance-Addono" title="Maintenance">🚧</a> <a href="#design-Addono" title="Design">🎨</a> <a href="https://github.com/Addono/LISA/issues?q=author%3AAddono" title="Bug reports">🐛</a> <a href="https://github.com/Addono/LISA/commits?author=Addono" title="Code">💻</a> <a href="#content-Addono" title="Content">🖋</a> <a href="#translation-Addono" title="Translation">🌍</a></td>
     <td align="center"><a href="https://www.sdhd.nl/"><img src="https://avatars1.githubusercontent.com/u/4325936?v=4" width="100px;" alt="Djamon Staal"/><br /><sub><b>Djamon Staal</b></sub></a><br /><a href="#security-SjamonDaal" title="Security">🛡️</a> <a href="#infra-SjamonDaal" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+    <td align="center"><a href="https://koenvw.nl"><img src="https://avatars0.githubusercontent.com/u/1337450?v=4" width="100px;" alt="Koen"/><br /><sub><b>Koen</b></sub></a><br /><a href="#infra-koen860" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#ideas-koen860" title="Ideas, Planning, & Feedback">🤔</a> <a href="#userTesting-koen860" title="User Testing">📓</a> <a href="https://github.com/Addono/LISA/issues?q=author%3Akoen860" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 

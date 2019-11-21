@@ -28,6 +28,18 @@
         "security",
         "infra"
       ]
+    },
+    {
+      "login": "koen860",
+      "name": "Koen",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1337450?v=4",
+      "profile": "https://koenvw.nl",
+      "contributions": [
+        "infra",
+        "ideas",
+        "userTesting",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
