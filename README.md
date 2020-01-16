@@ -31,7 +31,7 @@ cp application/config/config.php-setup application/config/config.php
 cp application/config/email.php-setup application/config/email.php
 vim application/config/email.php
 
-# Setup if finished, it's time to launch
+# Configuration is finished, let's deploy the application and all required services
 docker-compose up -d
 ```
 One small last thing we need to do is to run all database migrations, either point your browser at [http://localhost:8080/install](http://localhost:8080/install) or run`curl http://localhost:8080/install`.
