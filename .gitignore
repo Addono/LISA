@@ -18,6 +18,9 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 
 node_modules/
 
+# Ignore Cypress' video recordings
+*.mp4
+
 # IDE Files
 #-------------------------
 /nbproject/
