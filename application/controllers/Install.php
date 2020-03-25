@@ -126,7 +126,7 @@ class Install extends CI_Controller {
 
         // Check if all models in the queue where successfully updated. If not this means that an (dependency) issue occurred.
         if ($queue->isEmpty()) {
-            echo '<b>Update successful</b><br>';
+            echo '<b data-cy="update-successful">Update successful</b><br>';
             return true;
         } else {
             echo '<b>DEPENDENCY CANNOT BE SOLVED!</b><br>Unfinished models are:';
