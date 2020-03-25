@@ -6,13 +6,6 @@ $config['from_name']  = 'Lisa';
 $config['crlf'] = '\r\n';
 $config['newline'] = '\r\n';
 
-$config['protocol'] = '';
-$config['smtp_host'] = '';
-$config['smtp_port'] = '';
-$config['smtp_user'] = '';
-$config['smtp_pass'] = '';
-// $config['smtp_crypto'] = '';
-
 // -------------
 // |  Examples |
 // -------------
