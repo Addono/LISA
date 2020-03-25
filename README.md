@@ -1,5 +1,6 @@
 # LISA
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors)
+![Continuous Integration](https://github.com/Addono/LISA/workflows/Continuous%20Integration/badge.svg?branch=master)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg)](#contributors)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/609d0cc095eb48b18305a6cc3e178f4d)](https://app.codacy.com/app/Addono/lisa?utm_source=github.com&utm_content=Addono/lisa&utm_campaign=badger)
 [![Project Status: Inactive – The project has reached a stable, usable state but is no longer being actively developed; support/maintenance will be provided as time allows.](https://www.repostatus.org/badges/latest/inactive.svg)](https://www.repostatus.org/#inactive)
 
