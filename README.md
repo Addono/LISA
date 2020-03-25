@@ -20,18 +20,17 @@ git clone https://github.com/Addono/lisa && cd lisa
 # Install dependencies
 npm install
 
-# Configure the database, the defaults are for a docker-compose instance
-cp application/config/database.php-setup application/config/database.php
+# (Optional) Configure the database, the defaults are for a docker-compose instance
+vim application/config/database.php
 
-# Configure general settings, setting the hostname is mandatory
+# (Optional) Configure general settings, setting the hostname is mandatory
 # by default it is set to http://localhost:8080, if your Docker instance
 # is not at localhost, then you need to set $config['base_url'] manually 
 # in application/config/config.php
-cp application/config/config.php-setup application/config/config.php
+vim application/config/config.php
 
-# Optional, although you will get nasty errors without configuring this,
+# (Optional) Although you might get nasty errors without configuring this,
 # configure outgoing email.
-cp application/config/email.php-setup application/config/email.php
 vim application/config/email.php
 
 # Configuration is finished, let's deploy the application and all required services
