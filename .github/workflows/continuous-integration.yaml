@@ -1,0 +1,33 @@
+name: Continuous Integration
+
+on: 
+  push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [13.x]
+
+    steps:
+    - uses: actions/checkout@722adc6 # v2
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@83c9f7a # v1.4.1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install Node dependencies
+      run: npm ci
+
+    - name: Create test environment
+      run: docker-compose up -d
+    
+    - name: Wait until test environment is up
+      run: npx wait-on http-get://localhost:8080/Install
+
+    - name: Run cypress tests
+      run: npm run cypress run
+
