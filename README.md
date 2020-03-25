@@ -58,7 +58,7 @@ Requirements:
     * (Optional, but recommended) Configure an SMTP server in `email.php`.
  1. Navigate to __YOUR_HOSTNAME__/index.php/Install to initialize the database.
 
-* The docker-compose deploy method and the CI are using 7.3. The version used there is leading and the only one supported.
+*The docker-compose deploy method and the CI are using 7.3. The version used there is leading and the only one supported.
 
 ## Usage
 
