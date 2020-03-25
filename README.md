@@ -46,7 +46,7 @@ _Note: Depending on how you installed Docker it might be that Docker is not acce
 
 ### Manual
 Requirements:
- * PHP 7.1 with the mysqli extension enabled.
+ * PHP 7* with the mysqli extension enabled.
  * MySQL database
 
  1. Download a copy/make a clone/make a fork of the project and move it to a folder in your web server.
@@ -56,6 +56,8 @@ Requirements:
     * Enter the settings of your database in `database.php`.
     * (Optional, but recommended) Configure an SMTP server in `email.php`.
  1. Navigate to __YOUR_HOSTNAME__/index.php/Install to initialize the database.
+
+* The docker-compose deploy method and the CI are using 7.3. The version used there is leading and the only one supported.
 
 ## Usage
 
