@@ -17,6 +17,9 @@ Many use-cases can be imagined, in general LISA gives each user an integer sized
 # Clone the repository
 git clone https://github.com/Addono/lisa && cd lisa
 
+# Install dependencies
+npm install
+
 # Configure the database, the defaults are for a docker-compose instance
 cp application/config/database.php-setup application/config/database.php
 
