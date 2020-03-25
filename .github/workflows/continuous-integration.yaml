@@ -34,6 +34,11 @@ jobs:
     - name: Wait until test environment is up
       run: npx wait-on http-get://localhost:8080/Install
 
-    - name: Run cypress tests
-      run: npm run cypress run
-
+    - name: Cypress run
+      uses: cypress-io/github-action@v1
+      with:
+        record: true
+      env:
+        # pass the Dashboard record key as an environment variable
+        CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
