@@ -29,8 +29,8 @@ vim application/config/database.php
 # in application/config/config.php
 vim application/config/config.php
 
-# (Optional) Although you might get nasty errors without configuring this,
-# configure outgoing email.
+# (Optional) Although you will get nasty errors in your logs whenever it
+# tries to send email.
 vim application/config/email.php
 
 # Configuration is finished, let's deploy the application and all required services
