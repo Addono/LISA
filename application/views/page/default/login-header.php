@@ -22,7 +22,7 @@
                                 <i class="fa fa-user fa-lg"></i>
                             </span>
                                 <label class="control-label"><?=lang('login_username')?></label>
-                                <input type="text" name="username" class="form-control" value="<?=set_value('username')?>" autofocus />
+                                <input type="text" name="username" class="form-control" value="<?=set_value('username')?>" autofocus data-cy="username" />
                             </div>
 
                             <div class="input-group form-group label-floating">
@@ -30,7 +30,7 @@
                                     <i class="fa fa-key fa-lg"></i>
                                 </span>
                                 <label class="control-label"><?=lang('login_password')?></label>
-                                <input type="password" name="password" class="form-control" />
+                                <input type="password" name="password" class="form-control" data-cy="password" />
                             </div>
                         </div>
                         <div class="footer text-center">
