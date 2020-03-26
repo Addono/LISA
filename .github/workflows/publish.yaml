@@ -5,7 +5,7 @@ on:
     types: [published]
 
 jobs:
-  publish-lisa-php-pfm:
+  publish-lisa-php-fpm:
     
     runs-on: ubuntu-latest
 
