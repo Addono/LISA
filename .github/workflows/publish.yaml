@@ -12,10 +12,10 @@ jobs:
     steps:
     - uses: actions/checkout@722adc6 # v2
     
-    - name: Build and publish lisa-php-pfm
+    - name: Build and publish lisa-php-fpm
       uses: elgohr/Publish-Docker-Github-Action@b2f6325 # v2.14
       with:
-        name: addono/lisa-php-pfm
+        name: addono/lisa-php-fpm
         dockerfile: docker/php-fpm/Dockerfile
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
