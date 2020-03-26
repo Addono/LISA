@@ -1,0 +1,18 @@
+# Ignore everything by default
+**/*
+
+# Include the Dockerfile 
+!Dockerfile
+
+# Include application specific files
+!system/
+!application/
+
+# Include Node package files
+!package.json
+!package-lock.json
+
+# Include static files
+!public/
+!manifest.webmanifest
+!robots.txt
