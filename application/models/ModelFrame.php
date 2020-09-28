@@ -13,13 +13,14 @@
 class ModelFrame extends CI_Model
 {
     private static $tablePrefix;
+    protected $ci;
 
     public function __construct()
     {
-        $ci =& get_instance();
+        $this->ci =& get_instance();
         $dependencies = $this->dependencies();
 
-        $ci->load->database();
+        $this->ci->load->database();
         $this->load->model($dependencies);
         $this->load->helper([
             'tables',
