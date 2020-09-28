@@ -1,6 +1,6 @@
 {
   "name": "lisa",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Lisa Is Super Awesome (LISA) - \"An informal thing tracker\"",
   "main": "index.php",
   "scripts": {
