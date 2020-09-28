@@ -41,19 +41,9 @@ class User_Transaction extends ModelFrame
     }
 
     public function getSumDeltaForAllSubjectId(bool $positive, $limit = null) {
-        // Retrieve the sum of the delta of all negative or positive transactions, ordered and limited to retrieve only highest values.
-        $sumQuery = $this->db
-            ->select(Transaction::FIELD_SUBJECT_ID)
-            ->select_sum(Transaction::FIELD_DELTA, 'sum')
-            ->where(Transaction::FIELD_DELTA . ($positive?'>':'<') . ' 0')
-            ->group_by(Transaction::FIELD_SUBJECT_ID)
-            ->limit($limit)
-            ->order_by('sum ' . ($positive?'DESC':'ASC'))
-            ->get_compiled_select(Transaction::name());
-
         // Join the leaderboard on the user database.
         return $this->db
-            ->from('(' . $sumQuery . ') `' . $this->db->dbprefix('t') . '`')
+            ->from('(' . $this->ci->Transaction->getSumQuerySql($positive, $limit) . ') `' . $this->db->dbprefix('t') . '`')
             ->where('t.' . Transaction::FIELD_SUBJECT_ID . '=' . User::name() . '.' . Login::FIELD_LOGIN_ID)
             ->get(User::name())
             ->result_array();
