@@ -87,6 +87,24 @@ class Transaction extends ModelFrame
     }
 
     /**
+     * SQL query which sorts the top amount of consumptions made by a user.
+     * @param bool $positive True if only positive consumptions should be counter, false if only negative consumptions should be counted.
+     * @param int $limit The amount of users retrieved to compute the top score over.
+     * @return string SQL for this query.
+     */
+    public function getSumQuerySql(bool $positive, int $limit) {
+        $sumQuery = $this->db
+            ->select(self::FIELD_SUBJECT_ID)
+            ->select_sum(self::FIELD_DELTA, 'sum')
+            ->where(self::FIELD_DELTA . ($positive?'>':'<') . ' 0')
+            ->group_by(self::FIELD_SUBJECT_ID)
+            ->limit($limit)
+            ->order_by('sum ' . ($positive?'DESC':'ASC'));
+
+        return $sumQuery->get_compiled_select(self::name());
+    }
+
+    /**
      * Checks if a subject user is on the leaderboard
      *
      * @param int $subjectId The login ID of the subject.
@@ -95,20 +113,10 @@ class Transaction extends ModelFrame
      */
     public function getSumDeltaSubjectIdWithinTop(int $subjectId, int $position): bool
     {
-        // Retrieve the sum of the delta of consumption transactions, ordered and limited to retrieve only highest values.
-        $sumQuery = $this->db
-            ->select(self::FIELD_SUBJECT_ID)
-            ->select_sum(self::FIELD_DELTA, 'sum')
-            ->where([self::FIELD_TYPE => self::TYPE_CONSUME])
-            ->group_by(self::FIELD_SUBJECT_ID)
-            ->limit($position)
-            ->order_by('sum ' . 'ASC')
-            ->get_compiled_select(self::name());
-
         // Check if the specified subject is within the earlier retrieved leaderboard.
         $result = $this->db
-            ->from('(' . $sumQuery . ') `' . $this->db->dbprefix('t') . '`')
-            ->where('t.' . self::FIELD_SUBJECT_ID . '=' . $subjectId)
+            ->from('(' . $this->getSumQuerySql(false, $position) . ') `' . $this->db->dbprefix('t') . '`') // Insert SQL from $sumQuery and name it t for later use
+            ->where('t.' . self::FIELD_SUBJECT_ID . '=' . $subjectId) // Check if the subject is in the sumQuery
             ->get();
 
         // If a row is returned, then the user is on the leaderboard.
