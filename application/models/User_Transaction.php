@@ -12,6 +12,8 @@
 class User_Transaction extends ModelFrame
 {
 
+    const FIELD_TIME = 'time';
+
     protected function dependencies()
     {
         return [
@@ -20,10 +22,11 @@ class User_Transaction extends ModelFrame
         ];
     }
 
-    public function getAll($where = [], $limit = null) {
+    public function getAll($where = [], $limit = null)
+    {
         // Retrieve all transactions
         $transactions = $this->db
-            ->select('*, UNIX_TIMESTAMP('.Transaction::FIELD_TIME.') as '.Transaction::FIELD_TIME.'_unix')
+            ->select('*, UNIX_TIMESTAMP(' . Transaction::FIELD_TIME . ') as ' . Transaction::FIELD_TIME . '_unix')
             ->order_by(Transaction::FIELD_TIME, 'DESC')
             ->where($where)
             ->limit($limit)
@@ -40,7 +43,8 @@ class User_Transaction extends ModelFrame
         return $transactions;
     }
 
-    public function getSumDeltaForAllSubjectId(bool $positive, $limit = null) {
+    public function getSumDeltaForAllSubjectId(bool $positive, $limit = null)
+    {
         // Join the leaderboard on the user database.
         return $this->db
             ->from('(' . $this->ci->Transaction->getSumQuerySql($positive, $limit) . ') `' . $this->db->dbprefix('t') . '`')
@@ -49,11 +53,23 @@ class User_Transaction extends ModelFrame
             ->result_array();
     }
 
-    public function getAllForSubjectId($subjectId, $limit = null) {
+    public function getAllForSubjectId($subjectId, $limit = null)
+    {
         return $this->getAll([Transaction::FIELD_SUBJECT_ID => $subjectId], $limit);
     }
 
-    public function getAllForAuthorId($authorId, $limit = null) {
+    public function getAllForAuthorId($authorId, $limit = null)
+    {
         return $this->getAll([Transaction::FIELD_AUTHOR_ID => $authorId], $limit);
+    }
+
+    public function getLatestForSubjectId($subjectId, $limit = 1)
+    {
+        return $this->db
+            ->where(Transaction::FIELD_SUBJECT_ID . '=' . $subjectId)
+            ->order_by(Transaction::FIELD_TIME, 'DESC')
+            ->limit($limit)
+            ->get(Transaction::name())
+            ->row_array()[self::FIELD_TIME];
     }
 }

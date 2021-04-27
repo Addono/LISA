@@ -21,6 +21,7 @@ $lang['consume_table_head_consumptions'] = '#Consumpties';
 $lang['consume_group_first_name'] = 'Voornaam';
 $lang['consume_group_last_name'] = 'Achternaam';
 $lang['consume_group_amount_name'] = 'Hoeveelheid';
+$lang['consume_group_recent_name'] = 'Recent';
 
 $lang['consume_submit'] = 'Koop';
 

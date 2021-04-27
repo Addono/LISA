@@ -21,6 +21,7 @@ $lang['consume_table_head_consumptions'] = '#Consumptions';
 $lang['consume_group_first_name'] = 'First name';
 $lang['consume_group_last_name'] = 'Last name';
 $lang['consume_group_amount_name'] = 'Amount';
+$lang['consume_group_recent_name'] = 'Recent';
 
 $lang['consume_submit'] = 'Buy';
 
