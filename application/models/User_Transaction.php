@@ -65,11 +65,16 @@ class User_Transaction extends ModelFrame
 
     public function getLatestForSubjectId($subjectId, $limit = 1)
     {
-        return $this->db
+        $result = $this->db
             ->where(Transaction::FIELD_SUBJECT_ID . '=' . $subjectId)
             ->order_by(Transaction::FIELD_TIME, 'DESC')
             ->limit($limit)
             ->get(Transaction::name())
             ->row_array()[self::FIELD_TIME];
+
+        if ($result == null) {
+		    $result == '2000-01-01 00:00:00';
+		}
+        return $result;
     }
 }
