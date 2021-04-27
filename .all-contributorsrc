@@ -40,11 +40,21 @@
         "userTesting",
         "bug"
       ]
+    },
+    {
+      "login": "omit01",
+      "name": "Timo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/62880858?v=4",
+      "profile": "https://github.com/omit01",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
   "projectName": "LISA",
   "projectOwner": "Addono",
   "repoType": "github",
-  "repoHost": "https://github.com"
+  "repoHost": "https://github.com",
+  "skipCi": true
 }
