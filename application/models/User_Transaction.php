@@ -73,8 +73,8 @@ class User_Transaction extends ModelFrame
             ->row_array()[self::FIELD_TIME];
 
         if ($result == null) {
-		    $result == '2000-01-01 00:00:00';
-		}
+            $result == '2000-01-01 00:00:00';
+        }
         return $result;
     }
 }
