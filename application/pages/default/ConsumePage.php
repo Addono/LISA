@@ -47,12 +47,12 @@ class ConsumePage extends PageFrame
         usort($byAmount, function($a, $b) {
             return $b['amount'] - $a['amount'];
         });
-		$byLatest = $allUsersByRole[Role::ROLE_USER];
-		usort($byLatest, function($a, $b) {
-			$timeStamp1 = strtotime($a['time']);
-			$timeStamp2 = strtotime($b['time']);
-			return $timeStamp2 - $timeStamp1;
-		});;
+        $byLatest = $allUsersByRole[Role::ROLE_USER];
+        usort($byLatest, function($a, $b) {
+            $timeStamp1 = strtotime($a['time']);
+            $timeStamp2 = strtotime($b['time']);
+            return $timeStamp2 - $timeStamp1;
+        });;
 
         $tabs = [
             'ordered-first-name' => [
@@ -70,11 +70,11 @@ class ConsumePage extends PageFrame
                 'icon' => 'fa-sort-amount-desc',
                 'users' => $byAmount,
             ],
-			'recent' => [
-				'title' => lang('consume_group_recent_name'),
-				'icon' => 'fa-clock-o',
-				'users' => $byLatest,
-			],
+            'recent' => [
+                'title' => lang('consume_group_recent_name'),
+                'icon' => 'fa-clock-o',
+                'users' => $byLatest,
+            ],
         ];
 
         foreach ($allUsersByRole as $roleName => $users) {

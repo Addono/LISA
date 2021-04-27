@@ -12,64 +12,64 @@
 class User_Transaction extends ModelFrame
 {
 
-	const FIELD_TIME = 'time';
+    const FIELD_TIME = 'time';
 
-	protected function dependencies()
-	{
-		return [
-			User::class,
-			Transaction::class
-		];
-	}
+    protected function dependencies()
+    {
+        return [
+            User::class,
+            Transaction::class
+        ];
+    }
 
-	public function getAll($where = [], $limit = null)
-	{
-		// Retrieve all transactions
-		$transactions = $this->db
-			->select('*, UNIX_TIMESTAMP(' . Transaction::FIELD_TIME . ') as ' . Transaction::FIELD_TIME . '_unix')
-			->order_by(Transaction::FIELD_TIME, 'DESC')
-			->where($where)
-			->limit($limit)
-			->get(Transaction::name())
-			->result_array();
+    public function getAll($where = [], $limit = null)
+    {
+        // Retrieve all transactions
+        $transactions = $this->db
+            ->select('*, UNIX_TIMESTAMP(' . Transaction::FIELD_TIME . ') as ' . Transaction::FIELD_TIME . '_unix')
+            ->order_by(Transaction::FIELD_TIME, 'DESC')
+            ->where($where)
+            ->limit($limit)
+            ->get(Transaction::name())
+            ->result_array();
 
-		$users = $this->User->getLoginIdToName();
+        $users = $this->User->getLoginIdToName();
 
-		foreach ($transactions as $key => $t) {
-			$transactions[$key]['author_name'] = $users[$t[Transaction::FIELD_AUTHOR_ID]];
-			$transactions[$key]['subject_name'] = $users[$t[Transaction::FIELD_SUBJECT_ID]];
-		}
+        foreach ($transactions as $key => $t) {
+            $transactions[$key]['author_name'] = $users[$t[Transaction::FIELD_AUTHOR_ID]];
+            $transactions[$key]['subject_name'] = $users[$t[Transaction::FIELD_SUBJECT_ID]];
+        }
 
-		return $transactions;
-	}
+        return $transactions;
+    }
 
-	public function getSumDeltaForAllSubjectId(bool $positive, $limit = null)
-	{
-		// Join the leaderboard on the user database.
-		return $this->db
-			->from('(' . $this->ci->Transaction->getSumQuerySql($positive, $limit) . ') `' . $this->db->dbprefix('t') . '`')
-			->where('t.' . Transaction::FIELD_SUBJECT_ID . '=' . User::name() . '.' . Login::FIELD_LOGIN_ID)
-			->get(User::name())
-			->result_array();
-	}
+    public function getSumDeltaForAllSubjectId(bool $positive, $limit = null)
+    {
+        // Join the leaderboard on the user database.
+        return $this->db
+            ->from('(' . $this->ci->Transaction->getSumQuerySql($positive, $limit) . ') `' . $this->db->dbprefix('t') . '`')
+            ->where('t.' . Transaction::FIELD_SUBJECT_ID . '=' . User::name() . '.' . Login::FIELD_LOGIN_ID)
+            ->get(User::name())
+            ->result_array();
+    }
 
-	public function getAllForSubjectId($subjectId, $limit = null)
-	{
-		return $this->getAll([Transaction::FIELD_SUBJECT_ID => $subjectId], $limit);
-	}
+    public function getAllForSubjectId($subjectId, $limit = null)
+    {
+        return $this->getAll([Transaction::FIELD_SUBJECT_ID => $subjectId], $limit);
+    }
 
-	public function getAllForAuthorId($authorId, $limit = null)
-	{
-		return $this->getAll([Transaction::FIELD_AUTHOR_ID => $authorId], $limit);
-	}
+    public function getAllForAuthorId($authorId, $limit = null)
+    {
+        return $this->getAll([Transaction::FIELD_AUTHOR_ID => $authorId], $limit);
+    }
 
-	public function getLatestForSubjectId($subjectId, $limit = 1)
-	{
-		return $this->db
-			->where(Transaction::FIELD_SUBJECT_ID . '=' . $subjectId)
-			->order_by(Transaction::FIELD_TIME, 'DESC')
-			->limit($limit)
-			->get(Transaction::name())
-			->row_array()[self::FIELD_TIME];
-	}
+    public function getLatestForSubjectId($subjectId, $limit = 1)
+    {
+        return $this->db
+            ->where(Transaction::FIELD_SUBJECT_ID . '=' . $subjectId)
+            ->order_by(Transaction::FIELD_TIME, 'DESC')
+            ->limit($limit)
+            ->get(Transaction::name())
+            ->row_array()[self::FIELD_TIME];
+    }
 }

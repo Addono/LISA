@@ -21,10 +21,10 @@ class User_Consumption_LoginRole extends ModelFrame
             Login::class,
             User::class,
             Consumption::class,
-			Transaction::class,
+            Transaction::class,
             LoginRole::class,
             User_LoginRole::class,
-			User_Transaction::class,
+            User_Transaction::class,
         ];
     }
 
@@ -33,7 +33,7 @@ class User_Consumption_LoginRole extends ModelFrame
 
         foreach ($users as $key => $user) {
             $users[$key][Consumption::FIELD_AMOUNT] = $this->Consumption->get($user[Login::FIELD_LOGIN_ID]);
-            $users[$key][Transaction::FIELD_TIME] = $this->User_Transaction->getLatestForSubjectId($user[$this->Login::FIELD_LOGIN_ID]);
+            $users[$key][Transaction::FIELD_TIME] = $this->User_Transaction->getLatestForSubjectId($user[Login::FIELD_LOGIN_ID]);
         }
 
         return $users;
