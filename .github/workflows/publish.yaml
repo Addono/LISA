@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@722adc6 # v2
+    - uses: actions/checkout@v2.3.4
     
     - name: Build and publish lisa-php-fpm
-      uses: elgohr/Publish-Docker-Github-Action@b2f6325 # v2.14
+      uses: elgohr/Publish-Docker-Github-Action@v2.14
       with:
         name: addono/lisa-php-fpm
         dockerfile: docker/php-fpm/Dockerfile
@@ -25,10 +25,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@722adc6 # v2
+    - uses: actions/checkout@v2.3.4
 
     - name: Build and publish lisa-nginx
-      uses: elgohr/Publish-Docker-Github-Action@b2f6325 # v2.14
+      uses: elgohr/Publish-Docker-Github-Action@v2.14
       with:
         name: addono/lisa-nginx
         dockerfile: docker/nginx/Dockerfile
