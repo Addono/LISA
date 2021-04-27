@@ -78,14 +78,19 @@ Currently, the language used by the application is hard-coded into `Handler.php`
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://aknapen.nl"><img src="https://avatars1.githubusercontent.com/u/15435678?v=4" width="100px;" alt="Adriaan Knapen"/><br /><sub><b>Adriaan Knapen</b></sub></a><br /><a href="#maintenance-Addono" title="Maintenance">🚧</a> <a href="#design-Addono" title="Design">🎨</a> <a href="https://github.com/Addono/LISA/issues?q=author%3AAddono" title="Bug reports">🐛</a> <a href="https://github.com/Addono/LISA/commits?author=Addono" title="Code">💻</a> <a href="#content-Addono" title="Content">🖋</a> <a href="#translation-Addono" title="Translation">🌍</a></td>
-    <td align="center"><a href="https://www.sdhd.nl/"><img src="https://avatars1.githubusercontent.com/u/4325936?v=4" width="100px;" alt="Djamon Staal"/><br /><sub><b>Djamon Staal</b></sub></a><br /><a href="#security-SjamonDaal" title="Security">🛡️</a> <a href="#infra-SjamonDaal" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
-    <td align="center"><a href="https://koenvw.nl"><img src="https://avatars0.githubusercontent.com/u/1337450?v=4" width="100px;" alt="Koen"/><br /><sub><b>Koen</b></sub></a><br /><a href="#infra-koen860" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#ideas-koen860" title="Ideas, Planning, & Feedback">🤔</a> <a href="#userTesting-koen860" title="User Testing">📓</a> <a href="https://github.com/Addono/LISA/issues?q=author%3Akoen860" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://aknapen.nl"><img src="https://avatars1.githubusercontent.com/u/15435678?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Adriaan Knapen</b></sub></a><br /><a href="#maintenance-Addono" title="Maintenance">🚧</a> <a href="#design-Addono" title="Design">🎨</a> <a href="https://github.com/Addono/LISA/issues?q=author%3AAddono" title="Bug reports">🐛</a> <a href="https://github.com/Addono/LISA/commits?author=Addono" title="Code">💻</a> <a href="#content-Addono" title="Content">🖋</a> <a href="#translation-Addono" title="Translation">🌍</a></td>
+    <td align="center"><a href="https://www.sdhd.nl/"><img src="https://avatars1.githubusercontent.com/u/4325936?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Djamon Staal</b></sub></a><br /><a href="#security-SjamonDaal" title="Security">🛡️</a> <a href="#infra-SjamonDaal" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+    <td align="center"><a href="https://koenvw.nl"><img src="https://avatars0.githubusercontent.com/u/1337450?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Koen</b></sub></a><br /><a href="#infra-koen860" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#ideas-koen860" title="Ideas, Planning, & Feedback">🤔</a> <a href="#userTesting-koen860" title="User Testing">📓</a> <a href="https://github.com/Addono/LISA/issues?q=author%3Akoen860" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/omit01"><img src="https://avatars.githubusercontent.com/u/62880858?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Timo</b></sub></a><br /><a href="https://github.com/Addono/LISA/commits?author=omit01" title="Code">💻</a></td>
   </tr>
 </table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
