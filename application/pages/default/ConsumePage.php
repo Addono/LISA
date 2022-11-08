@@ -77,6 +77,21 @@ class ConsumePage extends PageFrame
             ],
         ];
 
+        $max_transactions = 0;
+        foreach ($allUsersByRole[Role::ROLE_USER] as $user) {
+            $transactions = $this->ci->Transaction->getSumDeltaSubjectIdByWeek($user[Login::FIELD_LOGIN_ID]);
+            $transaction = -$transactions[0]['sum'];
+            if ($transaction > $max_transactions) {
+                $max_transactions = $transaction;
+            }
+        }
+
+        $winners = array();
+        foreach ($allUsersByRole[Role::ROLE_USER] as $user) {
+            $transactions = $this->ci->Transaction->getSumDeltaSubjectIdByWeek($user[Login::FIELD_LOGIN_ID]);
+            $winners[$user[Login::FIELD_LOGIN_ID]] = (-$transactions[0]['sum'] == $max_transactions);
+        }
+
         foreach ($allUsersByRole as $roleName => $users) {
             if ($roleName !== Role::ROLE_USER) {
                 // Intersect the roles of user and every non-admin or user role. (1)
@@ -107,6 +122,7 @@ class ConsumePage extends PageFrame
         $this->setData('fields', $fields);
         $this->setData('myId', getLoggedInLoginId($this->ci->session));
         $this->setData('tabs', $tabs);
+        $this->setData('winners', $winners);
     }
 
     /**
