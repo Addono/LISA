@@ -62,7 +62,10 @@
                                 foreach ($tab['users'] as $u) {
                                 $amount = $u[$fields['amount']]; ?>
                                     <tr class="<?=$amount<0?'text-danger ':''?>ajax-login-id-<?=$u[$fields['login_id']]?>">
-                                        <td><?= $u[$fields['first_name']] . ' ' . $u[$fields['last_name']] ?></td>
+                                        <td>
+                                            <?= $u[$fields['first_name']] . ' ' . $u[$fields['last_name']] ?>
+											<?= isset($winners) && in_array($u[$fields['login_id']], $winners) ? '👑' : '' ?>
+                                        </td>
                                         <td class="amount"><?=$amount?></td>
                                         <td>
                                             <?=$this->transactions->getBuyButtonHtml($u[$fields['login_id']])?>

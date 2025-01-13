@@ -77,6 +77,47 @@ class ConsumePage extends PageFrame
             ],
         ];
 
+		// Tracks the highest amount of transactions seen so far, start at one to ensure a user has to consume 
+		// at least one to be considered a winner
+        $max_transactions = 1; 
+
+		// Tracks everyone with the highest amount of transactions seen so far
+		$winners = array(); 
+
+		// Determine which users have had the most transactions this week, which will be marked as the winners
+        foreach ($allUsersByRole[Role::ROLE_USER] as $user) {
+			// Find the transactions grouped by week for this user
+            $transactions = $this->ci->Transaction->getSumDeltaSubjectIdByWeek($user[Login::FIELD_LOGIN_ID]);
+
+			// If the user did not consume anything, skip this user
+			if (count($transactions) === 0) {
+				// Skip this user if there are no transactions.
+				continue;
+			}
+
+			// Find the most recent week for which the user consumed
+			$most_recent_week = $transactions[count($transactions) - 1];
+
+			// Check if the most recent week was not the current week
+			if ($most_recent_week['year'] != date('Y') || $most_recent_week['week'] != date('W')) {
+				// Skip this user if the most recent week was not the current week.
+				continue;
+			}
+
+			// Get the amount of transactions for this week.
+			$amount_this_week = -$most_recent_week['sum'];
+
+            if ($amount_this_week > $max_transactions) { // Check if we found a new maximum
+				// Update the maximum amount of transactions.
+                $max_transactions = $amount_this_week;
+
+				// Reset the winners array, since we found a new maximum.
+				$winners = array($user[Login::FIELD_LOGIN_ID]);
+            } else if ($amount_this_week == $max_transactions) { // Check if we found another winner.
+				$winners[] = $user[Login::FIELD_LOGIN_ID];
+			}
+        }
+
         foreach ($allUsersByRole as $roleName => $users) {
             if ($roleName !== Role::ROLE_USER) {
                 // Intersect the roles of user and every non-admin or user role. (1)
@@ -107,6 +148,7 @@ class ConsumePage extends PageFrame
         $this->setData('fields', $fields);
         $this->setData('myId', getLoggedInLoginId($this->ci->session));
         $this->setData('tabs', $tabs);
+        $this->setData('winners', $winners);
     }
 
     /**
