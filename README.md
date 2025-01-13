@@ -60,6 +60,24 @@ Requirements:
 
 *The docker-compose deploy method and the CI are using 7.3. The version used there is leading and the only one supported.
 
+## Development Environment
+
+For development purposes, an extended Docker Compose configuration is available in `docker-compose.dev.yml`. This configuration adds additional services useful for development:
+
+### Additional Services
+- **phpMyAdmin**: Web interface for database management
+  - Available at: http://localhost:8081
+
+### Starting Development Environment
+
+To start all services including development tools:
+
+```bash
+docker-compose -f docker-compose.dev.yml up -d
+```
+
+This will start all base services plus the development services.
+
 ## Usage
 
 By default, the database is populated with one admin user with username `admin`and password `admin312`. Login as this user and change the password as soon as possible.
