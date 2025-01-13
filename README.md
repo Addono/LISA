@@ -1,5 +1,5 @@
 # LISA
-![Continuous Integration](https://github.com/Addono/LISA/workflows/Continuous%20Integration/badge.svg?branch=master)
+[![Continuous Integration](https://github.com/Addono/LISA/actions/workflows/continuous-integration.yaml/badge.svg)](https://github.com/Addono/LISA/actions/workflows/continuous-integration.yaml)
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg)](#contributors)
 [![Project Status: Inactive – The project has reached a stable, usable state but is no longer being actively developed; support/maintenance will be provided as time allows.](https://www.repostatus.org/badges/latest/inactive.svg)](https://www.repostatus.org/#inactive)
 
