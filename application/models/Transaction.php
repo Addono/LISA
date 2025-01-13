@@ -132,11 +132,12 @@ class Transaction extends ModelFrame
     public function getSumDeltaSubjectIdByWeek(int $subjectId): array
     {
         return $this->db
-            ->where(self::FIELD_SUBJECT_ID, $subjectId)
-            ->where('WEEKOFYEAR(NOW())=WEEKOFYEAR(' . self::FIELD_TIME . ')')
-            ->where('YEAR(NOW())=YEAR(' . self::FIELD_TIME . ')')
-            ->where([self::FIELD_TYPE => self::TYPE_CONSUME])
+            ->select('YEAR(' . self::FIELD_TIME . ') as year, WEEKOFYEAR(' . self::FIELD_TIME . ') as week')
             ->select_sum(self::FIELD_DELTA, 'sum')
+            ->where(self::FIELD_SUBJECT_ID, $subjectId)
+            ->where([self::FIELD_TYPE => self::TYPE_CONSUME])
+            ->group_by('YEAR(' . self::FIELD_TIME . '), WEEKOFYEAR(' . self::FIELD_TIME . ')')
+            ->order_by(self::FIELD_TIME, 'asc')
             ->get(self::name())
             ->result_array();
     }
