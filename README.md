@@ -11,7 +11,7 @@ Many use-cases can be imagined, in general LISA gives each user an integer sized
 
 ## Installation
 
-### docker-compose (Recommended)
+### Docker Compose (Recommended)
 
 ```bash
 # Clone the repository
@@ -20,7 +20,7 @@ git clone https://github.com/Addono/lisa && cd lisa
 # Install dependencies
 npm install
 
-# (Optional) Configure the database, the defaults are for a docker-compose instance
+# (Optional) Configure the database, the defaults are for a docker compose instance
 vim application/config/database.php
 
 # (Optional) Configure general settings, setting the hostname is mandatory
@@ -34,7 +34,7 @@ vim application/config/config.php
 vim application/config/email.php
 
 # Configuration is finished, let's deploy the application and all required services
-docker-compose up -d
+docker compose up -d
 ```
 One small last thing we need to do is to run all database migrations, either point your browser at [http://localhost:8080/install](http://localhost:8080/install) or run`curl http://localhost:8080/install`.
 
@@ -57,7 +57,7 @@ Requirements:
     * (Optional, but recommended) Configure an SMTP server in `email.php`.
  1. Navigate to __YOUR_HOSTNAME__/index.php/Install to initialize the database.
 
-*The docker-compose deploy method and the CI are using 7.4. The version used there is leading and the only one supported.
+*The Docker Compose deploy method and the CI are using 7.4. The version used there is leading and the only one supported.
 
 ## Development Environment
 
@@ -72,7 +72,7 @@ For development purposes, an extended Docker Compose configuration is available 
 To start all services including development tools:
 
 ```bash
-docker-compose -f docker-compose.dev.yml up -d
+docker compose -f docker-compose.dev.yml up -d
 ```
 
 This will start all base services plus the development services.
