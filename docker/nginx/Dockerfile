@@ -1,5 +1,5 @@
 # Get all node dependencies
-FROM node:12 as node-builder
+FROM node:12 AS node-builder
 
 WORKDIR /application
 
