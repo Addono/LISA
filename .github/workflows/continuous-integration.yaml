@@ -22,7 +22,7 @@ jobs:
       run: npm ci
 
     - name: Create test environment
-      run: docker-compose up -d
+      run: docker compose up -d
     
     - name: Wait until test environment is up
       run: npx wait-on http-get://localhost:8080/Install
