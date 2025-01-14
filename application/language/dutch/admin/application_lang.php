@@ -7,7 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $lang['admin_application_name'] = 'Jouw beheerspaneel naam hier';
 $lang['admin_application_title'] = 'Jouw beheerspaneel titel hier';
-$lang['copyright'] = '2018, <a style="color:#fff" href="https://aknapen.nl">Adriaan Knapen</a>';
+$lang['copyright'] = '2018-2025, <a style="color:#fff" href="https://aknapen.nl">Adriaan Knapen</a>';
 
 // Side menu
 $lang['application_menu_dashboard'] = 'Dashboard';
