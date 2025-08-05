@@ -26,7 +26,7 @@ jobs:
       run: docker compose up -d
     
     - name: Wait until test environment is up
-      run: npx wait-on http-get://localhost:8080/Install
+      run: npx wait-on@7 http-get://localhost:8080/Install
 
     - name: Cypress run
       uses: cypress-io/github-action@v6.7.8
