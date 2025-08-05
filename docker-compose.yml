@@ -3,9 +3,6 @@ services:
     mariadb:
       image: mariadb:10.4
       container_name: lisa-mariadb
-      working_dir: /application
-      volumes:
-        - ${PWD}/:/application/
       environment:
         - MYSQL_ROOT_PASSWORD=root
         - MYSQL_DATABASE=lisa
