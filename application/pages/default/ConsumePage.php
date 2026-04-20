@@ -39,20 +39,35 @@ class ConsumePage extends PageFrame
         usort($byFirstName, function($a, $b) {
             return strcmp(strtolower($a[User::FIELD_FIRST_NAME]), strtolower($b[User::FIELD_FIRST_NAME]));
         });
+        $byFirstName = array_filter($byFirstName, function($a) {
+            $timeStamp = strtotime($a['time']);
+            $cutOffDate = strtotime('-6 months');
+
+            return ($timeStamp > $cutOffDate);
+        });
+
         $byLastName = $allUsersByRole[Role::ROLE_USER];
         usort($byLastName, function($a, $b) {
             return strcmp(strtolower($a[User::FIELD_LAST_NAME]), strtolower($b[User::FIELD_LAST_NAME]));
         });
+        $byLastName = array_filter($byLastName, function($a) {
+            $timeStamp = strtotime($a['time']);
+            $cutOffDate = strtotime('-6 months');
+
+            return ($timeStamp > $cutOffDate);
+        });
+
         $byAmount = $allUsersByRole[Role::ROLE_USER];
         usort($byAmount, function($a, $b) {
             return $b['amount'] - $a['amount'];
         });
+
         $byLatest = $allUsersByRole[Role::ROLE_USER];
         usort($byLatest, function($a, $b) {
             $timeStamp1 = strtotime($a['time']);
             $timeStamp2 = strtotime($b['time']);
             return $timeStamp2 - $timeStamp1;
-        });;
+        });
 
         $tabs = [
             'ordered-first-name' => [
