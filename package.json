@@ -26,6 +26,6 @@
     "visibilityjs": "^2.0.2"
   },
   "devDependencies": {
-    "cypress": "^13.17.0"
+    "cypress": "^15.15.0"
   }
 }
