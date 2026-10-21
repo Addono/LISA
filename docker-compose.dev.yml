@@ -1,0 +1,27 @@
+services:
+  mariadb:
+    extends:
+      file: docker-compose.yml
+      service: mariadb
+
+  webserver:
+    extends:
+      file: docker-compose.yml
+      service: webserver
+
+  php-fpm:
+    extends:
+      file: docker-compose.yml
+      service: php-fpm
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:5.2.1
+    container_name: lisa-phpmyadmin
+    environment:
+      - PMA_HOST=mariadb
+      - PMA_USER=lisa
+      - PMA_PASSWORD=lisa
+    ports:
+      - "8081:80"
+    depends_on:
+      - mariadb

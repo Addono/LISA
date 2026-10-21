@@ -1,7 +1,8 @@
 # LISA
-![Continuous Integration](https://github.com/Addono/LISA/workflows/Continuous%20Integration/badge.svg?branch=master)
+LISA runs on CodeIgniter 4.7.5 or newer and PHP 8.5.
+
+[![Continuous Integration](https://github.com/Addono/LISA/actions/workflows/continuous-integration.yaml/badge.svg)](https://github.com/Addono/LISA/actions/workflows/continuous-integration.yaml)
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg)](#contributors)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/609d0cc095eb48b18305a6cc3e178f4d)](https://app.codacy.com/app/Addono/lisa?utm_source=github.com&utm_content=Addono/lisa&utm_campaign=badger)
 [![Project Status: Inactive – The project has reached a stable, usable state but is no longer being actively developed; support/maintenance will be provided as time allows.](https://www.repostatus.org/badges/latest/inactive.svg)](https://www.repostatus.org/#inactive)
 
 ![Screenshot of the application](https://i.imgur.com/Yc03EAW.png)
@@ -12,31 +13,23 @@ Many use-cases can be imagined, in general LISA gives each user an integer sized
 
 ## Installation
 
-### docker-compose (Recommended)
+### Docker Compose (Recommended)
 
 ```bash
 # Clone the repository
-git clone https://github.com/Addono/lisa && cd lisa
+git clone https://github.com/omit01/LISA.git && cd LISA
 
 # Install dependencies
-npm install
+npm ci
 
-# (Optional) Configure the database, the defaults are for a docker-compose instance
-vim application/config/database.php
-
-# (Optional) Configure general settings, setting the hostname is mandatory
-# by default it is set to http://localhost:8080, if your Docker instance
-# is not at localhost, then you need to set $config['base_url'] manually 
-# in application/config/config.php
-vim application/config/config.php
-
-# (Optional) Although you will get nasty errors in your logs whenever it
-# tries to send email.
-vim application/config/email.php
+# Configure the URL, database, locale, and optional SMTP settings
+cp .env.example .env
 
 # Configuration is finished, let's deploy the application and all required services
-docker-compose up -d
+docker compose up --build -d
 ```
+The PHP container installs the locked Composer dependencies and prepares `writable/` before starting PHP-FPM. The default database settings match Docker Compose. Change `app.baseURL` in `.env` when using another hostname. Never commit `.env` or expose it through your web server.
+
 One small last thing we need to do is to run all database migrations, either point your browser at [http://localhost:8080/install](http://localhost:8080/install) or run`curl http://localhost:8080/install`.
 
 :rocket: And we are live at [http://localhost:8080](http://localhost:8080) :rocket:
@@ -47,18 +40,53 @@ _Note: Depending on how you installed Docker it might be that Docker is not acce
 
 ### Manual
 Requirements:
- * PHP 7* with the mysqli extension enabled.
- * MySQL database
+ * PHP 8.5 with `intl`, `mbstring`, and `mysqli` extensions.
+ * Composer 2, Node.js, and npm.
+ * MySQL or MariaDB.
 
- 1. Download a copy/make a clone/make a fork of the project and move it to a folder in your web server.
- 1. Rename or copy  `config.php-setup`, `database.php-setup` and `email.php-config` to `config.php`, `database.php` and `email.php` respectively, these files can be found in `application/config/`.
- 1. Edit these config files to match your system.
-    * Add your hostname in `config.php`.
-    * Enter the settings of your database in `database.php`.
-    * (Optional, but recommended) Configure an SMTP server in `email.php`.
- 1. Navigate to __YOUR_HOSTNAME__/index.php/Install to initialize the database.
+1. Clone the repository, run `composer install` and `npm ci`.
+2. Copy `.env.example` to `.env` and configure your URL, database, locale, and SMTP server.
+3. Configure the web server's document root as `public/`, not the repository root. Forward dynamic requests to `public/index.php` and serve `/node_modules/` from the installed frontend dependencies, as shown in the Nginx configuration.
+4. Make `writable/` writable by the PHP process. Application code and `vendor/` must not be publicly accessible.
+5. Open `/Install` to initialize the database, then change the default administrator password.
 
-*The docker-compose deploy method and the CI are using 7.3. The version used there is leading and the only one supported.
+### Migrating an Existing Installation
+
+Back up the database and the old configuration before deployment. This is a CI3-to-CI4 application conversion, following the [official migration guide](https://codeigniter4.github.io/userguide/installation/upgrade_4xx.html).
+
+Move your database, URL, SMTP, and language settings from the old `application/config/` files into `.env` using the names in `.env.example`. Existing tables, password hashes, model-version keys, and transaction data are retained. Preserve any configured database table prefix with `database.default.DBPrefix`. Do not import a fresh database or recreate existing tables. Running `/Install` again applies only outstanding schema versions. Existing sessions are replaced, so users must log in again.
+
+The source lives in `app/`; the framework is installed under `vendor/`. The old `application/`, bundled `system/`, and root entry point are no longer used. Keep the `/Install` endpoint restricted to operators in production, and configure SMTP to deliver low-credit notifications.
+
+### Verification
+
+```bash
+# Isolated regression checks; requires the sqlite3 extension
+docker compose exec -T php-fpm composer test
+
+# Browser checks against the running MariaDB-backed application
+npx cypress run --record false
+```
+
+The regression checks use an in-memory database and do not modify application data. Cypress uses the running application and creates test users; run it against a development database.
+
+## Development Environment
+
+For development purposes, an extended Docker Compose configuration is available in `docker-compose.dev.yml`. This configuration adds additional services useful for development:
+
+### Additional Services
+- **phpMyAdmin**: Web interface for database management
+  - Available at: http://localhost:8081
+
+### Starting Development Environment
+
+To start all services including development tools:
+
+```bash
+docker compose -f docker-compose.dev.yml up -d
+```
+
+This will start all base services plus the development services.
 
 ## Usage
 
@@ -71,7 +99,7 @@ Afterwards, use the admin user to create new users, which can be done in the bac
 ## Customisation
 
 ### Language
-Currently, the language used by the application is hard-coded into `Handler.php`, for future releases it is planned to move configurations like these into the database. For now, one should edit hard-coded language or substitute all language files in the `nederlands` language folder with your language of preference. During development I tried to add translations for both English and Dutch, so the English translation files should be complete.
+Set `app.defaultLocale = en` or `app.defaultLocale = nl` in `.env`. Frontend translations are in `app/Language/<locale>/Lisa.php`; administrator translations are in `Admin.php`. The existing default, application, and custom dictionaries have been combined into these files.
 
 ## Contributors✨
 
@@ -81,12 +109,15 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 <table>
-  <tr>
-    <td align="center"><a href="https://aknapen.nl"><img src="https://avatars1.githubusercontent.com/u/15435678?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Adriaan Knapen</b></sub></a><br /><a href="#maintenance-Addono" title="Maintenance">🚧</a> <a href="#design-Addono" title="Design">🎨</a> <a href="https://github.com/Addono/LISA/issues?q=author%3AAddono" title="Bug reports">🐛</a> <a href="https://github.com/Addono/LISA/commits?author=Addono" title="Code">💻</a> <a href="#content-Addono" title="Content">🖋</a> <a href="#translation-Addono" title="Translation">🌍</a></td>
-    <td align="center"><a href="https://www.sdhd.nl/"><img src="https://avatars1.githubusercontent.com/u/4325936?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Djamon Staal</b></sub></a><br /><a href="#security-SjamonDaal" title="Security">🛡️</a> <a href="#infra-SjamonDaal" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
-    <td align="center"><a href="https://koenvw.nl"><img src="https://avatars0.githubusercontent.com/u/1337450?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Koen</b></sub></a><br /><a href="#infra-koen860" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#ideas-koen860" title="Ideas, Planning, & Feedback">🤔</a> <a href="#userTesting-koen860" title="User Testing">📓</a> <a href="https://github.com/Addono/LISA/issues?q=author%3Akoen860" title="Bug reports">🐛</a></td>
-    <td align="center"><a href="https://github.com/omit01"><img src="https://avatars.githubusercontent.com/u/62880858?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Timo</b></sub></a><br /><a href="https://github.com/Addono/LISA/commits?author=omit01" title="Code">💻</a></td>
-  </tr>
+  <tbody>
+    <tr>
+      <td align="center"><a href="https://aknapen.nl"><img src="https://avatars1.githubusercontent.com/u/15435678?v=4?s=100" width="100px;" alt="Adriaan Knapen"/><br /><sub><b>Adriaan Knapen</b></sub></a><br /><a href="#maintenance-Addono" title="Maintenance">🚧</a> <a href="#design-Addono" title="Design">🎨</a> <a href="https://github.com/Addono/LISA/issues?q=author%3AAddono" title="Bug reports">🐛</a> <a href="https://github.com/Addono/LISA/commits?author=Addono" title="Code">💻</a> <a href="#content-Addono" title="Content">🖋</a> <a href="#translation-Addono" title="Translation">🌍</a></td>
+      <td align="center"><a href="https://www.sdhd.nl/"><img src="https://avatars1.githubusercontent.com/u/4325936?v=4?s=100" width="100px;" alt="Djamon Staal"/><br /><sub><b>Djamon Staal</b></sub></a><br /><a href="#security-SjamonDaal" title="Security">🛡️</a> <a href="#infra-SjamonDaal" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+      <td align="center"><a href="https://koenvw.nl"><img src="https://avatars0.githubusercontent.com/u/1337450?v=4?s=100" width="100px;" alt="Koen"/><br /><sub><b>Koen</b></sub></a><br /><a href="#infra-koen860" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#ideas-koen860" title="Ideas, Planning, & Feedback">🤔</a> <a href="#userTesting-koen860" title="User Testing">📓</a> <a href="https://github.com/Addono/LISA/issues?q=author%3Akoen860" title="Bug reports">🐛</a></td>
+      <td align="center"><a href="https://github.com/omit01"><img src="https://avatars.githubusercontent.com/u/62880858?v=4?s=100" width="100px;" alt="Timo"/><br /><sub><b>Timo</b></sub></a><br /><a href="https://github.com/Addono/LISA/commits?author=omit01" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/Synthetica9"><img src="https://avatars.githubusercontent.com/u/7075751?v=4?s=100" width="100px;" alt="Patrick Hilhorst"/><br /><sub><b>Patrick Hilhorst</b></sub></a><br /><a href="https://github.com/Addono/LISA/commits?author=Synthetica9" title="Code">💻</a></td>
+    </tr>
+  </tbody>
 </table>
 
 <!-- markdownlint-restore -->

@@ -15,11 +15,20 @@ user_guide_src/cilexer/build/*
 user_guide_src/cilexer/dist/*
 user_guide_src/cilexer/pycilexer.egg-info/*
 /vendor/
+/.env
+/writable/*
+!/writable/.htaccess
+!/writable/index.html
+!/writable/*/
+/writable/*/*
+!/writable/*/index.html
 
 node_modules/
 
 # Ignore Cypress' video recordings
 *.mp4
+/cypress/screenshots/
+/cypress/videos/
 
 # IDE Files
 #-------------------------

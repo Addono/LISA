@@ -5,8 +5,9 @@
 !Dockerfile
 
 # Include application specific files
-!system/
-!application/
+!app/
+!composer.json
+!composer.lock
 
 # Include Node package files
 !package.json

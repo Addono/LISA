@@ -1,12 +1,8 @@
-version: "3.1"
 services:
 
     mariadb:
       image: mariadb:10.4
       container_name: lisa-mariadb
-      working_dir: /application
-      volumes:
-        - ${PWD}/:/application/
       environment:
         - MYSQL_ROOT_PASSWORD=root
         - MYSQL_DATABASE=lisa
@@ -31,5 +27,5 @@ services:
       container_name: lisa-php-fpm
       volumes:
         - ${PWD}:/application
-        - ${PWD}/docker/php-fpm/php-ini-overrides.ini:/etc/php/7.3/fpm/conf.d/99-overrides.ini
+        - ${PWD}/docker/php-fpm/php-ini-overrides.ini:/usr/local/etc/php/conf.d/99-overrides.ini
 
