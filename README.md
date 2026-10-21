@@ -1,4 +1,6 @@
 # LISA
+LISA runs on CodeIgniter 4.7.5 or newer and PHP 8.5.
+
 [![Continuous Integration](https://github.com/Addono/LISA/actions/workflows/continuous-integration.yaml/badge.svg)](https://github.com/Addono/LISA/actions/workflows/continuous-integration.yaml)
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg)](#contributors)
 [![Project Status: Inactive – The project has reached a stable, usable state but is no longer being actively developed; support/maintenance will be provided as time allows.](https://www.repostatus.org/badges/latest/inactive.svg)](https://www.repostatus.org/#inactive)
@@ -15,27 +17,19 @@ Many use-cases can be imagined, in general LISA gives each user an integer sized
 
 ```bash
 # Clone the repository
-git clone https://github.com/Addono/lisa && cd lisa
+git clone https://github.com/omit01/LISA.git && cd LISA
 
 # Install dependencies
-npm install
+npm ci
 
-# (Optional) Configure the database, the defaults are for a docker compose instance
-vim application/config/database.php
-
-# (Optional) Configure general settings, setting the hostname is mandatory
-# by default it is set to http://localhost:8080, if your Docker instance
-# is not at localhost, then you need to set $config['base_url'] manually 
-# in application/config/config.php
-vim application/config/config.php
-
-# (Optional) Although you will get nasty errors in your logs whenever it
-# tries to send email.
-vim application/config/email.php
+# Configure the URL, database, locale, and optional SMTP settings
+cp .env.example .env
 
 # Configuration is finished, let's deploy the application and all required services
-docker compose up -d
+docker compose up --build -d
 ```
+The PHP container installs the locked Composer dependencies and prepares `writable/` before starting PHP-FPM. The default database settings match Docker Compose. Change `app.baseURL` in `.env` when using another hostname. Never commit `.env` or expose it through your web server.
+
 One small last thing we need to do is to run all database migrations, either point your browser at [http://localhost:8080/install](http://localhost:8080/install) or run`curl http://localhost:8080/install`.
 
 :rocket: And we are live at [http://localhost:8080](http://localhost:8080) :rocket:
@@ -46,18 +40,35 @@ _Note: Depending on how you installed Docker it might be that Docker is not acce
 
 ### Manual
 Requirements:
- * PHP 7* with the mysqli extension enabled.
- * MySQL database
+ * PHP 8.5 with `intl`, `mbstring`, and `mysqli` extensions.
+ * Composer 2, Node.js, and npm.
+ * MySQL or MariaDB.
 
- 1. Download a copy/make a clone/make a fork of the project and move it to a folder in your web server.
- 1. Rename or copy  `config.php-setup`, `database.php-setup` and `email.php-config` to `config.php`, `database.php` and `email.php` respectively, these files can be found in `application/config/`.
- 1. Edit these config files to match your system.
-    * Add your hostname in `config.php`.
-    * Enter the settings of your database in `database.php`.
-    * (Optional, but recommended) Configure an SMTP server in `email.php`.
- 1. Navigate to __YOUR_HOSTNAME__/index.php/Install to initialize the database.
+1. Clone the repository, run `composer install` and `npm ci`.
+2. Copy `.env.example` to `.env` and configure your URL, database, locale, and SMTP server.
+3. Configure the web server's document root as `public/`, not the repository root. Forward dynamic requests to `public/index.php` and serve `/node_modules/` from the installed frontend dependencies, as shown in the Nginx configuration.
+4. Make `writable/` writable by the PHP process. Application code and `vendor/` must not be publicly accessible.
+5. Open `/Install` to initialize the database, then change the default administrator password.
 
-*The Docker Compose deploy method and the CI are using 7.4. The version used there is leading and the only one supported.
+### Migrating an Existing Installation
+
+Back up the database and the old configuration before deployment. This is a CI3-to-CI4 application conversion, following the [official migration guide](https://codeigniter4.github.io/userguide/installation/upgrade_4xx.html).
+
+Move your database, URL, SMTP, and language settings from the old `application/config/` files into `.env` using the names in `.env.example`. Existing tables, password hashes, model-version keys, and transaction data are retained. Preserve any configured database table prefix with `database.default.DBPrefix`. Do not import a fresh database or recreate existing tables. Running `/Install` again applies only outstanding schema versions. Existing sessions are replaced, so users must log in again.
+
+The source lives in `app/`; the framework is installed under `vendor/`. The old `application/`, bundled `system/`, and root entry point are no longer used. Keep the `/Install` endpoint restricted to operators in production, and configure SMTP to deliver low-credit notifications.
+
+### Verification
+
+```bash
+# Isolated regression checks; requires the sqlite3 extension
+docker compose exec -T php-fpm composer test
+
+# Browser checks against the running MariaDB-backed application
+npx cypress run --record false
+```
+
+The regression checks use an in-memory database and do not modify application data. Cypress uses the running application and creates test users; run it against a development database.
 
 ## Development Environment
 
@@ -88,7 +99,7 @@ Afterwards, use the admin user to create new users, which can be done in the bac
 ## Customisation
 
 ### Language
-Currently, the language used by the application is hard-coded into `Handler.php`, for future releases it is planned to move configurations like these into the database. For now, one should edit hard-coded language or substitute all language files in the `nederlands` language folder with your language of preference. During development I tried to add translations for both English and Dutch, so the English translation files should be complete.
+Set `app.defaultLocale = en` or `app.defaultLocale = nl` in `.env`. Frontend translations are in `app/Language/<locale>/Lisa.php`; administrator translations are in `Admin.php`. The existing default, application, and custom dictionaries have been combined into these files.
 
 ## Contributors✨
 

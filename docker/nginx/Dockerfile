@@ -1,18 +1,19 @@
 # Get all node dependencies
-FROM node:12 AS node-builder
+FROM node:22 AS node-builder
 
 WORKDIR /application
 
 COPY package.json package-lock.json ./
 
-RUN npm install --only=prod
+RUN npm ci --omit=dev
 
 # Add all static files to our NGINX image
 FROM nginx:alpine
 
 WORKDIR /application
 
-COPY --from=node-builder /application/node_modules/ ./
-COPY public/ manifest.webmanifest robots.txt ./
+COPY --from=node-builder /application/node_modules/ ./node_modules/
+COPY public/ ./public/
+COPY manifest.webmanifest robots.txt ./public/
 
 EXPOSE 8080

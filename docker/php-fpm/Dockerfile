@@ -1,15 +1,14 @@
-FROM php:7.4.33-fpm-alpine3.16
+FROM composer:2 AS composer
 
-WORKDIR "/application"
+FROM php:8.5-fpm-alpine
 
-# Fix debconf warnings upon build
-ARG DEBIAN_FRONTEND=noninteractive
+RUN apk add --no-cache icu-libs oniguruma \
+	&& apk add --no-cache --virtual .build-deps $PHPIZE_DEPS icu-dev oniguruma-dev \
+	&& docker-php-ext-install intl mbstring mysqli \
+	&& apk del .build-deps
 
-# Install selected extensions and other stuff
-# RUN apt-get update \
-#     && apt-get -y --no-install-recommends install  php7.4-mysql \
-#     && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
-
-RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
+COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 
 WORKDIR /application
+
+CMD ["sh", "-c", "composer install --no-interaction --prefer-dist && mkdir -p writable/cache writable/logs writable/session writable/uploads && chown -R www-data:www-data writable && exec php-fpm"]
