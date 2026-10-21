@@ -17,7 +17,7 @@ Many use-cases can be imagined, in general LISA gives each user an integer sized
 
 ```bash
 # Clone the repository
-git clone https://github.com/omit01/LISA.git && cd LISA
+git clone https://github.com/Addono/LISA.git && cd LISA
 
 # Install dependencies
 npm ci
