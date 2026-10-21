@@ -27,5 +27,5 @@ services:
       container_name: lisa-php-fpm
       volumes:
         - ${PWD}:/application
-        - ${PWD}/docker/php-fpm/php-ini-overrides.ini:/etc/php/7.3/fpm/conf.d/99-overrides.ini
+        - ${PWD}/docker/php-fpm/php-ini-overrides.ini:/usr/local/etc/php/conf.d/99-overrides.ini
 

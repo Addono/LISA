@@ -28,6 +28,9 @@ jobs:
     - name: Wait until test environment is up
       run: npx wait-on http-get://localhost:8080/Install
 
+    - name: PHP 8.5 migration regression checks
+      run: docker compose exec -T php-fpm composer test
+
     - name: Cypress run
       uses: cypress-io/github-action@v6.7.8
       with:
